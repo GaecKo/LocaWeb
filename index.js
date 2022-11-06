@@ -18,7 +18,7 @@ app.set('views', __dirname + '/views');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
-  secret: "appr_pf08",
+  secret: "APPR_PF08",
   resave: false,
   saveUninitialized: true,
   cookie: {
