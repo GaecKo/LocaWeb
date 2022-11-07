@@ -1,18 +1,9 @@
-@font-face {
-    font-family: 'Codec Pro';
-    src: url('../fonts/code-pro/CodecPro-ExtraBold.eot');
-    src: local('../fonts/code-pro/Codec Pro ExtraBold'), local('CodecPro-ExtraBold'),
-        url('../fonts/code-pro/CodecPro-ExtraBold.eot?#iefix') format('embedded-opentype'),
-        url('../fonts/code-pro/CodecPro-ExtraBold.woff2') format('woff2'),
-        url('../fonts/code-pro/CodecPro-ExtraBold.woff') format('woff'),
-        url('../fonts/code-pro/CodecPro-ExtraBold.ttf') format('truetype');
-    font-weight: 800;
-    font-style: normal;
-}
 
 @font-face {
     font-family: 'Codec Pro ExtraBold';
     src: url('../fonts/codec-pro/CodecPro-ExtraBold.ttf');
+    font-weight: 800;
+    font-style: normal;
 }
 
 @font-face {
@@ -45,7 +36,7 @@
 .div2 { grid-area: 1 / 3 / 2 / 4; }
         
 .btn-grad {
-    background-image: linear-gradient(to right, #9340FF 0%, #FF3C5F  51%, #273d70  100%);
+    background-image: linear-gradient(to right, #5b3094 0%, #f00530  51%, #273d70  100%);
     margin: 10px;
     text-align: center;
     text-transform: uppercase;
