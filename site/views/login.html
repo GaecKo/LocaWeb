@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <title>Login</title>
 </head>
-<body>
+<body onload="randomtext()">
 
     <div style="margin-top: 50px; margin-left: 9.4%;">
         <img src="https://locaweb.my.canva.site/images/0c0266e15d76ba44735c33bcc0e27c74.svg" style="border-radius:1px; width:50px;"  alt="Gradient Shape Logo Element" loading="lazy">
@@ -19,8 +19,22 @@
         <div class="container1">
 
             <h2 style="color:#ffffff;">Nice to see you again!</h2>
-            <h1 class="welcome">Welcome back !</h1>
+            <h1 id="hellotext"class="welcome">Welcome back !</h1>
             <hr style="width: 80%; border: 3px dashed rgb(254, 254, 254);">
+
+            <script>
+
+                function randomtext(){
+
+                    const texts = ['Welcome back !','Nice to see you again !','Looking for new product ?', 'Stop coming back','👋👋👋']
+                    const rando = ()  => texts[Math.floor(Math.random() * texts.length)];
+                    document.getElementById("hellotext").innerHTML = rando();
+
+                }
+
+            
+        
+            </script>
 
         </div>
 
@@ -77,8 +91,8 @@
         <div class="container4">
           <h1 style="background-color: transparent;">Contact</h1>
           <pre style="background-color: transparent;">01 23 45 68 89
-  Adress sympa
-  bonjour@gmail.com</pre>
+Adress sympa
+bonjour@gmail.com</pre>
         </div>
   
   
