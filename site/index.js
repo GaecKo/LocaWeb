@@ -60,7 +60,6 @@ app.get('/signup', function (req, res) {
 //The 404 Route
 app.get('*', function(req, res){
   res.render('./error.html');
-  res.send('what???', 404);
 });
 
 https.createServer({
