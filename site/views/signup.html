@@ -4,9 +4,101 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <title>Sign-up</title>
 </head>
-<body>
-    <h1> je vais pleurer</h1>
+<body onload="randomtext()">
+
+    <div style="margin-top: 50px; margin-left: 9.4%;">
+        <img src="../image/logo.svg" style="border-radius:1px; width:50px;"  alt="Gradient Shape Logo Element" loading="lazy">
+        <span class="title"><a href=".." style="text-decoration:none; color: white;">&nbsp; LocaWeb </a> </span> 
+    </div>
+
+    <div class="flex1">
+        <div class="container1">
+
+            <h2 style="color:#ffffff;">New here?</h2>
+            <h1 id="hellotext"class="welcome">Create an account !</h1>
+            <hr style="width: 80%; border: 3px dashed rgb(254, 254, 254);">
+
+            <script>
+                function randomtext(){
+                    const texts = ['Create an account !']
+                    const rando = ()  => texts[Math.floor(Math.random() * texts.length)];
+                    document.getElementById("hellotext").innerHTML = rando();
+                }
+            </script>
+
+        </div>
+
+        <div class="container2">
+
+            <form action="/login">
+
+            <h1>New account</h1>
+            <input class="textinput" type="text" placeholder="Username" name="username" required>
+            <hr style="width: 80%; border: 3px dashed transparent;">
+            <input class="textinput" type="email" placeholder="Email" name="email" required>
+            <hr style="width: 80%; border: 3px dashed transparent;">
+            <input class="textinput" type="password" placeholder="Password" name="password" id="id_password" required>
+            <i class="far fa-eye" id="togglePassword" style="margin-left: -40px; cursor: pointer; font-size: 25px; background-color: transparent; color: rgb(61, 61, 207);"></i>
+            <hr style="width: 80%; border: 3px dashed transparent;">
+            <input class="textinput" type="password" placeholder="Comfirm Password" name="comfpassword" required>
+
+            <input class="boxinput" type="checkbox" name="keeplog" id="">
+            <p>Stay signed in</p>
+                <br>
+            <p>Already have an account?</p>
+            <a class="asignup" href="/login" >Login-in here</a>
+            <br>
+            <br>
+            <a href="/" class="btn-grad" style="margin: auto;">Create account</a>
+
+            </form>
+
+
+        </div>
+    </div>
+
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#id_password');
+    
+        togglePassword.addEventListener('click', function (e) {
+        // toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // toggle the eye slash icon
+        this.classList.toggle('fa-eye-slash');
+    });
+    </script>
+
+<div class="spacer"></div>
+
+<footer>
+    <div class="footer-inside">
+      <div class="flex3">
+  
+        <div class="container3">
+        <img src="../image/logo.svg" style="border-radius:1px; width:50px; background-color: transparent; "  alt="Gradient Shape Logo Element" loading="lazy">
+        <span class="title" style="background-color: transparent;"> &nbsp; LocaWeb </span>
+        </div>
+  
+        <div class="container4">
+          <h1 style="background-color: transparent;">Contact</h1>
+          <pre style="background-color: transparent;">01 23 45 68 89
+Adress sympa
+bonjour@gmail.com</pre>
+        </div>
+  
+  
+      </div>
+    </div>
+  </footer>
+
+
+
 </body>
+
 </html>
