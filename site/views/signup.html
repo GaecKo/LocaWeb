@@ -37,18 +37,22 @@
             <form action="/login">
 
             <h1>New account</h1>
-            <input class="textinput" type="text" placeholder="Username" name="username" required>
+            <input class="textinput" type="text" placeholder="Username" name="username" id="username_sign_up" minlength="3" required>
             <hr style="width: 80%; border: 3px dashed transparent;">
-            <input class="textinput" type="email" placeholder="Email" name="email" required>
-            <hr style="width: 80%; border: 3px dashed transparent;">
-            <input class="textinput" type="password" placeholder="Password" name="password" id="id_password" required>
-            <i class="far fa-eye" id="togglePassword" style="margin-left: -40px; cursor: pointer; font-size: 25px; background-color: transparent; color: rgb(61, 61, 207);"></i>
-            <hr style="width: 80%; border: 3px dashed transparent;">
-            <input class="textinput" type="password" placeholder="Comfirm Password" name="comfpassword" required>
 
-            <input class="boxinput" type="checkbox" name="keeplog" id="">
+            <input class="textinput" type="email" placeholder="Email" name="email" id="email_sign_up" pattern=".+@.+\..+" required>
+            <hr style="width: 80%; border: 3px dashed transparent;">
+
+            <input class="textinput" type="password" placeholder="Password (at least 8 characters)" name="password" id="id_password" minlength="8" required>
+            <i class="far fa-eye" id="togglePassword" style="margin-left: -40px; cursor: pointer; font-size: 25px; background-color: transparent; color: rgb(61, 61, 207);"></i>
+
+            <hr style="width: 80%; border: 3px dashed transparent;">
+            <input class="textinput" type="password" placeholder="Comfirm Password" name="comfpassword" id="confirmmdp" minlength="8" required>
+
+            <input class="boxinput" type="checkbox" name="keeplog" id="cookies">
             <p>Stay signed in</p>
                 <br>
+
             <p>Already have an account?</p>
             <a class="asignup" href="/login" >Login-in here</a>
             <br>
@@ -72,6 +76,26 @@
         // toggle the eye slash icon
         this.classList.toggle('fa-eye-slash');
     });
+
+
+    document.querySelector('.btn-grad').onclick = function(){
+        const password = document.querySelector('#id_password').value,
+            confirmPassword = document.querySelector('#confirmmdp').value;
+
+        if(password == "") {
+            alert("Please insert a password!");
+            return false
+        }
+        else if(password.length < 8) {
+            alert("The password has less than 8 chracters!");
+            return false
+        }
+        else if(password != confirmPassword) {
+            alert("Passwords don't match!");
+            return false
+        }
+        return true
+    }
     </script>
 
 <div class="spacer"></div>
