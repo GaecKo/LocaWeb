@@ -57,6 +57,11 @@ app.get('/signup', function (req, res) {
 }
 );
 
+app.get('/announces', function (req, res) {
+  res.render('./annonces.html');
+}
+);
+
 //The 404 Route
 app.get('*', function(req, res){
   res.render('./error.html');
