@@ -5,8 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error</title>
+    <script src="../js/confetti.js"></script>
 </head>
-<body>
+<body onload="startConfetti()">
+
     <style>
         @font-face {
             font-family: 'Codec Pro ExtraBold';
@@ -20,30 +22,57 @@
         }
 
         .center {
-            margin: auto;
-            width: 50%;
-            padding: 10px;
+            display: flex;
+            margin-top: auto;
+            width: 100%;
+            /* padding: 10px; */
+            flex-direction: column;
+            align-content: stretch;
+            justify-content: space-around;
+            align-items: stretch;
         }
 
         .elements{
+            display: contents;
             margin: auto;
             width: 50%;
-            padding: 10px;
+            /* padding: 10px; */
             text-align: center;
+            align-content: center;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: nowrap;
+            flex-direction: column;
         }
 
         h1 {
+            margin-left: auto;
+            margin-right: auto;
             font-family: 'Codec Pro ExtraBold';
             font-size: 50px;
             /* border: 3px dashed #1c87c9; */
             text-align: center;
             width: 300px;
-
             background-image: url(../image/rainbow.gif);
             background-size: cover;
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
+        }
+
+        img{
+            margin-right: 50px;
+            margin-left: 50px;
+        }
+
+
+        @media only screen and (max-width: 600px) {
+
+            img{
+                margin-right: 0px;
+                margin-left: 0px;
+            }
+            
         }
 
     </style>
@@ -53,5 +82,6 @@
             <IMG SRC="../image/cat.gif">
         </div>
     </div>
+
 </body>
 </html>
