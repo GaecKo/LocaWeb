@@ -5,33 +5,6 @@ const sequelize = new Sequelize({
     storage: "./database.sqlite"  
 })
 
-
-
-async function get_User(email){
-    user = await User.findOne({ email: email })
-    console.log(user)
-} 
-
-function addUser(username, email, password) {
-    /*
-     * return true if User has been added to database
-     * return false if error
-     */
-
-    return User.create({
-        username: username,
-        email: email,
-        password: password
-    }).then(user => {
-        console.log("User added" + user);
-        return true;
-    }).catch(err => {
-        console.log("User already exists " + err);
-        return false;
-    })
-}
-
-
 class User extends Model {}
 
 class Ad extends Model {}
@@ -56,7 +29,8 @@ User.init({
     },
     moderator: {
         type: DataTypes.BOOLEAN,
-        allowNull: false
+        allowNull: true,
+        defaultValue: false
     }
 }, {sequelize, modelName: 'User'})
 
@@ -124,6 +98,32 @@ Comment.init({
 }, {sequelize, modelName: 'Comment'})
 
 
-
 // To sync the database, if changes are done in the above init functions, uncomment next line. Be carefull, it's maybe needed to delete database content
 // sequelize.sync()
+
+
+async function get_User(email){
+    return await User.findOne({where: {email: email}})
+}
+
+
+function addUser(username, email, password, modo) {
+    /*
+     * return true if User has been added to database
+     * return false if error
+     */
+
+    return User.create({
+        username: username,
+        email: email,
+        password: password,
+        moderator: modo
+    }).then(user => {
+        console.log("User added" + user);
+        return true;
+    }).catch(err => {
+        console.log("User already exists " + err);
+        return false;
+    })
+}
+
