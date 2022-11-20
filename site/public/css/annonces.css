@@ -14,7 +14,7 @@ body {
     margin-bottom: 10px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 1rem;
+    gap: 2rem;
 }
 
 #annonce-element {
@@ -22,11 +22,9 @@ body {
     padding-right: 30px;
     padding-top: 10px;
     padding-bottom: 10px;
-    background: rgba(145, 0, 198, 0.4);
+    background: rgba(140, 0, 200, 0.4);
     border-radius: 16px;
-    box-shadow: 0px 0px 10px 5px rgba(255, 0, 242, 0.3);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(7px);
+    box-shadow: 0px 0px 10px 5px rgba(140, 0, 200, 0.4);
     border: 1px solid rgba(91, 2, 124, 0.2);
 }
 
@@ -44,10 +42,10 @@ body {
     text-align: left;
     overflow-y: scroll;
     color: white;
-    text-shadow: 0 0px 3px #f1f1f1;
+    text-shadow: 0 0px 2px #f1f1f1;
 }
 
-#annonce-left {
+#annonce-middle {
     width: 100%;
     height: 60%;
 }
@@ -58,7 +56,7 @@ body {
     border: 1px solid #ffffff;
     background: rgba(89, 0, 122, 0.4);
     border-radius: 16px;
-    box-shadow: inset 0px 0px 10px 5px rgba(255, 0, 242, 0.3);
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(7px);
     border: 1px solid rgba(91, 2, 124, 0.2);
@@ -123,7 +121,7 @@ body {
     font-size: 1.4em;
     font-weight: bold;
     text-align: left;
-    margin-left: 20px;
+    margin-left: 10px;
     color: white;
     text-shadow: 0 0px 3px #f1f1f1;
 }

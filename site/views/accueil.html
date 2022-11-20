@@ -1,67 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/style.css">
-    <title>Accueil</title>
-</head>
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="../css/style.css">
+      <title>Accueil</title>
+  </head>
 
 
-<body>
- 
-  <div class="main">
-  <img class="logo" src="../image/logo.svg" style="border-radius:1px; width:50px;"  alt="Gradient Shape Logo Element" loading="lazy">
-  <span class="title"> &nbsp; LocaWeb </span>  
-  <a href="/login" class="btn-grad">Sign-up / Login</a>
+  <body>
   
+    <div class="main">
+      <header id="header">
+        <img class="logo" src="../image/logo.svg" style="border-radius:1px; width:50px;"  alt="Gradient Shape Logo Element" loading="lazy">
+        <span class="title"> &nbsp; LocaWeb </span>  
+        <a href="/login" class="btn-grad">Sign-up / Login</a>
+      </header>
+      
+      
 
-  <div class="flex1">
-    <h1 class="rentingtext"> Renting has never been so easy !</h1>
-    <img class="imgphone"src="../image/phone.webp"> </img>
-  </div>
-
-  <div class="container1">
-    <h1 class="renttext"> With LocaWeb you can rent or lease a whole range of products.</h1>
-    <p class="smallrenttext">Our site will allow you to advertise a bike / a parking space / a book and much more. Conversely, this site will allow you to get in touch with people who rent their goods.</p>
-  </div>
-
-  <div class="flex2">
-
-    <div class="container2">
-      <h1 class="ecotext">The eco-friendly solution</h1>
-      <p class="smallecotext">All goods these days are single use. Let's stop this endless loop and use the goods that people no longer use for less than the purchase price of the new good. </p>
-    </div>
-    
-  <img class="imghand"src="../image/hands.webp"> </img>
-  </div>
-
-</div>
-
-<div class="spacer"></div>
-
-<footer>
-  <div class="footer-inside">
-    <div class="flex3">
-
-      <div class="container3">
-      <img src="../image/logo.svg" style="border-radius:1px; width:50px; background-color: transparent; "  alt="Gradient Shape Logo Element" loading="lazy">
-      <span class="title" style="background-color: transparent;"> &nbsp; LocaWeb </span>
+      <div class="flex1">
+        <h1 class="rentingtext"> Renting has never been so easy !</h1>
+        <img class="imgphone"src="../image/phone.webp"> </img>
       </div>
 
-      <div class="container4">
-        <h1 style="background-color: transparent;">Contact</h1>
-        <pre style="background-color: transparent;">01 23 45 68 89
-Adress sympa
-bonjour@gmail.com</pre>
+      <div class="container1">
+        <h1 class="renttext"> With LocaWeb you can rent or lease a whole range of products.</h1>
+        <p class="smallrenttext">Our site will allow you to advertise a bike / a parking space / a book and much more. Conversely, this site will allow you to get in touch with people who rent their goods.</p>
       </div>
 
+      <div class="flex2">
+
+        <div class="container2">
+          <h1 class="ecotext">The eco-friendly solution</h1>
+          <p class="smallecotext">All goods these days are single use. Let's stop this endless loop and use the goods that people no longer use for less than the purchase price of the new good. </p>
+        </div>
+        
+      <img class="imghand"src="../image/hands.webp"> </img>
+      </div>
 
     </div>
-  </div>
-</footer>
+
+    <div class="spacer"></div>
+
+    <footer>
+      <div class="footer-inside">
+        <div class="flex3">
+
+          <div class="container3">
+            <img src="../image/logo.svg" style="border-radius:1px; width:50px; background-color: transparent; "  alt="Gradient Shape Logo Element" loading="lazy">
+            <span class="title" style="background-color: transparent;"> &nbsp; LocaWeb </span>
+          </div>
+
+          <div class="container4">
+            <h1 style="background-color: transparent;">Contact</h1>
+            <pre style="background-color: transparent;">01 23 45 68 89
+    Adress sympa
+    bonjour@gmail.com</pre>
+          </div>
+
+
+        </div>
+      </div>
+    </footer>
       
 
   </body>
 </html>
+
+<script>
+
+  //the following code comes from W3schools.com
+  
+  // When the user scrolls the page, execute stickHeader 
+  window.onscroll = function() {stickHeader()};
+
+  // Get the header
+  var header = document.getElementById("header");
+
+  // Get the offset position of the navbar
+  var sticky = header.offsetTop;
+
+  // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+  function stickHeader() {
+    if (window.pageYOffset > sticky) {
+      header.classList.add("sticky");
+    } else {
+      header.classList.remove("sticky");
+    }
+  }
+
+</script>
