@@ -207,3 +207,9 @@ input[id="username_sign_up"]:focus, input[id="email_sign_up"]:focus, input[id="i
     border: 2px solid #00d204;
     transition: all .3s ease;
 }
+
+@media only screen and (max-width: 600px) {
+    .flex3{
+        width: 100%;
+    }
+}
