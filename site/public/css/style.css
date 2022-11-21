@@ -34,6 +34,11 @@ body{
     font-family: 'Codec Pro ExtraBold';
 }
 
+#website-logo {
+    float: left;
+    background-color: #ffffff00;
+}
+
 
 .btn-grad {
     float: right;
@@ -219,20 +224,42 @@ footer {
 @media only screen and (max-width: 600px) {
 
     .main {
-      margin-left: 0%;
-      margin-right: 0%;
-      width: 100%;
+      width: 90%;
+      margin-left: auto;
+        margin-right: auto;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    #header {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding-bottom: 20px;
+    }
+
+    #website-logo {
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+        gap: 10px;
     }
 
     .logo{
-        margin-left: 60px;
+        flex: 1;
+    }
+
+    .title {
+        font-size: 30px;
+        flex: 1;
     }
 
     .btn-grad {
         margin-top: 5%;
-        text-align: center;
-        float: revert;
-        margin-left: 82px;
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 15px;
     }
 
     .imgphone{
@@ -275,7 +302,8 @@ footer {
 #header {
     background-color: rgba(16, 23, 40, .9);
     width: 100%;
-    padding: 20px;
+    padding-bottom: 60px;
+    padding-top: 30px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(7px);
 }
