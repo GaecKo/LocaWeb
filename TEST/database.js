@@ -107,7 +107,7 @@ async function get_User(email){
 }
 
 
-function addUser(username, email, password, modo) {
+async function addUser(username, email, password, modo) {
     /*
      * return true if User has been added to database
      * return false if error
@@ -119,11 +119,57 @@ function addUser(username, email, password, modo) {
         password: password,
         moderator: modo
     }).then(user => {
-        console.log("User added" + user);
+        console.log("User added " + user);
         return true;
     }).catch(err => {
         console.log("User already exists " + err);
         return false;
     })
 }
+
+async function setModoState(username, state) {
+    /*
+    *  Update User (username) to the given state (true or false)
+    */
+    if (typeof state != Boolean) {
+        console.log("Wrong State input")
+        return;
+    }
+    await User.update({moderator: state}, {where: {username: username}})
+    // const user = await User.findOne({where: {username: username}});
+    // user.modo = state;
+    // await user.save()
+}
+
+async function getAllUsers() {
+    /*
+    *  Return a list with all the users in it with simple attributes
+    */
+    const users = await User.findAll()
+    const lst = []
+
+    return User.findAll().then(users => {
+        if (users) {
+            Object.entries(users).forEach(user => {
+                lst.push(Array.from(user)[1].dataValues) 
+                // the object user contains important data in 
+                // User : Datavalues : {...}, User is located at index 1 of array representing the user object
+            })
+            return lst;
+        } else {
+            return false;
+        }
+    }).catch(err => {
+        console.log("Error occuried while retrieving all Users data: " + err);
+    })
+}
+
+async function main() {
+    const users = await getAllUsers();
+    console.log(users)
+    
+    
+}
+main()
+
 
