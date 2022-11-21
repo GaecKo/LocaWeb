@@ -22,7 +22,7 @@ body{
 
 .main{
     width:80%;
-    margin-top: 50px;
+    margin-top: 20px;
     margin-left:auto;
     margin-right:auto;
 }
@@ -32,6 +32,15 @@ body{
     font-size:40px;
     color:white;
     font-family: 'Codec Pro ExtraBold';
+    background-color: rgba(16, 23, 40, 0);
+    -webkit-backdrop-filter: blur(7px);
+}
+
+.logo {
+    border-radius: 1px; 
+    width: 50px;
+    background-color: rgba(16, 23, 40, 0);
+    -webkit-backdrop-filter: blur(7px);
 }
 
 #website-logo {
@@ -239,7 +248,6 @@ footer {
     }
 
     #website-logo {
-        display: flex;
         margin-left: auto;
         margin-right: auto;
         gap: 10px;
@@ -250,7 +258,6 @@ footer {
     }
 
     .title {
-        font-size: 30px;
         flex: 1;
     }
 
