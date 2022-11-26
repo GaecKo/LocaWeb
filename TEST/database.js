@@ -34,7 +34,6 @@ User.init({
     }
 }, {sequelize, modelName: 'User'})
 
-
 Ad.init({
     id : {
         type: DataTypes.INTEGER,
@@ -50,6 +49,11 @@ Ad.init({
     title: {
         type: DataTypes.TEXT,
         allowNull: false
+    },
+    reports: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue: 0
     },
     user: {
         type: DataTypes.TEXT,
@@ -102,12 +106,25 @@ Comment.init({
 // sequelize.sync()
 
 
-async function get_User(email){
-    return await User.findOne({where: {email: email}})
+async function getUser(username){
+    /*
+    * Return user (object with user's info) if finded, false if not
+    */
+    return User.findOne({where: {username: username}}).then(user => {
+        if (user) {   
+            return user.dataValues
+        } else {
+            console.log("User not found")
+            return false
+        }
+        
+    }).catch(err => {
+        console.log("Error while looking for " + username + " : " + err)
+        return false;
+    })
 }
 
-
-async function addUser(username, email, password, modo) {
+async function addUser(username, email, password) {
     /*
      * return true if User has been added to database
      * return false if error
@@ -116,8 +133,7 @@ async function addUser(username, email, password, modo) {
     return User.create({
         username: username,
         email: email,
-        password: password,
-        moderator: modo
+        password: password
     }).then(user => {
         console.log("User added " + user);
         return true;
@@ -130,46 +146,81 @@ async function addUser(username, email, password, modo) {
 async function setModoState(username, state) {
     /*
     *  Update User (username) to the given state (true or false)
+    *  return true if updated, false if not    
     */
-    if (typeof state != Boolean) {
+    if (typeof state !== 'boolean') {
         console.log("Wrong State input")
-        return;
+        return false;
     }
-    await User.update({moderator: state}, {where: {username: username}})
-    // const user = await User.findOne({where: {username: username}});
-    // user.modo = state;
-    // await user.save()
+    return User.update({moderator: state}, {where: {username: username}}).then(state => {
+        if (state == 1) {
+            console.log("User :" + username + " has been updated to modo: " + state)
+            return true
+        } else {
+            console.log("User couldn't be updated (not found)")
+            return false
+        }
+    }).catch(err => {
+        console.log("unable to change state: " + err)
+        return false
+    })        
 }
 
 async function getAllUsers() {
     /*
     *  Return a list with all the users in it with simple attributes
+    *  return false if no users
     */
-    const users = await User.findAll()
     const lst = []
 
     return User.findAll().then(users => {
-        if (users) {
+        if (users.length > 0) {
             Object.entries(users).forEach(user => {
                 lst.push(Array.from(user)[1].dataValues) 
                 // the object user contains important data in 
                 // User : Datavalues : {...}, User is located at index 1 of array representing the user object
             })
+            console.log("All users were retrieved")
             return lst;
         } else {
+            console.log("No user found")
             return false;
         }
     }).catch(err => {
         console.log("Error occuried while retrieving all Users data: " + err);
+        return false;
+    })
+}
+
+async function isModo(username) {
+    return User.findOne({where: {username: username, moderator: true}}).then(user => {
+        if (user) {
+            console.log(username + " is modo")
+            return true
+        } else {
+            console.log(username + " is NOT modo")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while trying to find " + username + " : " + err)
+        return false
     })
 }
 
 async function main() {
-    const users = await getAllUsers();
-    console.log(users)
-    
+    // const modo = await setModoState("GaecK", true)
+    // User.destroy({where: {username: "GaecKo"}})
+    const users = await getAllUsers()
+    console.log(users)  
     
 }
+
 main()
 
-
+module.exports = {
+    getUser,
+    addUser,
+    setModoState,
+    getAllUsers,
+    isModo
+}
