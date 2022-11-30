@@ -44,23 +44,23 @@ app.engine('html', require('ejs').renderFile);
 // render the accueil.html page 
 app.get('/', function (req, res) {
   res.render('./accueil.html');
-}
-);
+});
 
 app.get('/login', function (req, res) {
   res.render('./login.html');
-}
-);
+});
 
 app.get('/signup', function (req, res) {
   res.render('./signup.html');
-}
-);
+});
 
 app.get('/announces', function (req, res) {
   res.render('./annonces.html');
-}
-);
+});
+
+app.get('/announce_main', function (req, res) {
+  res.render('./annonce_main.html');
+});
 
 //The 404 Route
 app.get('*', function(req, res){

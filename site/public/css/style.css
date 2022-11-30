@@ -151,13 +151,15 @@ body{
 .ecotext{
     color:#9340FF;
     font-family:'Codec Pro ExtraBold';
-    font-size:50px;
+    font-size: 50px;
+    text-align: center;
 }
 
 .smallecotext{
     color:white;
     font-family:'Codec Pro';
-    font-size:25px;
+    font-size: 25px;
+    text-align: center;
 }
 
 .imghand{
@@ -229,8 +231,7 @@ footer {
     font-size:25px;
 }
 
-
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 768px) {
 
     .main {
       width: 90%;
