@@ -207,16 +207,6 @@ async function isModo(username) {
     })
 }
 
-async function main() {
-    // const modo = await setModoState("GaecK", true)
-    // User.destroy({where: {username: "GaecKo"}})
-    const users = await getAllUsers()
-    console.log(users)  
-    
-}
-
-main()
-
 module.exports = {
     getUser,
     addUser,

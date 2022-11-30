@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-    <title>Login</title>
+    <title>Sign-up</title>
 </head>
 <body onload="randomtext()">
 
@@ -18,45 +18,46 @@
     <div class="flex1">
         <div class="container1">
 
-            <h2 style="color:#ffffff;">Nice to see you again!</h2>
-            <h1 id="hellotext"class="welcome">Welcome back !</h1>
+            <h2 style="color:#ffffff;">New here?</h2>
+            <h1 id="hellotext"class="welcome">Create an account !</h1>
             <hr style="width: 80%; border: 3px dashed rgb(254, 254, 254);">
 
             <script>
-
                 function randomtext(){
-
-                    const texts = ['Welcome back !','Nice to see you again !','Looking for new product ?', 'Stop coming back','👋👋👋']
+                    const texts = ['Create an account !']
                     const rando = ()  => texts[Math.floor(Math.random() * texts.length)];
                     document.getElementById("hellotext").innerHTML = rando();
-
                 }
-
-            
-        
             </script>
 
         </div>
 
         <div class="container2">
 
-            <form action="/login">
+            <form action="/signup" method="POST">
 
-            <h1>User Login</h1>
-            <input class="textinput" id="login_email" type="email" placeholder="Email" name="email" required>
+            <h1>New account</h1>
+            <input class="textinput" type="text" placeholder="Username" name="username" id="username_sign_up" minlength="3" required>
             <hr style="width: 80%; border: 3px dashed transparent;">
-            <input class="textinput" id="login_password" type="password" placeholder="Password" name="password" id="id_password" required>
-            <i class="far fa-eye" id="togglePassword" style="margin-left: -40px; cursor: pointer; font-size: 25px; background-color: transparent; color: rgb(61, 61, 207);"></i>
-            <br >
 
-            <input class="boxinput" type="checkbox" name="keeplog" id="">
+            <input class="textinput" type="email" placeholder="Email" name="email" id="email_sign_up" pattern=".+@.+\..+" required>
+            <hr style="width: 80%; border: 3px dashed transparent;">
+
+            <input class="textinput" type="password" placeholder="Password (at least 8 characters)" name="password" id="id_password" minlength="8" required>
+            <i class="far fa-eye" id="togglePassword" style="margin-left: -40px; cursor: pointer; font-size: 25px; background-color: transparent; color: rgb(61, 61, 207);"></i>
+
+            <hr style="width: 80%; border: 3px dashed transparent;">
+            <input class="textinput" type="password" placeholder="Comfirm Password" name="comfpassword" id="confirmmdp" minlength="8" required>
+
+            <input class="boxinput" type="checkbox" name="keeplog" id="cookies">
             <p>Stay signed in</p>
                 <br>
-            <p>Don't have an account yet?</p>
-            <a class="asignup" href="/signup" >Sign-up here</a>
+
+            <p>Already have an account?</p>
+            <a class="asignup" href="/login" >Login-in here</a>
             <br>
             <br>
-            <a href="/" class="btn-grad" style="margin: auto;">Login</a>
+            <button type="submit" class="btn-grad" style="margin: auto;">Create account</button> 
 
             </form>
 
@@ -75,6 +76,26 @@
         // toggle the eye slash icon
         this.classList.toggle('fa-eye-slash');
     });
+
+
+    document.querySelector('.btn-grad').onclick = function(){
+        const password = document.querySelector('#id_password').value,
+            confirmPassword = document.querySelector('#confirmmdp').value;
+
+        if(password == "") {
+            alert("Please insert a password!");
+            return false
+        }
+        else if(password.length < 8) {
+            alert("The password has less than 8 chracters!");
+            return false
+        }
+        else if(password != confirmPassword) {
+            alert("Passwords don't match!");
+            return false
+        }
+        return true
+    }
     </script>
 
 <div class="spacer"></div>

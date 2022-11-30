@@ -7,7 +7,7 @@ const fs = require('fs');
 
 const router = express.Router();
 const PORT = 4000;
-let db = require("./database.js");
+const db = require("./database.js");
 const bodyParser = require("body-parser");
 const bcrypt = require('bcryptjs');
 const { type } = require('os');
@@ -43,29 +43,64 @@ app.engine('html', require('ejs').renderFile);
 
 // render the accueil.html page 
 app.get('/', function (req, res) {
-  res.render('./accueil.html');
+  res.render('./accueil');
 });
 
 app.get('/login', function (req, res) {
-  res.render('./login.html');
+  res.render('./login', {error: req.session.error});
 });
 
 app.get('/signup', function (req, res) {
-  res.render('./signup.html');
+  res.render('./signup');
 });
 
 app.get('/announces', function (req, res) {
-  res.render('./annonces.html');
+  req.session.error = undefined;
+  res.render('./annonces');
 });
 
 app.get('/announce_main', function (req, res) {
-  res.render('./annonce_main.html');
+  res.render('./annonce_main');
 });
 
+app.post('/login', async function (req, res) {
+  let user = await db.getUser(req.body.username)
+  let hashed_password = bcrypt.hashSync(req.body.password, salt)
+  if (!user) {
+    req.session.error = "It seems like you don't have an account. Please create one."
+    res.redirect('/login')
+  } else if (user.password != hashed_password) {
+    console.log("User " + req.body.username + " didn't give the proper password.")
+    req.session.error = "The given password / username doesn't correspond. Please retry."
+    res.redirect('/login')
+  } else if (user.password == hashed_password) {
+    console.log("User " + req.body.username + " logged in")
+    req.session.username = req.body.username
+    req.session.email = user.email
+    req.session.moderator = user.moderator
+    res.redirect('/announces')
+  }
+});
+
+app.post('/signup', async function (req, res) {
+  let added_user = await db.addUser(req.body.username, req.body.email, req.body.password)
+  if (added_user) {
+    res.redirect("/announces")
+  } else {
+    req.session.error = "It seems like you already have an account, please login"
+    res.redirect("/login")
+  }
+});
+
+app.post('signup')
 //The 404 Route
 app.get('*', function(req, res){
-  res.render('./error.html');
+  res.render('./error');
 });
+
+
+
+
 
 https.createServer({
 
