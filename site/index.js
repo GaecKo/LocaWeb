@@ -43,7 +43,7 @@ app.engine('html', require('ejs').renderFile);
 
 // render the accueil.html page 
 app.get('/', function (req, res) {
-  res.render('./accueil');
+  res.render('./accueil', {username : req.session.username});
 });
 
 app.get('/login', function (req, res) {
@@ -56,7 +56,7 @@ app.get('/signup', function (req, res) {
 
 app.get('/announces', function (req, res) {
   req.session.error = undefined;
-  res.render('./annonces');
+  res.render('./annonces', {username : req.session.username});
 });
 
 app.get('/announce_main', function (req, res) {
@@ -64,16 +64,17 @@ app.get('/announce_main', function (req, res) {
 });
 
 app.post('/login', async function (req, res) {
+
   let user = await db.getUser(req.body.username)
-  let hashed_password = bcrypt.hashSync(req.body.password, salt)
+
   if (!user) {
     req.session.error = "It seems like you don't have an account. Please create one."
     res.redirect('/login')
-  } else if (user.password != hashed_password) {
+  } else if (! bcrypt.compare(req.body.password, user.password)) {
     console.log("User " + req.body.username + " didn't give the proper password.")
     req.session.error = "The given password / username doesn't correspond. Please retry."
     res.redirect('/login')
-  } else if (user.password == hashed_password) {
+  } else if ( bcrypt.compare(req.body.password, user.password)) {
     console.log("User " + req.body.username + " logged in")
     req.session.username = req.body.username
     req.session.email = user.email
@@ -83,7 +84,7 @@ app.post('/login', async function (req, res) {
 });
 
 app.post('/signup', async function (req, res) {
-  let added_user = await db.addUser(req.body.username, req.body.email, req.body.password)
+  let added_user = await db.addUser(req.body.username, req.body.email, bcrypt.hashSync(req.body.password, salt))
   if (added_user) {
     res.redirect("/announces")
   } else {

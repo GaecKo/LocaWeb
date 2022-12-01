@@ -18,7 +18,15 @@
           <span class="title"> &nbsp; LocaWeb </span>  
         </div>
           
-        <a href="/login" class="btn-grad">Sign-up / Login</a>
+        <a id="sign_up" href="/login" class="btn-grad">Sign-up / Login</a>
+
+      <% if (username !== undefined) { %>
+        <a id="username" class="btn-grad" href="#"> <%= username %> </a>
+        <a id="username" class="btn-offers btn-grad" href="/announces"> View offers </a>
+        <script>
+            document.getElementById('sign_up').style.display='none';
+        </script>
+      <% } %>
       </header>
       
       

@@ -5,43 +5,66 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/annonces.css">
+    <link rel="stylesheet" href="../css/style.css" >
     <title>Document</title>
 </head>
 <body>
-    <div id="annonce-container">
 
-        <!-- La boucle qui parcourt les annonces commencera ici -->
+    <div class="main">
 
-        <div id="annonce-element">
-            <div id="annonce-top">
-                <div id="annonce-title">
-                    <!-- Titre de l'annonce -->
-                    Trottinette en parfait état ouais mec, achète-là elle est trop bien
+        <header id="header">
+            <div id="website-logo">
+            <img class="logo" src="../image/logo.svg"  alt="Gradient Shape Logo Element" loading="lazy">
+            <span class="title" ><a href=".." style="text-decoration:none; color: white;">&nbsp; LocaWeb </a> </span>  
+            </div>
+            
+            <a id="sign_up" href="/login" class="btn-grad">Sign-up / Login</a>
+
+        <% if (username !== undefined) { %>
+            <a id="username" class="btn-grad" href="#"> <%= username %> </a>
+            <script>
+                document.getElementById('sign_up').style.display='none';
+            </script>
+        <% } %>
+        </header>
+
+
+        <div id="annonce-container">
+
+            <!-- La boucle qui parcourt les annonces commencera ici -->
+
+            <div id="annonce-element">
+                <div id="annonce-top">
+                    <div id="annonce-title">
+                        <!-- Titre de l'annonce -->
+                        Trottinette en parfait état ouais mec, achète-là elle est trop bien
+                    </div>
+                </div>
+                <div id="annonce-middle">
+                    <div id="annonce-image">
+                        <!-- Image de l'annonce -->
+                        <img id="image" src="../image/trottinette.jpeg" alt="trottinette">
+                    </div>
+                </div>
+                <div id="annonce-bottom">
+                    <div id="annonce-price">
+                        <!-- Prix de l'annonce -->
+                        A échanger
+                    </div>
+                    <div id="annonce-button">
+                        <!-- Bouton de l'annonce -->
+                        <form method="post" action="/site/views/annonces.html">
+                            <button id="contact-annonce-button" type="submit">Voir l'annonce </button>
+                        </form>
+                            
+                    </div>
                 </div>
             </div>
-            <div id="annonce-middle">
-                <div id="annonce-image">
-                    <!-- Image de l'annonce -->
-                    <img id="image" src="../image/trottinette.jpeg" alt="trottinette">
-                </div>
-            </div>
-            <div id="annonce-bottom">
-                <div id="annonce-price">
-                    <!-- Prix de l'annonce -->
-                    A échanger
-                </div>
-                <div id="annonce-button">
-                    <!-- Bouton de l'annonce -->
-                    <form method="post" action="/site/views/annonces.html">
-                        <button id="contact-annonce-button" type="submit">Voir l'annonce </button>
-                    </form>
-                        
-                </div>
-            </div>
+
+            <!-- Fin d'une annonce -->
+            
         </div>
 
-        <!-- Fin d'une annonce -->
-        
     </div>
 </body>
 </html>
