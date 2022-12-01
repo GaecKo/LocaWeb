@@ -1,0 +1,31 @@
+{
+    "comments": {
+        "idc1": {
+            "text" : "réponse 1", 
+            "author" : "author",
+            "response": {
+                "idc2": {
+                    "text" : "réponse à la réponse 1",
+                    "author" : "author",
+                    "response": false
+                },
+                "idc3" : {
+                    "text" : "réponse à la réponse 1",
+                    "author" : "author",
+                    "response" : {
+                        "idc4" : {
+                            "text" : "réponse à la réponse de la réponse 1",
+                            "author" : "author",
+                            "response": false
+                        }
+                    }
+                }
+            }
+        },
+        "idc5" : {
+            "text": "réponse 2",
+            "author" : "author",
+            "response" : false
+        }
+    }
+}
