@@ -59,9 +59,10 @@ app.get('/announces', function (req, res) {
   res.render('./annonces', {username : req.session.username});
 });
 
-app.get('/announce_main', function (req, res) {
-  res.render('./annonce_main');
-});
+app.get('/announces/:id'), function (req, res) {
+  console.log(id)
+  res.render("./acceuil")
+}
 
 app.post('/login', async function (req, res) {
 

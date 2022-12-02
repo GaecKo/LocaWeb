@@ -106,7 +106,7 @@ Comment.init({
 
 
 // To sync the database, if changes are done in the above init functions, uncomment next line. Be carefull, it's maybe needed to delete database content
-sequelize.sync()
+// sequelize.sync()
 
 async function getUser(username){
     /*
