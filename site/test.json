@@ -1,31 +1,29 @@
 {
-    "comments": {
-        "idc1": {
-            "text" : "réponse 1", 
-            "author" : "author",
-            "response": {
-                "idc2": {
-                    "text" : "réponse à la réponse 1",
-                    "author" : "author",
-                    "response": false
-                },
-                "idc3" : {
-                    "text" : "réponse à la réponse 1",
-                    "author" : "author",
-                    "response" : {
-                        "idc4" : {
-                            "text" : "réponse à la réponse de la réponse 1",
-                            "author" : "author",
-                            "response": false
-                        }
-                    }
-                }
-            }
+    "1": {
+      "3": {
+        "6": {
+          "text": "text6",
+          "author": "author6",
+          "NEW": { "text": "WOWOWOW", "author": "HEHEHEH" }
         },
-        "idc5" : {
-            "text": "réponse 2",
-            "author" : "author",
-            "response" : false
-        }
+        "text": "text3",
+        "author": "author3"
+      },
+      "text": "text1",
+      "author": "author1"
+    },
+    "2": { "text": "text", "author": "author2" },
+    "3": {
+      "3": {
+        "6": {
+          "text": "text6",
+          "author": "author6",
+          "NEW": { "text": "WOWOWOW", "author": "HEHEHEH" }
+        },
+        "text": "text3",
+        "author": "author3"
+      },
+      "text": "text1",
+      "author": "author1"
     }
-}
+  }
