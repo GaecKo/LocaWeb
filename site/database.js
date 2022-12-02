@@ -10,6 +10,8 @@ class Ad extends Model {}
 
 class Comment extends Model {}
 
+class Images extends Model {}
+
 User.init({
     username: {
         unique: true,
@@ -49,6 +51,15 @@ Ad.init({
         type: DataTypes.TEXT,
         allowNull: false
     },
+    city: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
+    price: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+    },
     reports: {
         type: DataTypes.INTEGER,
         allowNull: true,
@@ -65,7 +76,15 @@ Ad.init({
             model: User,
             key: "username"
         }
-    }
+    },
+    // images: {
+    //     type: DataTypes.INTEGER,
+    //     allowNull: false,
+    //     references : {
+    //         model: Images,
+    //         key: "id"
+    //     }
+    // }
     
     // address: pas obligatoire | images: pas obligatoire 
       // prix: type (échange-€/h-...) + text correspondant | 
@@ -73,6 +92,20 @@ Ad.init({
       // ... à implémenter au fur et à mesure
 
 }, {sequelize, modelName: 'Ad'})
+
+Images.init({
+    id : {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+        unique: true,
+    },
+    image : { 
+        type: DataTypes.BLOB('long'), // <- type for image
+        allowNull: false,
+    }
+}, {sequelize, modelName: 'Images'})
 
 Comment.init({
     id : {
@@ -105,8 +138,9 @@ Comment.init({
 }, {sequelize, modelName: 'Comment'})
 
 
+
 // To sync the database, if changes are done in the above init functions, uncomment next line. Be carefull, it's maybe needed to delete database content
-// sequelize.sync()
+//sequelize.sync()
 
 async function getUser(username){
     /*
@@ -137,7 +171,7 @@ async function addUser(username, email, password) {
         email: email,
         password: password
     }).then(user => {
-        console.log("User added: " + user);
+        console.log("User added: " + user.dataValues.username);
         return true;
     }).catch(err => {
         console.log("User already exists?: " + err);
@@ -243,17 +277,31 @@ async function getAd(adId) {
     })
 }
 
-async function addAd(description, title, username) {
+async function addAd(username, title, description, city, price, images) {
     return Ad.create({
-        description: description,
+        user : username,
         title: title,
-        comments: JSON.stringify({}),
-        user: username
+        description: description,
+        city: city,
+        price: price,
+        images: addImages(images),
+        comments: JSON.stringify({})
     }).then(ad => {
         console.log('Ad added: ' + ad)
         return true
     }).catch(err => {
         console.log("Error while adding Ad: " + err)
+    })
+}
+
+async function addImages(image) {
+    return Images.create({
+        image: image
+    }).then(image => {
+        console.log('Image added: ' + image)
+        return true
+    }).catch(err => {
+        console.log("Error while adding Image: " + err)
     })
 }
 
@@ -337,5 +385,28 @@ module.exports = {
     addUser,
     setModoState,
     getAllUsers,
-    isModo
+    isModo,
+    getAuthors,
+    getAd,
+    addAd,
+    addImages,
+    getComment,
+    addComment,
+    getFullComments
+
 }
+
+function main(){
+    //add an image to the db
+    Images.create({
+        image: "./photoid.png"
+    }).then(image => {
+        console.log('Image added: ' + image)
+    }
+    ).catch(err => {
+        console.log("Error while adding Image: " + err)
+    }
+    )
+}
+
+//main()

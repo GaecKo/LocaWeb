@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/annonce-builder.css">
+    <title>Annonce builder</title>
+</head>
+<body>
+
+    <div class="main">
+
+        <header id="header">
+            <div id="website-logo">
+                <img class="logo" src="../image/logo.svg"  alt="Gradient Shape Logo Element" loading="lazy">
+                <span class="title" ><a href=".." style="text-decoration:none; color: white;">&nbsp; LocaWeb </a> </span>  
+            </div>
+            
+            <a id="sign_up" href="/login" class="btn-grad">Sign-up / Login</a>
+
+            <% if (username !== undefined) { %>
+                <a id="username" class="btn-grad" href="#"> <%= username %> </a>
+                <script>
+                    document.getElementById('sign_up').style.display='none';
+                </script>
+            <% } %>
+        </header>
+
+        <div class="form-title">
+            <h1>Créer une annonce</h1>
+        </div>
+
+        <div class="form-container">
+
+            <form method="POST" action="/announces_builder">
+                <!-- Title -->
+                <input class="textinput" type="text" id="title" name="title" placeholder="Title of your offer">
+                <br>
+                <hr style="width: 80%; border: 3px dashed transparent;">
+                <!-- Description -->
+                <textarea class = "textinput" id="description" name="description" placeholder="Description of the offer" maxlength="500" style="height:200px;resize: none;"></textarea>
+                <br>
+                <hr style="width: 80%; border: 3px dashed transparent;">
+                <!-- City -->
+                <input  class="textinput"type="text" id="city" name="city" placeholder="City">
+                <br>
+                <hr style="width: 80%; border: 3px dashed transparent;">
+                <!-- Price -->
+                <input  class="textinput" type="number" id="price" name="price" placeholder="Price">
+                <br>
+                <hr style="width: 80%; border: 3px dashed transparent;">
+                <!-- Image -->
+                <input  class="textinput" type="file" id="image" name="images" accept="image/*">
+                <br>
+                <hr style="width: 80%; border: 3px dashed transparent;">
+                <!-- submit btn -->
+                <button class = "btn-grad" type="submit" style="border: 0;display: block;margin: 0 auto; float: inherit;">Créer l'annonce</button> 
+                <br>
+            </form>
+
+        </div>
+
+
+    </div>
+
+    
+    </body>
+</html>

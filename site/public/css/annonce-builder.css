@@ -12,12 +12,10 @@
 
 .form-title{
     font-family: 'Codec Pro ExtraBold';
-    color: rgb(255, 255, 255);
     margin-left: 20px;
 }
 
 .form-container{
-    color: rgb(255, 255, 255);
     font-family: 'Codec Pro';
     width: 100%;
     height: auto;

@@ -64,15 +64,13 @@ app.get('/announces/:id'), function (req, res) {
   res.render("./acceuil")
 }
 
-app.get('/announce_builder', function (req, res) {
-  res.render('./annonce_builder', {username : req.session.username});
+app.get('/announces_builder', function (req, res) {
+  res.render('./announces_builder', {username : req.session.username});
 });
 
 app.post('/login', async function (req, res) {
 
-  let user = await db.getUser(req.body.username)
-  console.log(req.body.password)
-  console.log(user.password)
+  let user = await db.getUser(req.body.username);
 
   if (!user) {
     req.session.error = "It seems like you don't have an account. Please create one."
@@ -99,7 +97,6 @@ app.post('/login', async function (req, res) {
 app.post('/signup', async function (req, res) {
   let added_user = await db.addUser(req.body.username, req.body.email, bcrypt.hashSync(req.body.password, salt))
   if (added_user) {
-    console.log("User " + req.body.username + " created")
     req.session.username = req.body.username
     req.session.email = req.body.email
     res.redirect('/announces')
@@ -108,6 +105,31 @@ app.post('/signup', async function (req, res) {
     res.redirect("/login")
   }
 });
+
+app.post('/announces_builder', async function (req, res) {
+  title = req.body.title
+  description = req.body.description
+  price = req.body.price
+  city = req.body.city
+  image = req.body.images
+
+  console.log(req.body)
+
+  let img = await db.addImages(image)
+  res.redirect("/announces")
+
+
+  // let added_announce = await db.addAd(req.session.username, title, description, city, price, image)
+
+  // if (added_announce) {
+  //   console.log("Announce " + title + " created")
+  //   res.redirect('/announces')
+  // } else {
+  //   req.session.error = "Error while creating the announce"
+  //   res.redirect("/announces")
+  // }
+});
+
 
 //The 404 Route
 app.get('*', function(req, res){
