@@ -1,5 +1,4 @@
 const { Sequelize, DataTypes, Model} = require('sequelize');
-const util = require('util')
 const sequelize = new Sequelize({
     dialect: "sqlite",
     storage: "./data/database.sqlite"  
@@ -107,7 +106,7 @@ Comment.init({
 
 
 // To sync the database, if changes are done in the above init functions, uncomment next line. Be carefull, it's maybe needed to delete database content
-// sequelize.sync()
+sequelize.sync()
 
 async function getUser(username){
     /*
@@ -215,6 +214,7 @@ async function isModo(username) {
 }
 
 async function getAuthors(JSONComment) {
+    // TODO
     let Author_list = []
     while (JSONComment.response != false) {
         break
@@ -226,12 +226,12 @@ async function getAd(adId) {
     *  Return an object: {id, desc, title, reports, comments, userId}
     *  return false if id doesnt correspond to any known ad
     */
-    return Ad.findOne({where: {id: adId}}).then( ad => {
+    return Ad.findOne({where: {id: adId}}).then(async ad => {
         if (ad) {
             console.log("ad: " + adId + " was found and retrieved.")
             ad = ad.dataValues
             ad.comments = JSON.parse(ad.comments)
-            return ad
+            return ad 
         } else {
             console.log("ad: " + adId + " was NOT found.")
             return false
@@ -243,12 +243,12 @@ async function getAd(adId) {
     })
 }
 
-async function addAd(description, title, userId) {
+async function addAd(description, title, username) {
     return Ad.create({
         description: description,
         title: title,
-        comments: JSON.stringify({comments: null}),
-        user: userId
+        comments: JSON.stringify({}),
+        user: username
     }).then(ad => {
         console.log('Ad added: ' + ad)
         return true
@@ -257,79 +257,66 @@ async function addAd(description, title, userId) {
     })
 }
 
-function RecAddComment(comments, parentId, id, content) {
-    if (parentId in comments) {
-        comments[parentId][id] = content
-        return [true, comments]
-    } 
-    for (key1 in comments) {
-        // console.log(key1)
-        let comment_key = null;
-        let in_com = comments[key1]
-        for (key2 in in_com) {
-            if (typeof in_com[key2] == 'object') {
-                comment_key = key2
-            }
+async function getComment(coId) {
+    return Comment.findOne({where: {id: coId}}).then(co => {
+        if (co) {
+            return co.dataValues
+        } else {
+            console.log("Couldn't retrieve " + coId + " content")
+            return false
         }
-        if (comment_key != null) {
-            let [found, temp] = RecAddComment(comments[key1], parentId, id, content)
-            if (found) {
-                comments[key1] = temp
-                
-            }
+    }).catch(err => {
+        console.log("Error while retrieving comment " + coId + ": " + err)
+        return false
+    })
+}
+
+async function getFullComments(comments) {
+    for (main_id in comments) {
+        main_Content = await getComment(main_id)
+        val = comments[main_id]
+        val = {
+            responses : comments[main_id],
+        }
+        val = Object.assign(val, main_Content)
+
+        val.responses = await Comment.findAll({where: {id: val.responses}}).then(coms => {
+            let mens = {}
+            Object.values(coms).forEach(co => {
+                mens[co.dataValues.id] = co.dataValues
+            })
+            return mens
+        })
         
-     }
-}
-    return [false, comments]
-}
 
-function main() {
-    let a = 
-    {
-        1: {
-            text: "text1",
-            author: "author1",
-            3: {
-                text: "text3", 
-                author: "author3",
-                6: {
-                    text: "text6",
-                    author: "author6"
-                }
-            }
-        },
-        2: {
-            text: "text",
-            author: "author2",
-            8: {
-                9: {
-                    10:{
-                        text: "hello"
-                    }
-                }
-            }
-        }
+        // for (let i = 0; i < val.responses.length; i++) {
+        //     val.responses[i] = await getComment(val.responses[i])
+        // }
+        comments[main_id] = val
     }
-    a  = RecAddComment(a, 10, "NEW", {text: "WOWOWOW", author: "HEHEHEH"})[1]
-    //console.log(JSON.stringify(a))
-    console.log(util.inspect(a, {showHidden: false, depth: null}))
-    
-    
+    return comments
 }
 
-async function addComment(adId, cId, text, author, parentId=null) {
+async function addComment(adId, text, author, parentId=null) {
     let ad = await getAd(adId)
     let comments = ad.comments
-    content = {
-        text: text,
-        author: author
-    }
+    cId = await Comment.create({
+        content: text,
+        user: author,
+        ad: adId
+    }).then(co => {
+        if (co) {
+            console.log("Comment added")
+            return co.dataValues.id
+            
+        }
+    })
     if (parentId == null) {
-        comments.cId = content
+        comments[cId] = []
     } else {
-        
+        comments[parentId].push(cId)
     }
-    return Ad.update({comments: comments}, {where: {id: adId}}).then(state => {
+    return Ad.update({comments: JSON.stringify(comments)}, {where: {id: adId}}).then(state => {
         if (state == 1) {
             console.log("Ad: " + adId + " has been updated.")
             return true
@@ -344,9 +331,6 @@ async function addComment(adId, cId, text, author, parentId=null) {
 
     
 }
-
-
-main()
 
 module.exports = {
     getUser,
