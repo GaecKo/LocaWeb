@@ -73,6 +73,19 @@
     color: transparent;
 }
 
+.error-container{
+    margin-top: 4%;
+    width: 100%;
+}
+
+.error{
+    color: red;
+    font-family: 'Codec Pro ExtraBold';
+    font-size: 20px;
+    text-align: center;
+    display:block;
+}
+
 .container2{
     /* border: 3px dashed #c3c91c; */
     height: auto;

@@ -66,27 +66,38 @@ app.get('/announce_main', function (req, res) {
 app.post('/login', async function (req, res) {
 
   let user = await db.getUser(req.body.username)
+  console.log(req.body.password)
+  console.log(user.password)
 
   if (!user) {
     req.session.error = "It seems like you don't have an account. Please create one."
     res.redirect('/login')
-  } else if (! bcrypt.compare(req.body.password, user.password)) {
-    console.log("User " + req.body.username + " didn't give the proper password.")
-    req.session.error = "The given password / username doesn't correspond. Please retry."
-    res.redirect('/login')
-  } else if ( bcrypt.compare(req.body.password, user.password)) {
-    console.log("User " + req.body.username + " logged in")
-    req.session.username = req.body.username
-    req.session.email = user.email
-    req.session.moderator = user.moderator
-    res.redirect('/announces')
+
+  } else {
+    let correctPassword = await bcrypt.compare(req.body.password, user.password)
+
+    if (correctPassword) {
+      console.log("User " + req.body.username + " logged in")
+      req.session.username = req.body.username
+      req.session.email = user.email
+      req.session.moderator = user.moderator
+      res.redirect('/announces')
+      
+    } else {
+      console.log("User " + req.body.username + " didn't give the proper password.")
+      req.session.error = "The given password / username doesn't correspond. Please retry."
+      res.redirect('/login')
+    }
   }
 });
 
 app.post('/signup', async function (req, res) {
   let added_user = await db.addUser(req.body.username, req.body.email, bcrypt.hashSync(req.body.password, salt))
   if (added_user) {
-    res.redirect("/announces")
+    console.log("User " + req.body.username + " created")
+    req.session.username = req.body.username
+    req.session.email = req.body.email
+    res.redirect('/announces')
   } else {
     req.session.error = "It seems like you already have an account, please login"
     res.redirect("/login")
@@ -100,11 +111,7 @@ app.get('*', function(req, res){
 });
 
 
-
-
-
 https.createServer({
-
   key: fs.readFileSync('./key.pem'),
   cert: fs.readFileSync('./cert.pem'),
   passphrase: 'APPR_PF08'

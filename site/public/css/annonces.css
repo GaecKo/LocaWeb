@@ -9,7 +9,7 @@ body {
 
 
 #annonce-container {
-    margin-top: 0px;
+    margin-top: 2%;
     border-radius: 3px;
     margin-left: 40px;
     margin-right: 40px;
@@ -17,7 +17,6 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 2rem;
-    background-color: rgba(140, 0, 200, 0.4);
 }
 
 #annonce-title{

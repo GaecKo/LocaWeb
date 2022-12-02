@@ -1,8 +1,3 @@
-// /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\ /!\  //
-//////////////////////////////////////////////////////////////////////
-// TAKEN FROM https://www.cssscript.com/confetti-falling-animation/ //
-//////////////////////////////////////////////////////////////////////
-
 // This script has been slightly modified to fit the needs of the project
 // The original script can be found at the following link:
 // https://www.cssscript.com/confetti-falling-animation/
