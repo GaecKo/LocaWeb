@@ -109,7 +109,6 @@ app.post('/signup', async function (req, res) {
   }
 });
 
-app.post('signup')
 //The 404 Route
 app.get('*', function(req, res){
   res.render('./error');
