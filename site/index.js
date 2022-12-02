@@ -63,6 +63,10 @@ app.get('/announce_main', function (req, res) {
   res.render('./annonce_main');
 });
 
+app.get('/announce_builder', function (req, res) {
+  res.render('./annonce_builder', {username : req.session.username});
+});
+
 app.post('/login', async function (req, res) {
 
   let user = await db.getUser(req.body.username)
@@ -82,7 +86,7 @@ app.post('/login', async function (req, res) {
       req.session.email = user.email
       req.session.moderator = user.moderator
       res.redirect('/announces')
-      
+
     } else {
       console.log("User " + req.body.username + " didn't give the proper password.")
       req.session.error = "The given password / username doesn't correspond. Please retry."
