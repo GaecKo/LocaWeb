@@ -33,9 +33,27 @@
             <h1>Créer une annonce</h1>
         </div>
 
+        <% if (error != undefined) { %>
+            <div class="error-container">
+                <a class="error"> <%= error %></a>
+            </div>
+            <style>
+                .error{
+                    color:green;
+                    font-size: 25px;
+                }
+                .flex1 {
+                    margin-top: 0px;    
+                }
+                .error-container {
+                    margin-bottom: 20px;
+                }
+            </style>
+        <% } %>
+
         <div class="form-container">
 
-            <form method="POST" action="/announces_builder">
+            <form method="POST" enctype="multipart/form-data" action="/announces_builder">
                 <!-- Title -->
                 <input class="textinput" type="text" id="title" name="title" placeholder="Title of your offer">
                 <br>

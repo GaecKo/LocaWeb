@@ -10,7 +10,7 @@ class Ad extends Model {}
 
 class Comment extends Model {}
 
-class Images extends Model {}
+// class Images extends Model {}
 
 User.init({
     username: {
@@ -77,14 +77,10 @@ Ad.init({
             key: "username"
         }
     },
-    // images: {
-    //     type: DataTypes.INTEGER,
-    //     allowNull: false,
-    //     references : {
-    //         model: Images,
-    //         key: "id"
-    //     }
-    // }
+    images: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+    }
     
     // address: pas obligatoire | images: pas obligatoire 
       // prix: type (échange-€/h-...) + text correspondant | 
@@ -93,19 +89,19 @@ Ad.init({
 
 }, {sequelize, modelName: 'Ad'})
 
-Images.init({
-    id : {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true,
-        unique: true,
-    },
-    image : { 
-        type: DataTypes.BLOB('long'), // <- type for image
-        allowNull: false,
-    }
-}, {sequelize, modelName: 'Images'})
+// Images.init({
+//     id : {
+//         type: DataTypes.INTEGER,
+//         allowNull: false,
+//         primaryKey: true,
+//         autoIncrement: true,
+//         unique: true,
+//     },
+//     image : { 
+//         type: DataTypes.BLOB('long'), // <- type for image
+//         allowNull: false,
+//     }
+// }, {sequelize, modelName: 'Images'})
 
 Comment.init({
     id : {
@@ -284,7 +280,7 @@ async function addAd(username, title, description, city, price, images) {
         description: description,
         city: city,
         price: price,
-        images: addImages(images),
+        images: images,
         comments: JSON.stringify({})
     }).then(ad => {
         console.log('Ad added: ' + ad)
@@ -294,16 +290,6 @@ async function addAd(username, title, description, city, price, images) {
     })
 }
 
-async function addImages(image) {
-    return Images.create({
-        image: image
-    }).then(image => {
-        console.log('Image added: ' + image)
-        return true
-    }).catch(err => {
-        console.log("Error while adding Image: " + err)
-    })
-}
 
 async function getComment(coId) {
     return Comment.findOne({where: {id: coId}}).then(co => {
@@ -389,7 +375,6 @@ module.exports = {
     getAuthors,
     getAd,
     addAd,
-    addImages,
     getComment,
     addComment,
     getFullComments

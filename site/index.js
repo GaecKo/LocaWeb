@@ -12,6 +12,19 @@ const bodyParser = require("body-parser");
 const bcrypt = require('bcryptjs');
 const { type } = require('os');
 var salt = bcrypt.genSaltSync(10);
+const multer = require("multer");
+
+const handleError = (err, res) => {
+  res
+    .status(500)
+    .contentType("text/plain")
+    .end("Oops! Something went wrong!");
+};
+
+const upload = multer({
+  dest: "./temp"
+  // you might also want to set some limits: https://github.com/expressjs/multer#limits
+});
 
 app.set('views', __dirname + '/views');
 
@@ -65,7 +78,7 @@ app.get('/announces/:id'), function (req, res) {
 }
 
 app.get('/announces_builder', function (req, res) {
-  res.render('./announces_builder', {username : req.session.username});
+  res.render('./announces_builder', {username : req.session.username, error: req.session.error});
 });
 
 app.post('/login', async function (req, res) {
@@ -106,28 +119,56 @@ app.post('/signup', async function (req, res) {
   }
 });
 
-app.post('/announces_builder', async function (req, res) {
-  title = req.body.title
-  description = req.body.description
-  price = req.body.price
-  city = req.body.city
-  image = req.body.images
+app.post("/announces_builder", upload.single("images" /* "images" is the name of the <file> input type in the form */),(req, res) => {
+  const tempPath = req.file.path;
+  const targetPath = path.join(__dirname, "./uploads/"+req.file.originalname);
 
-  console.log(req.body)
+  if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+    fs.rename(tempPath, targetPath, err => {
+      if (err) return handleError(err, res);
 
-  let img = await db.addImages(image)
-  res.redirect("/announces")
+      req.session.error = "File uploaded succesfully!"
+
+      console.log(req.file.originalname + " has been uploaded !")
+
+      //now that the image is uploaded, we can add the announce to the database
+      title = req.body.title
+      description = req.body.description
+      price = req.body.price
+      city = req.body.city
+      image = req.file.originalname //we store the name of the image in the database
+
+      db.addAd(req.session.username, title, description, city, price, image).then((result) => {
+        if(result){
+          console.log("Ad added to the database")
+          res
+            .status(200)
+            .contentType("text/plain")
+            .redirect('/announces');
+        } else {
+          req.session.error = "Something went wrong, please try again"
+          res.redirect("/announces_builder")
+        }
+        })
+      }).catch((err) => {
+        console.log(err)
+      })
+
+  } else { //if the file is not a png
+    fs.unlink(tempPath, err => {
+      if (err) return handleError(err, res);
+
+      res
+        .status(403)
+        .contentType("text/plain")
+        .end("Only .png files are allowed!");
+    });
+  }
+});
 
 
-  // let added_announce = await db.addAd(req.session.username, title, description, city, price, image)
-
-  // if (added_announce) {
-  //   console.log("Announce " + title + " created")
-  //   res.redirect('/announces')
-  // } else {
-  //   req.session.error = "Error while creating the announce"
-  //   res.redirect("/announces")
-  // }
+app.get("/image.png", (req, res) => {
+  res.sendFile(path.join(__dirname, "./uploads/image.png"));
 });
 
 
