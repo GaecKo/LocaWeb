@@ -1,0 +1,25 @@
+@font-face {
+    font-family: 'Codec Pro ExtraBold';
+    src: url('../fonts/codec-pro/CodecPro-ExtraBold.ttf');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Codec Pro';
+    src: url('../fonts/codec-pro/CodecPro-Light.ttf');
+}
+
+.form-title{
+    font-family: 'Codec Pro ExtraBold';
+    color: rgb(255, 255, 255);
+    margin-left: 20px;
+}
+
+.form-container{
+    color: rgb(255, 255, 255);
+    font-family: 'Codec Pro';
+    width: 100%;
+    height: auto;
+    margin-left: 40px;
+}
