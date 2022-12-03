@@ -23,7 +23,6 @@ const handleError = (err, res) => {
 
 const upload = multer({
   dest: "./temp"
-  // you might also want to set some limits: https://github.com/expressjs/multer#limits
 });
 
 app.set('views', __dirname + '/views');
@@ -71,7 +70,6 @@ app.get('/signup', function (req, res) {
 
 app.get('/announces', async function (req, res) {
   let announces = await db.getAllAds();
-  console.log(announces);
   res.render('./annonces', {username : req.session.username, error: req.session.error, announces: announces});
 });
 
