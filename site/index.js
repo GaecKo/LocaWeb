@@ -46,6 +46,7 @@ app.use("/css", express.static(path.join(__dirname + '/public/css')));
 app.use("/js", express.static(__dirname + '/public/js'));
 app.use("/images", express.static(__dirname + '/public/images'));
 app.use("/fonts", express.static(__dirname + '/public/fonts'));
+app.use("/uploads", express.static(__dirname + '/uploads'));
 
 //add the router
 app.use('/', router);
@@ -68,9 +69,10 @@ app.get('/signup', function (req, res) {
   res.render('./signup');
 });
 
-app.get('/announces', function (req, res) {
-  //req.session.error = undefined;
-  res.render('./annonces', {username : req.session.username, error: req.session.error});
+app.get('/announces', async function (req, res) {
+  let announces = await db.getAllAds();
+  console.log(announces);
+  res.render('./annonces', {username : req.session.username, error: req.session.error, announces: announces});
 });
 
 app.get('/announces/:id'), function (req, res) {

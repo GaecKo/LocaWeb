@@ -35,43 +35,47 @@
             </div>
         <% } %>
 
+        <!-- <img id="image" src="/uploads/a2.png" alt="screenshot"> -->
 
-        <div id="annonce-container">
+
+        <div class="annonce-container">
 
             <!-- La boucle qui parcourt les annonces commencera ici -->
 
-            <div id="annonce-element">
-                <div id="annonce-top">
-                    <div id="annonce-title">
-                        <!-- Titre de l'annonce -->
-                        Trottinette en parfait état ouais mec, achète-là elle est trop bien
+            <% for (var i = 0; i < announces.length; i++) { %>
+
+                <div class="annonce-element">
+                    <div class="annonce-top">
+                        <div class="annonce-title">
+                            <!-- Titre de l'annonce -->
+                            <%= announces[i].title %> 
+                        </div>
+                    </div>
+                    <div class="annonce-middle">
+                        <div class="annonce-image">
+                            <!-- Image de l'annonce -->
+                            <img  class="image" src="/uploads/<%= announces[i].images %>" alt="<%= announces[i].images %>">
+                        </div>
+                    </div>
+                    <div class="annonce-bottom">
+                        <div class="annonce-price">
+                            <!-- Prix de l'annonce -->
+                            <%= announces[i].price %>
+                        </div>
+                        <div class="annonce-button">
+                            <!-- Bouton de l'annonce -->
+                            <form method="GET" action="announces/<%= announces[i].id %>" style="background-color: rgb(48 17 60);">
+                                <button class="contact-annonce-button" type="submit">Voir l'annonce </button>
+                            </form>
+                                
+                        </div>
                     </div>
                 </div>
-                <div id="annonce-middle">
-                    <div id="annonce-image">
-                        <!-- Image de l'annonce -->
-                        <img id="image" src="../image/trottinette.jpeg" alt="trottinette">
-                    </div>
-                </div>
-                <div id="annonce-bottom">
-                    <div id="annonce-price">
-                        <!-- Prix de l'annonce -->
-                        A échanger
-                    </div>
-                    <div id="annonce-button">
-                        <!-- Bouton de l'annonce -->
-                        <form method="GET" action="announces/2">
-                            <button id="contact-annonce-button" type="submit">Voir l'annonce </button>
-                        </form>
-                            
-                    </div>
-                </div>
-            </div>
+            <% } %>
 
             <!-- Fin d'une annonce -->
             
         </div>
-
     </div>
 </body>
 </html>

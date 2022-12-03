@@ -89,19 +89,6 @@ Ad.init({
 
 }, {sequelize, modelName: 'Ad'})
 
-// Images.init({
-//     id : {
-//         type: DataTypes.INTEGER,
-//         allowNull: false,
-//         primaryKey: true,
-//         autoIncrement: true,
-//         unique: true,
-//     },
-//     image : { 
-//         type: DataTypes.BLOB('long'), // <- type for image
-//         allowNull: false,
-//     }
-// }, {sequelize, modelName: 'Images'})
 
 Comment.init({
     id : {
@@ -290,6 +277,32 @@ async function addAd(username, title, description, city, price, images) {
     })
 }
 
+async function getAllAds() {
+    /*
+    *  Return a list with all the ads in it with simple attributes
+    *  return false if no ads
+    */
+    const lst = []
+
+    return Ad.findAll().then(ads => {
+        if (ads.length > 0) {
+            Object.entries(ads).forEach(ad => {
+                lst.push(Array.from(ad)[1].dataValues) 
+                // the object ad contains important data in 
+                // Ad : Datavalues : {...}, Ad is located at index 1 of array representing the ad object
+            })
+            console.log("All ads were retrieved")
+            return lst;
+        } else {
+            console.log("No ad found")
+            return false;
+        }
+    }).catch(err => {
+        console.log("Error occuried while retrieving all Ads data: " + err);
+        return false;
+    })
+}
+
 
 async function getComment(coId) {
     return Comment.findOne({where: {id: coId}}).then(co => {
@@ -375,6 +388,7 @@ module.exports = {
     getAuthors,
     getAd,
     addAd,
+    getAllAds,
     getComment,
     addComment,
     getFullComments
@@ -382,16 +396,7 @@ module.exports = {
 }
 
 function main(){
-    //add an image to the db
-    Images.create({
-        image: "./photoid.png"
-    }).then(image => {
-        console.log('Image added: ' + image)
-    }
-    ).catch(err => {
-        console.log("Error while adding Image: " + err)
-    }
-    )
+    //use for testing
 }
 
 //main()
