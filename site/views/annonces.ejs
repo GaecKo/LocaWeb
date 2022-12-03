@@ -29,6 +29,12 @@
             <% } %>
         </header>
 
+        <% if (error != undefined) { %>
+            <div class="error-container">
+                <a class="error"> <%= error %></a>
+            </div>
+        <% } %>
+
 
         <div id="annonce-container">
 

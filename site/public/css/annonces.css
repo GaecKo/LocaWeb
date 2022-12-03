@@ -7,6 +7,17 @@ body {
     background-color: #101728;
 }
 
+.error{
+    color:green;
+    font-size: 25px;
+    font-family: 'Codec Pro';
+    display: block;
+    text-align: center;
+}
+.error-container {
+    margin-bottom: 30px;
+}
+
 
 #annonce-container {
     margin-top: 2%;

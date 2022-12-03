@@ -68,8 +68,8 @@ app.get('/signup', function (req, res) {
 });
 
 app.get('/announces', function (req, res) {
-  req.session.error = undefined;
-  res.render('./annonces', {username : req.session.username});
+  //req.session.error = undefined;
+  res.render('./annonces', {username : req.session.username, error: req.session.error});
 });
 
 app.get('/announces/:id'), function (req, res) {
@@ -119,11 +119,11 @@ app.post('/signup', async function (req, res) {
   }
 });
 
-app.post("/announces_builder", upload.single("images" /* "images" is the name of the <file> input type in the form */),(req, res) => {
+app.post("/announces_builder",  upload.single("images" /* "images" is the name of the <file> input type in the form */),(req, res) => {
   const tempPath = req.file.path;
   const targetPath = path.join(__dirname, "./uploads/"+req.file.originalname);
 
-  if (path.extname(req.file.originalname).toLowerCase() === ".png") {
+  if (path.extname(req.file.originalname).toLowerCase() === ".png") { // we can add more file types
     fs.rename(tempPath, targetPath, err => {
       if (err) return handleError(err, res);
 
@@ -141,18 +141,21 @@ app.post("/announces_builder", upload.single("images" /* "images" is the name of
       db.addAd(req.session.username, title, description, city, price, image).then((result) => {
         if(result){
           console.log("Ad added to the database")
+          req.session.error = "Offer added succesfully!"
           res
             .status(200)
             .contentType("text/plain")
             .redirect('/announces');
+           
         } else {
           req.session.error = "Something went wrong, please try again"
           res.redirect("/announces_builder")
         }
-        })
-      }).catch((err) => {
+        }).catch((err) => {
         console.log(err)
-      })
+       })
+    });
+    
 
   } else { //if the file is not a png
     fs.unlink(tempPath, err => {
