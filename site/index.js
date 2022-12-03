@@ -56,6 +56,7 @@ app.engine('html', require('ejs').renderFile);
 
 // render the accueil.html page 
 app.get('/', function (req, res) {
+  req.session.error = undefined;
   res.render('./accueil', {username : req.session.username});
 });
 
@@ -78,6 +79,7 @@ app.get('/announces/:id'), function (req, res) {
 }
 
 app.get('/announces_builder', function (req, res) {
+  req.session.error = undefined;
   res.render('./announces_builder', {username : req.session.username, error: req.session.error});
 });
 
