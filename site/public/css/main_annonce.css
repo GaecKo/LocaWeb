@@ -1,4 +1,14 @@
+html {
+    scroll-behavior: smooth;
+}
 
+header {
+    z-index: 999;
+}
+
+a {
+    text-decoration: none;
+}
 
 .main_announce_container {
     margin-top: 20px;
@@ -62,6 +72,7 @@ i {
 
 .main_announce_container > .announce_container_left > .announce_images_container > #arrow_right {
     display: block;
+    transform: translateY(500%);
     float: right;
     width: 5vh;
     height: 5vh;
@@ -76,7 +87,8 @@ i {
 
 .main_announce_container > .announce_container_left > .announce_images_container > #arrow_left:hover, 
 .main_announce_container > .announce_container_left > .announce_images_container > #arrow_right:hover {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 20px black;
     font-size: 1.1em;
     transition: all 0.2s ease-in-out;
 }
@@ -94,6 +106,15 @@ i {
     height: 30%;
 }
 
+.info_product, .moreless_announce_description {
+    color: aliceblue;
+    text-align: justify;
+    font-size: 1.5em;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: 'Codec Pro';
+}
 .selle_info{
     color:white;
     font-family:'Codec Pro';
@@ -103,7 +124,7 @@ i {
 
 .announce_goto_comment_description {
     border-radius: 10px;
-    margin-top: 20px;
+    margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
     height: 100px;
@@ -115,37 +136,109 @@ i {
 .announce_goto_comment_description > .goto_comment,
 .announce_goto_comment_description > .goto_description {
     width: 50%;
+    font-family: 'Codec Pro';
+    border: 1px solid #5e1cc9;
+    background-color: #5e1cc9;
+    border-radius: 10px;
+    height: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.announce_goto_comment_description > .goto_comment:hover,
+.announce_goto_comment_description > .goto_description:hover {
+    background-color: rgb(140, 0, 255);
+    transition: all 0.2s ease-in-out;
 }
 
 .announce_goto_comment_description > .goto_comment {
     float: left;
-    background-color: rgba(255, 54, 54, 0.425);
-    border-radius: 10px;
-    height: 100%;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
 }
 
 .announce_goto_comment_description > .goto_description {
     float: right;
-    background-color: rgba(54, 255, 74, 0.425);
-    border-radius: 10px;
-    height: 100%;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
 }
 
-.announce_description {
+.announce_goto_comment_description > .goto_comment > .goto_text, 
+.announce_goto_comment_description > .goto_description > .goto_text {
+    background-color: transparent;
+    font-size: 2em;
+    color: aliceblue;
+    text-align: center;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Codec Pro';
+}
+
+#announce_description {
+    border: 1px solid #5e1cc9;
+    border-radius: 10px;
+    margin-top: 50px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#announce_description > .text_description {
+    --max-lines: 5;
+    --line-height: 1.5;
+
+    max-height: calc(var(--max-lines) * var(--line-height) * 1em);
+    line-height: var(--line-height);
+
+    overflow: hidden;
+    position: relative;
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
-    width: 90%;
-    height: 300px;
-    background-color: rgba(54, 255, 74, 0.425);
+    width: 95%;
     border-radius: 10px;
 }
 
-.announce_comment {
+#announce_description > .text_description:has(+ .moreless_announce_description:checked) {
+    max-height: none;
+}
+
+#announce_description > .text_description:has(+ .moreless_announce_description:not(:checked))::before {
+    content: "";
+    position: absolute;
+    height: calc(2em * var(--line-height));
+    width: 100%;
+    background: linear-gradient(to bottom, transparent, #101728);
+    bottom: 0;
+    pointer-events: none;
+}
+
+#announce_description > .moreless_announce_description {
+    background-color: #5e1cc9;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    color: antiquewhite;
+    appearance: none;
+    padding: .5em;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    transition: all 0.2s ease-in-out;
+}
+
+#announce_description > .moreless_announce_description:hover {
+    background-color: rgb(140, 0, 255);
+    transition: all 0.2s ease-in-out;
+}
+
+#announce_description > .moreless_announce_description::before {
+    content: "See More";
+}
+
+#announce_description > .moreless_announce_description:checked::before {
+    content: "See Less";
+}
+
+#announce_comment {
     margin-top: 20px;
     margin-left: auto;
     margin-right: auto;
@@ -154,3 +247,8 @@ i {
     background-color: rgba(255, 54, 54, 0.425);
     border-radius: 10px;
 }
+
+/* 
+    #101728 color to background
+    #5e1cc9 color to border
+*/
