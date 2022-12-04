@@ -36,13 +36,13 @@
                         <i class="fas fa-arrow-left"></i>
                     </div>
 
+                    <div id="arrow_right">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+
                     <div class="images_container">
                         <!-- Multiple images here -->
                         <img style="height: -webkit-fill-available;width: -webkit-fill-available;"  class="image" src="/uploads/<%= ad.images %>" alt="<%= ad.images %>">
-                    </div>
-
-                    <div id="arrow_right">
-                        <i class="fas fa-arrow-right"></i>
                     </div>
                 </div>
             </div>
@@ -66,21 +66,37 @@
         </div>
 
         <div class="announce_goto_comment_description">
-            <div class="goto_comment">
-                <!-- Créer lien vers section commentaires -->
-                Lien vers commentaires (pour les flemmards) pas besoin de JS pour ça
-            </div>
-            <div class="goto_description">
-                <!-- Créer lien vers section description -->
-                Lien vers description (pour les flemmards) pas besoin de JS pour ça
-            </div>
+            <a href="#announce_description" class="goto_comment">
+                <p class="goto_text">
+                    Description
+                </p>
+                <!-- Lien vers section commentaires -->
+            </a>
+            <a href="#announce_comment" class="goto_description">
+                <p class="goto_text">
+                    Comments
+                </p>
+                <!-- Lien vers section description -->
+            </a>
         </div>
 
-        <div class="announce_description">
+        <div id="announce_description">
+            <div class="text_description">
+                <!-- Description de l'article -->
+
+                <p class="info_product">
+                    <!-- <%= ad.description %> -->
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum ut architecto dolorem iure ad perspiciatis molestiae tempore blanditiis necessitatibus deserunt placeat dolor magnam amet, quas laudantium, mollitia similique perferendis consequatur!
+                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Qui culpa molestias, quia, ullam ut laboriosam suscipit numquam nostrum, ipsa incidunt aliquam consequatur soluta dolor. Officiis reiciendis voluptates ad. Earum, eius.
+                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa, corrupti dolores. Recusandae nam velit laborum nulla tenetur dolores eligendi culpa a sint in amet pariatur quas veritatis, impedit reprehenderit eius!
+                </p>
+                
+            </div>
+            <input type="checkbox" class="moreless_announce_description">
+        </div>
             <!-- Description de l'article -->
-        </div>
 
-        <div class="announce_comment">
+        <div id="announce_comment">
             <!-- Commentaires de l'article -->
         </div>
 
@@ -113,5 +129,25 @@
     function mouseOut(arrow) {
         arrow.setAttribute("style", "display:block;")
         arrow.setAttribute("style", "transition: all 0.2 ease-in-out;")
+    }
+
+    //the following code comes from W3schools.com
+    
+    // When the user scrolls the page, execute stickHeader 
+    window.onscroll = function() {stickHeader()};
+
+    // Get the header
+    var header = document.getElementById("header");
+
+    // Get the offset position of the navbar
+    var sticky = header.offsetTop;
+
+    // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+    function stickHeader() {
+    if (window.pageYOffset > sticky) {
+        header.classList.add("sticky");
+    } else {
+        header.classList.remove("sticky");
+    }
     }
 </script>
