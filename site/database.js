@@ -1,3 +1,4 @@
+const sequelize = require("sequelize")
 const {User, Ad, Comment} = require("./tables")
 
 // USERS SECTIONS
@@ -143,6 +144,20 @@ async function checkAdReports() {
    // TODO
 }
 
+async function getUserAd(adId) {
+    return Ad.findOne({where: {id: adId}, attributes: ["user"]}).then(usr => {
+        if (usr) {
+            console.log("Author of ad " + adId + " was found")
+            return usr.dataValues.user
+        } else {
+            console.log("Author of ad " + adId + " was NOT found, Ad exists?")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while finding author of ad " + adId + ": " + err)
+        return false
+    })
+}
 
 async function addAdRepport(adId) {
     return Ad.findOne({
@@ -284,10 +299,33 @@ async function getComment(coId) {
     })
 }
 
+async function getUserComment(coId) {
+    return Comment.findOne({where: {id: coId}, attributes: ["user"]}).then(usr => {
+        if (usr) {
+            console.log("Author of comment " + coId + " was found.")
+            return usr.dataValues.user
+        } else {
+            console.log("Author couldn't be retrieved, does comment " + coId + " exists?")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while retrieving author of comment " + coId + ": " + err)
+    })
+}
+
 async function getFullComments(comments) {
+    function goodDate(date) {
+        // Returns a string of length two corresponding to the minutes (4 -> 04, 15 -> 15)
+        if (date.toString().length == 1) {
+          return "0" + date;
+        }
+        return date;
+      }
     for (main_id in comments) {
         main_Content = await getComment(main_id)
-        val = comments[main_id]
+        data = main_Content.createdAt
+        main_Content.createdAt = data.toLocaleDateString() + " " + data.getHours() + "h" + goodDate(data.getMinutes())
+                
         val = {
             responses : comments[main_id],
         }
@@ -296,6 +334,8 @@ async function getFullComments(comments) {
         val.responses = await Comment.findAll({where: {id: val.responses}}).then(coms => {
             let mens = {}
             Object.values(coms).forEach(co => {
+                data = co.dataValues.createdAt
+                co.dataValues.createdAt = data.toLocaleDateString() + " " + data.getHours() + "h" + goodDate(data.getMinutes())
                 mens[co.dataValues.id] = co.dataValues
             })
             return mens
@@ -306,16 +346,26 @@ async function getFullComments(comments) {
     return comments
 }
 
-async function addComment(adId, text, author, parentId=null) {
+async function addComment(adId, text, author, parentId=null, repId=null) {
+    /* parentId: main comment, in which this comment is a subcomment
+    *  repId: id to who the comment is responding (could be the same as parentId)
+    */
     let ad = await getAd(adId)
     let comments = ad.comments
+    if (repId != null) {
+        repAuthor = await getUserComment(repId)
+        text = "@" + repAuthor + " " + text
+    } else {
+        repAuthor = await getUserAd(adId)
+        text = "@" + repAuthor + " " + text
+    }
     cId = await Comment.create({
         content: text,
         user: author,
-        ad: adId
+        ad: adId,
     }).then(co => {
         if (co) {
-            console.log("Comment added")
+            console.log("Comment added in database")
             return co.dataValues.id
         } else {
             console.log("Are you sure " + author + " is in db?")
@@ -333,7 +383,8 @@ async function addComment(adId, text, author, parentId=null) {
         comments[cId] = []
     } else {
         comments[parentId].push(cId)
-    }
+    } 
+        
     return Ad.update({comments: JSON.stringify(comments)}, {where: {id: adId}}).then(state => {
         if (state == 1) {
             console.log("Ad: " + adId + " has been updated.")
@@ -370,7 +421,19 @@ module.exports = {
 }
 
 async function main(){
-    await addUser("GaecKo", "gogo", "pass")
+    // await addUser("Max", "gagxxx", "password")
+    // await addAd("GaecKo", "titredelad", "descript", "city", "3000", "path")
+
+    // await addComment(1, "Moi pas", "GaecKo", 4, 4)
+    // await addComment(1, "M'en fout", "Max", 4, 5)
+    // await addComment(1, "M'en fout que tu t'en fou", "Max", 4, 6)
+    // await addComment(1, "Trop beau mon vélo", "Max")
+
+    // ad = await getAd(1)
+    // ful = await getFullComments(ad.comments)
+    // const util = require('util')
+    // console.log(util.inspect(ful, {showHidden: false, depth: null, colors: true}))(ful)
+
 }
 
-//main()
+ //main()

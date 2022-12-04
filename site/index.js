@@ -77,7 +77,8 @@ app.get('/announces', async function (req, res) {
 app.get('/announces/:productId', async function (req, res) {
   const productId = req.params;
   const ad = await db.getAd(productId.productId);
-  res.render("./annonce_main", {username : req.session.username, ad: ad});
+  const comments = await db.getFullComments(ad.comments)
+  res.render("./annonce_main", {username : req.session.username, ad: ad, comments: comments});
 });
 
 app.get('/announces_builder', function (req, res) {

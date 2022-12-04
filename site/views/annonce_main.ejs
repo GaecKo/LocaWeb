@@ -97,6 +97,24 @@
             <!-- Description de l'article -->
 
         <div id="announce_comment">
+            <% for (main_c in comments) { %>
+                <% cur_m = comments[main_c] %>
+                <% date = cur_m.createdAt %>
+                
+                <p> Author: <%=cur_m.user %> | Date: <%= date %> ></p>
+                <p> | | <%= cur_m.content %> </p>
+                
+                <% for (sub_c in cur_m.responses) { %>
+                    <% cur_sub = cur_m.responses[sub_c] %>
+                    <% date = cur_sub.createdAt %>
+
+                    <p> - - Author: <%= cur_sub.user %> | Date: <%= date %> ></p>
+                    <p> - - | | <%= cur_sub.content %> </p>
+                    <br>
+                <% } %>
+                <br><br>
+
+            <% } %>
             <!-- Commentaires de l'article -->
         </div>
 
