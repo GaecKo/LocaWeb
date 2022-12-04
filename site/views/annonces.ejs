@@ -65,10 +65,11 @@
                             <%= announces[i].price %>
                         </div>
                         <div class="annonce-button">
+                            <a href="announces/<%= announces[i].id %>">View details</a>
                             <!-- Bouton de l'annonce -->
-                            <form method="GET" action="announces/<%= announces[i].id %>" style="background-color: rgb(48 17 60);">
+                            <!-- <form method="GET" action="announces/<%= announces[i].id %>" style="background-color: rgb(48 17 60);">
                                 <button class="contact-annonce-button" type="submit">Voir l'annonce </button>
-                            </form>
+                            </form> -->
                                 
                         </div>
                     </div>

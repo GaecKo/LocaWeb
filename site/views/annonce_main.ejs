@@ -5,9 +5,113 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="../image/logo.svg">
-    <title>Document</title>
+    <link rel="stylesheet" href="../css/main_annonce.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <title><%= ad.images %></title>
+    <link rel="icon" type="image/svg+xml" href="../image/logo.svg">
 </head>
 <body>
-    <p> Hello</p>
+    <div class="main">
+        <header id="header">
+            <div id="website-logo">
+                <img class="logo" src="../image/logo.svg"  alt="Gradient Shape Logo Element" loading="lazy">
+                <span class="title" ><a href=".." style="text-decoration:none; color: white;">&nbsp; LocaWeb </a> </span>  
+                </div>
+                
+                <a id="sign_up" href="/login" class="btn-grad">Sign-up / Login</a>
+    
+                <% if (username !== undefined) { %>
+                    <a id="username" class="btn-grad" href="#"> <%= username %> </a>
+                    <a id="username" class="btn-offers btn-grad" href="/announces_builder"> Create offers </a>
+                    <script>
+                        document.getElementById('sign_up').style.display='none';
+                    </script>
+                <% } %>
+        </header>
+        <div class="main_announce_container">
+            <div class="announce_container_left">
+                <div class="announce_images_container">
+                    <div id="arrow_left">
+                        <i class="fas fa-arrow-left"></i>
+                    </div>
+
+                    <div class="images_container">
+                        <!-- Multiple images here -->
+                        <img style="height: -webkit-fill-available;width: -webkit-fill-available;"  class="image" src="/uploads/<%= ad.images %>" alt="<%= ad.images %>">
+                    </div>
+
+                    <div id="arrow_right">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="announce_container_right">
+                <div class="announce_seller">
+                    <!-- Le vendeur -->
+                    <p class="selle_info"><%= ad.user %></p>
+                </div>
+
+                <div class="announce_price">
+                    <!-- Prix de l'article -->
+                    <p class="selle_info"><%= ad.price %>€</p>
+                </div>
+
+                <div class="rent_article_button">
+                    Bouton pour louer
+                    <!-- Bouton pour louer le bien -->
+                </div>
+            </div>
+        </div>
+
+        <div class="announce_goto_comment_description">
+            <div class="goto_comment">
+                <!-- Créer lien vers section commentaires -->
+                Lien vers commentaires (pour les flemmards) pas besoin de JS pour ça
+            </div>
+            <div class="goto_description">
+                <!-- Créer lien vers section description -->
+                Lien vers description (pour les flemmards) pas besoin de JS pour ça
+            </div>
+        </div>
+
+        <div class="announce_description">
+            <!-- Description de l'article -->
+        </div>
+
+        <div class="announce_comment">
+            <!-- Commentaires de l'article -->
+        </div>
+
+        
+        <footer>
+            <!-- Reprendre le footer -->
+        </footer>
+        
+    </div>
+
+
 </body>
 </html>
+
+<script>
+    const arrow_left = document.getElementById("arrow_left")
+    const arrow_right = document.getElementById("arrow_right")
+
+    arrow_left.addEventListener('mousein', mouseIn(arrow_right))
+    arrow_left.addEventListener('mouseout', mouseOut(arrow_right))
+
+    arrow_right.addEventListener('mousein', mouseIn(arrow_left))
+    arrow_right.addEventListener('mouseout', mouseOut(arrow_left))
+
+    function mouseIn(arrow) {
+        arrow.setAttribute("style", "display:none;")
+        arrow.setAttribute("style", "transition: all 0.2 ease-in-out;")
+    }
+
+    function mouseOut(arrow) {
+        arrow.setAttribute("style", "display:block;")
+        arrow.setAttribute("style", "transition: all 0.2 ease-in-out;")
+    }
+</script>
