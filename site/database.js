@@ -143,9 +143,6 @@ async function checkAdReports() {
    // TODO
 }
 
-async function main(){
-    await addUser("GaecKo", "gogo", "pass")
-}
 
 async function addAdRepport(adId) {
     return Ad.findOne({
@@ -372,6 +369,8 @@ module.exports = {
 
 }
 
+async function main(){
+    await addUser("GaecKo", "gogo", "pass")
+}
 
-
-main()
+//main()

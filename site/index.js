@@ -45,7 +45,7 @@ app.use("/css", express.static(path.join(__dirname + '/public/css')));
 app.use("/js", express.static(__dirname + '/public/js'));
 app.use("/images", express.static(__dirname + '/public/images'));
 app.use("/fonts", express.static(__dirname + '/public/fonts'));
-app.use("/uploads", express.static(__dirname + '/uploads'));
+app.use("/uploads", express.static(__dirname + '/data/uploads'));
 
 //add the router
 app.use('/', router);
@@ -126,7 +126,7 @@ app.post('/signup', async function (req, res) {
 
 app.post("/announces_builder",  upload.single("images" /* "images" is the name of the <file> input type in the form */),(req, res) => {
   const tempPath = req.file.path;
-  const targetPath = path.join(__dirname, "./uploads/"+req.file.originalname);
+  const targetPath = path.join(__dirname, "./data/uploads/"+req.file.originalname);
 
   if (path.extname(req.file.originalname).toLowerCase() === ".png") { // we can add more file types
     fs.rename(tempPath, targetPath, err => {
