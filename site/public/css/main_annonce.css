@@ -1,0 +1,153 @@
+header {
+
+    border-radius: 10px;
+    height: 150px;
+    width: 100%;
+    background-color: rgba(164, 164, 164, 0.425);
+}
+
+.main_announce_container {
+    margin-top: 20px;
+    width: 90%;
+    height: 650px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.main_announce_container > .announce_container_left {
+    background-color: rgba(54, 161, 255, 0.425);
+    border-radius: 10px;
+    float: left;
+    width: 60%;
+    height: 100%;
+}
+
+.main_announce_container > .announce_container_right {
+    background-color: rgba(54, 255, 74, 0.425);
+    border-radius: 10px;
+    float: right;
+    width: 35%;
+    height: 100%;
+}
+
+.main_announce_container > .announce_container_left > .announce_images_container {
+    margin-right: auto;
+    margin-left: auto;
+    transform: translateY(5%);
+    background-color: rgba(255, 54, 54, 0.425);
+    border-radius: 10px;
+    width: 90%;
+    height: 90%;
+}
+
+.main_announce_container > .announce_container_left > .announce_images_container > #arrow_left {
+    display: block;
+    transform: translateY(500%);
+    float: left;
+    width: 5vh;
+    height: 5vh;
+    margin-left: 10px;
+    background-color: rgba(255, 255, 255, 0.425);
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.425);
+    cursor: pointer;
+    z-index: 3;
+    transition: all 0.2s ease-in-out;
+}
+
+i {
+    margin-top: 50%;
+    margin-left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em;
+}
+
+.main_announce_container > .announce_container_left > .announce_images_container > #arrow_right {
+    display: block;
+    transform: translateY(500%);
+    float: right;
+    width: 5vh;
+    height: 5vh;
+    margin-right: 10px;
+    background-color: rgba(255, 255, 255, 0.425);
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.425);
+    cursor: pointer;
+    z-index: 3;
+    transition: all 0.2s ease-in-out;
+}
+
+.main_announce_container > .announce_container_left > .announce_images_container > #arrow_left:hover, 
+.main_announce_container > .announce_container_left > .announce_images_container > #arrow_right:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1em;
+    transition: all 0.2s ease-in-out;
+}
+
+.main_announce_container > .announce_container_right > .announce_seller,
+.main_announce_container > .announce_container_right > .announce_price,
+.main_announce_container > .announce_container_right > .rent_article_button {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+    background-color: rgba(255, 131, 131, 0.425);
+    border-radius: 10px;
+    width: 90%;
+    height: 30%;
+}
+
+.announce_goto_comment_description {
+    border-radius: 10px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100px;
+    width: 90%;
+    display: flex;
+    gap: 10px;
+}
+
+.announce_goto_comment_description > .goto_comment,
+.announce_goto_comment_description > .goto_description {
+    width: 50%;
+}
+
+.announce_goto_comment_description > .goto_comment {
+    float: left;
+    background-color: rgba(255, 54, 54, 0.425);
+    border-radius: 10px;
+    height: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.announce_goto_comment_description > .goto_description {
+    float: right;
+    background-color: rgba(54, 255, 74, 0.425);
+    border-radius: 10px;
+    height: 100%;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.announce_description {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    height: 300px;
+    background-color: rgba(54, 255, 74, 0.425);
+    border-radius: 10px;
+}
+
+.announce_comment {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    height: 300px;
+    background-color: rgba(255, 54, 54, 0.425);
+    border-radius: 10px;
+}
