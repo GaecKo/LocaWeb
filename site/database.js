@@ -1,129 +1,14 @@
-const { Sequelize, DataTypes, Model} = require('sequelize');
-const sequelize = new Sequelize({
-    dialect: "sqlite",
-    storage: "./data/database.sqlite"  
-})
+const {User, Ad, Comment} = require("./tables")
 
-class User extends Model {}
+// USERS SECTIONS
 
-class Ad extends Model {}
-
-class Comment extends Model {}
-
-// class Images extends Model {}
-
-User.init({
-    username: {
-        unique: true,
-        type: DataTypes.TEXT,
-        primaryKey: true,
-        allowNull: false
-    },
-    email: {
-        unique: true,
-        type: DataTypes.TEXT,
-        allowNull: false
-    },
-    password: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    },
-    moderator: {
-        type: DataTypes.BOOLEAN,
-        allowNull: true,
-        defaultValue: false
-    }
-}, {sequelize, modelName: 'User'})
-
-Ad.init({
-    id : {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true,
-        unique: true,
-    },
-    description: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    },
-    title: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    },
-    city: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    },
-    price: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        defaultValue: 0
-    },
-    reports: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        defaultValue: 0
-    },
-    comments: {
-        type: DataTypes.TEXT,
-        allowNull: true
-    },
-    user: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-        references: {
-            model: User,
-            key: "username"
-        }
-    },
-    images: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-    }
-    
-    // address: pas obligatoire | images: pas obligatoire 
-      // prix: type (échange-€/h-...) + text correspondant | 
-      // signalement: à lier avec l'utilisateur
-      // ... à implémenter au fur et à mesure
-
-}, {sequelize, modelName: 'Ad'})
-
-
-Comment.init({
-    id : {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true,
-        autoIncrement: true,
-        unique: true,
-    },
-    content : {
-        type: DataTypes.TEXT,
-        allowNull: false,
-    },
-    user : {
-        type: DataTypes.TEXT,
-        allowNull: false,
-        references: {
-            model: User,
-            key: "username"
-        }
-    },
-    ad : {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: Ad,
-            key: "id"
-        }
-    }
-}, {sequelize, modelName: 'Comment'})
-
-
-
-// To sync the database, if changes are done in the above init functions, uncomment next line. Be carefull, it's maybe needed to delete database content
-//sequelize.sync()
+async function checkReportsUser() {
+    /*
+    * Function to check if Users are +- banned
+    * 
+    */
+   // TODO
+}
 
 async function getUser(username){
     /*
@@ -185,6 +70,24 @@ async function setModoState(username, state) {
     })        
 }
 
+async function addUserRepport(username) {
+    return User.findOne({
+        where: {
+            username: username
+        },
+        attributes: ["total_report"] }).then(usr => {
+            if (usr) {
+                return User.update({total_report: usr.dataValues.total_report + 1}, {where: {username: username}})
+            } else {
+                console.log("User " + username + " wasn't found..")
+                return false;
+            }
+        }).catch(err => {
+            console.log("Error while working on User " + username + ": " + err)
+            return false;
+        })
+}
+
 async function getAllUsers() {
     /*
     *  Return a list with all the users in it with simple attributes
@@ -230,12 +133,39 @@ async function isModo(username) {
     })
 }
 
-async function getAuthors(JSONComment) {
-    // TODO
-    let Author_list = []
-    while (JSONComment.response != false) {
-        break
-    }
+// ADS SECTION
+
+async function checkAdReports() {
+    /*
+    * all ads with more than 3 (or +-) reports will have their visibility to false! 
+    * 
+    */
+   // TODO
+}
+
+async function main(){
+    await addUser("GaecKo", "gogo", "pass")
+}
+
+async function addAdRepport(adId) {
+    return Ad.findOne({
+        where: {
+            id: adId
+        },
+        attributes: ["reports", "user"] }).then(ad => {
+            if (ad) {
+                // console.log(ad)
+                return Ad.update({reports: ad.dataValues.reports + 1}, {where: {id: adId}}).then(async state => {
+                    return await addUserRepport(ad.dataValues.user);   
+                })
+            } else {
+                console.log("Ad " + adId + " wasn't found..")
+                return false;
+            }
+        }).catch(err => {
+            console.log("Error while working on add " + adId + ": " + err)
+            return false;
+        })
 }
 
 async function getAd(adId) {
@@ -303,6 +233,45 @@ async function getAllAds() {
     })
 }
 
+// COMMENTS SECTION
+
+async function checkCommentReports() {
+    /*
+    * all comments with more than 3 (or +-) reports will have their visibility to false! 
+    * 
+    */
+   // TODO
+}
+
+async function addCommentRepport(coId) {
+    return Comment.findOne({
+        where: {
+            id: coId
+        },
+        attributes: ["reports", "user"] }).then(co => {
+            if (co) {
+                console.log(co)
+                return Comment.update({reports: co.dataValues.reports + 1}, {where: {id: coId}}).then(async state => {
+                    return await addUserRepport(co.dataValues.user);   
+                })
+            } else {
+                console.log("Ad " + coId + " wasn't found..")
+                return false;
+            }
+        }).catch(err => {
+            console.log("Error while working on add " + coId + ": " + err)
+            return false;
+        })
+}
+
+async function getAuthors(JSONComment) {
+    // TODO
+    // this function will be used so that people will be able to contact author of a commentary
+    let Author_list = []
+    while (JSONComment.response != false) {
+        break
+    }
+}
 
 async function getComment(coId) {
     return Comment.findOne({where: {id: coId}}).then(co => {
@@ -335,10 +304,6 @@ async function getFullComments(comments) {
             return mens
         })
         
-
-        // for (let i = 0; i < val.responses.length; i++) {
-        //     val.responses[i] = await getComment(val.responses[i])
-        // }
         comments[main_id] = val
     }
     return comments
@@ -355,9 +320,18 @@ async function addComment(adId, text, author, parentId=null) {
         if (co) {
             console.log("Comment added")
             return co.dataValues.id
-            
+        } else {
+            console.log("Are you sure " + author + " is in db?")
+            return false
         }
+    }).catch(err => {
+        console.log("Error while creating comment: " + err)
+        return false
     })
+    if (typeof cId == "boolean") {
+        console.log("Couldn't add comment...")
+        return 
+    }
     if (parentId == null) {
         comments[cId] = []
     } else {
@@ -385,6 +359,9 @@ module.exports = {
     setModoState,
     getAllUsers,
     isModo,
+    addCommentRepport,
+    addUserRepport,
+    addAdRepport,
     getAuthors,
     getAd,
     addAd,
@@ -395,8 +372,6 @@ module.exports = {
 
 }
 
-function main(){
-    //use for testing
-}
 
-//main()
+
+main()

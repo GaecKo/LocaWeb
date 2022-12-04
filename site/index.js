@@ -56,12 +56,12 @@ app.engine('html', require('ejs').renderFile);
 
 // render the accueil.html page 
 app.get('/', function (req, res) {
-  req.session.error = undefined;
   res.render('./accueil', {username : req.session.username});
 });
 
 app.get('/login', function (req, res) {
   res.render('./login', {error: req.session.error});
+  req.session.error = undefined;
 });
 
 app.get('/signup', function (req, res) {
@@ -71,6 +71,7 @@ app.get('/signup', function (req, res) {
 app.get('/announces', async function (req, res) {
   let announces = await db.getAllAds();
   res.render('./annonces', {username : req.session.username, error: req.session.error, announces: announces});
+  req.session.error
 });
 
 app.get('/announces/:productId', async function (req, res) {
@@ -108,6 +109,7 @@ app.post('/login', async function (req, res) {
       res.redirect('/login')
     }
   }
+  
 });
 
 app.post('/signup', async function (req, res) {
