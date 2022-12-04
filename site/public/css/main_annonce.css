@@ -1,10 +1,4 @@
-header {
 
-    border-radius: 10px;
-    height: 150px;
-    width: 100%;
-    background-color: rgba(164, 164, 164, 0.425);
-}
 
 .main_announce_container {
     margin-top: 20px;
@@ -16,15 +10,17 @@ header {
 }
 
 .main_announce_container > .announce_container_left {
-    background-color: rgba(54, 161, 255, 0.425);
+    border: 1px solid #5e1cc9;
     border-radius: 10px;
+    /* border-color: blue;
+    border-width: 10px; */
     float: left;
     width: 60%;
     height: 100%;
 }
 
 .main_announce_container > .announce_container_right {
-    background-color: rgba(54, 255, 74, 0.425);
+    border: 1px solid #5e1cc9;
     border-radius: 10px;
     float: right;
     width: 35%;
@@ -35,7 +31,7 @@ header {
     margin-right: auto;
     margin-left: auto;
     transform: translateY(5%);
-    background-color: rgba(255, 54, 54, 0.425);
+    /* background-color: rgba(255, 54, 54, 0.425); */
     border-radius: 10px;
     width: 90%;
     height: 90%;
@@ -61,11 +57,11 @@ i {
     margin-left: 50%;
     transform: translate(-50%, -50%);
     font-size: 2em;
+    background-color: transparent;
 }
 
 .main_announce_container > .announce_container_left > .announce_images_container > #arrow_right {
     display: block;
-    transform: translateY(500%);
     float: right;
     width: 5vh;
     height: 5vh;
@@ -92,10 +88,17 @@ i {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
-    background-color: rgba(255, 131, 131, 0.425);
+    border: 1px solid #5e1cc9;
     border-radius: 10px;
     width: 90%;
     height: 30%;
+}
+
+.selle_info{
+    color:white;
+    font-family:'Codec Pro';
+    font-size:25px;
+    text-align: center;
 }
 
 .announce_goto_comment_description {

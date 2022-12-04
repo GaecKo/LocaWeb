@@ -73,10 +73,12 @@ app.get('/announces', async function (req, res) {
   res.render('./annonces', {username : req.session.username, error: req.session.error, announces: announces});
 });
 
-app.get('/announces/:id'), function (req, res) {
-  console.log(id)
-  res.render("./acceuil")
-}
+app.get('/announces/:productId', async function (req, res) {
+  const productId = req.params;
+  const ad = await db.getAd(productId.productId);
+  console.log(ad);
+  res.render("./annonce_main", {username : req.session.username, ad: ad});
+});
 
 app.get('/announces_builder', function (req, res) {
   req.session.error = undefined;
