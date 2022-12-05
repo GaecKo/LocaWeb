@@ -40,9 +40,9 @@
                         <i class="fas fa-arrow-right"></i>
                     </div>
 
-                    <div class="images_container">
+                    <div class="images_container" style=" height: 100%; width: 100%;">
                         <!-- Multiple images here -->
-                        <img style="height: -webkit-fill-available;width: -webkit-fill-available;"  class="image" src="/uploads/<%= ad.images %>" alt="<%= ad.images %>">
+                        <img style="height: 100%; width: 100%; object-fit: contain;"  class="image" src="/uploads/<%= ad.images %>" alt="<%= ad.images %>">
                     </div>
                 </div>
             </div>
@@ -96,7 +96,7 @@
         </div>
             <!-- Description de l'article -->
 
-        <div id="announce_comment">
+        <div class="announce_comment">
             <% for (main_c in comments) { %>
                 <% cur_m = comments[main_c] %>
                 <% date = cur_m.createdAt %>
@@ -119,9 +119,9 @@
         </div>
 
         
-        <footer>
-            <!-- Reprendre le footer -->
-        </footer>
+        <!-- <footer>
+
+        </footer> -->
         
     </div>
 
