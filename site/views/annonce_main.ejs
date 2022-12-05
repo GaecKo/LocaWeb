@@ -29,6 +29,7 @@
                     </script>
                 <% } %>
         </header>
+
         <div class="main_announce_container">
             <div class="announce_container_left">
                 <div class="announce_images_container">
@@ -66,13 +67,13 @@
         </div>
 
         <div class="announce_goto_comment_description">
-            <a href="#announce_description" class="goto_comment">
+            <a href="#blank_space" class="goto_comment">
                 <p class="goto_text">
                     Description
                 </p>
                 <!-- Lien vers section commentaires -->
             </a>
-            <a href="#announce_comment" class="goto_description">
+            <a href="#announce_description" class="goto_description">
                 <p class="goto_text">
                     Comments
                 </p>
@@ -80,42 +81,62 @@
             </a>
         </div>
 
+        <div id="blank_space" style="height: 50px;"></div>
+
         <div id="announce_description">
             <div class="text_description">
                 <!-- Description de l'article -->
 
                 <p class="info_product">
-                    <!-- <%= ad.description %> -->
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum ut architecto dolorem iure ad perspiciatis molestiae tempore blanditiis necessitatibus deserunt placeat dolor magnam amet, quas laudantium, mollitia similique perferendis consequatur!
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Qui culpa molestias, quia, ullam ut laboriosam suscipit numquam nostrum, ipsa incidunt aliquam consequatur soluta dolor. Officiis reiciendis voluptates ad. Earum, eius.
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa, corrupti dolores. Recusandae nam velit laborum nulla tenetur dolores eligendi culpa a sint in amet pariatur quas veritatis, impedit reprehenderit eius!
+                    <%= ad.description %>
                 </p>
                 
             </div>
             <input type="checkbox" class="moreless_announce_description">
         </div>
-            <!-- Description de l'article -->
 
-        <div class="announce_comment">
-            <% for (main_c in comments) { %>
-                <% cur_m = comments[main_c] %>
-                <% date = cur_m.createdAt %>
-                
-                <p> Author: <%=cur_m.user %> | Date: <%= date %> ></p>
-                <p> | | <%= cur_m.content %> </p>
-                
-                <% for (sub_c in cur_m.responses) { %>
-                    <% cur_sub = cur_m.responses[sub_c] %>
-                    <% date = cur_sub.createdAt %>
-
-                    <p> - - Author: <%= cur_sub.user %> | Date: <%= date %> ></p>
-                    <p> - - | | <%= cur_sub.content %> </p>
-                    <br>
+        <div class="announce_comment_container">
+            <div id="announce_comment_text">
+                <% for (main_c in comments) { %>
+                    <% cur_m = comments[main_c] %>
+                    <% date = cur_m.createdAt %>
+                <div class="announce_one_comment">
+                    <div class="date_username">
+                        <div class="comment_username">
+                            <%=cur_m.user %>
+                        </div>
+                        <div class="comment_date">
+                            <%= date %>
+                        </div>
+                    </div>
+                    
+                    <div class="comment_text">
+                        <%= cur_m.content %>
+                    </div>
+                    <% for (sub_c in cur_m.responses) { %>
+                        <% cur_sub = cur_m.responses[sub_c] %>
+                        <% date = cur_sub.createdAt %>
+                    <div class="comment_reply_text">
+                        <div class="reply_user_date">
+                            <div class="comment_reply_username">
+                                <%= cur_sub.user %>
+                            </div>
+                            <div class="comment_reply_date">
+                                <%= date %>
+                            </div>
+                        </div>
+                        <div class="reply_text">
+                            <%= cur_sub.content %>
+                        </div> 
+                    </div>
+                    <% } %>
+                </div>
                 <% } %>
-                <br><br>
-
-            <% } %>
-            <!-- Commentaires de l'article -->
+            </div>
+            <div class="announce_type_and_send">
+                <input type="text" class="comment_type_text" placeholder="Type your text here" required>
+                <button class="comment_send_button">SEND</button>
+            </div>
         </div>
 
         
@@ -150,7 +171,6 @@
     }
 
     //the following code comes from W3schools.com
-    
     // When the user scrolls the page, execute stickHeader 
     window.onscroll = function() {stickHeader()};
 
@@ -162,10 +182,13 @@
 
     // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
     function stickHeader() {
-    if (window.pageYOffset > sticky) {
-        header.classList.add("sticky");
-    } else {
-        header.classList.remove("sticky");
+        if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+        } else {
+            header.classList.remove("sticky");
+        }
     }
-    }
+
+    const objDiv = document.getElementById('announce_comment_text')
+    objDiv.scrollTop = objDiv.scrollHeight;
 </script>
