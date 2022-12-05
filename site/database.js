@@ -252,13 +252,17 @@ async function getAllAds() {
     */
     const lst = []
 
-    return Ad.findAll().then(ads => {
+    return Ad.findAll().then(async ads => {
         if (ads.length > 0) {
-            Object.entries(ads).forEach(ad => {
-                lst.push(Array.from(ad)[1].dataValues) 
-                // the object ad contains important data in 
-                // Ad : Datavalues : {...}, Ad is located at index 1 of array representing the ad object
-            })
+            for (ad in ads) {
+                ads[ad].dataValues.username = await getUsername(ads[ad].dataValues.user)
+                lst.push(ads[ad].dataValues)
+            }
+            // Object.entries(ads).forEach(ad => {
+            //     lst.push(Array.from(ad)[1].dataValues) 
+            //     // the object ad contains important data in 
+            //     // Ad : Datavalues : {...}, Ad is located at index 1 of array representing the ad object
+            // })
             console.log("All ads were retrieved")
             return lst;
         } else {
@@ -473,11 +477,13 @@ async function main(){
 
     // await addComment()
 
+    //await Ad.update({visibility: true}, {where: {id: 1}})
+
     // ad = await getAd(1)
     // ful = await getFullComments(ad.comments)
     // const util = require('util')
     // console.log(util.inspect(ful, {showHidden: false, depth: null, colors: true}))
-
+    // ad = await getAllAds()
     // await User.update({username: "MonNom"}, {where: {id: 1}})
 }
 

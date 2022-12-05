@@ -100,6 +100,7 @@
                 <% for (main_c in comments) { %>
                     <% cur_m = comments[main_c] %>
                     <% date = cur_m.createdAt %>
+                    <% id_m = cur_m.id %>
                 <div class="announce_one_comment">
                     <div class="date_username">
                         <div class="comment_username">
@@ -112,10 +113,18 @@
                     
                     <div class="comment_text">
                         <%= cur_m.content %>
+                        <form method="POST" action="./<%= ad.id %>">
+                        <button onclick="toggleComment('<%= id_m %>')" type="button" value="0" id="b<%= id_m %>">Res</button>
+                        <input type="text" id="<%= id_m %>" style="display: None;" name="res_content">
+                        <button type="submit" id="<%= id_m %>b" value="<%= id_m %>|" name="res_btn" style="display: None;">Post</button>
+                        </form>
+                    </div>
                     </div>
                     <% for (sub_c in cur_m.responses) { %>
                         <% cur_sub = cur_m.responses[sub_c] %>
                         <% date = cur_sub.createdAt %>
+                        <% id_sub = cur_sub.id %>
+                        
                     <div class="comment_reply_text">
                         <div class="reply_user_date">
                             <div class="comment_reply_username">
@@ -126,7 +135,16 @@
                             </div>
                         </div>
                         <div class="reply_text">
-                            <%= cur_sub.content %>
+                            <% if (cur_sub.repAuthorId == userId) { %> <!-- Affiche le content en bleu si c'est une réponse au user conntecté -->
+                                <a style="color: blue;"><%= cur_sub.content %></a> 
+                            <% } else { %>
+                                <%= cur_sub.content %>
+                            <% } %>
+                            <form method="POST" action="./<%= ad.id %>">
+                            <button onclick="toggleComment('<%= id_sub %>')" type="button"value="0" id="b<%= id_sub %>">Res</button>
+                            <input type="text" id="<%= id_sub %>" style="display: None;" name="res_content">
+                            <button type="submit" id="<%= id_sub %>b" value="<%= id_m %>|<%= id_sub %>" name="res_btn" style="display: None;">Post</button>
+                            </form>
                         </div> 
                     </div>
                     <% } %>
@@ -134,8 +152,10 @@
                 <% } %>
             </div>
             <div class="announce_type_and_send">
-                <input type="text" class="comment_type_text" placeholder="Type your text here" required>
-                <button class="comment_send_button">SEND</button>
+                <form method="POST" action="./<%= ad.id %>">
+                <input type="text" name="res_content" class="comment_type_text" placeholder="Type your text here" required>
+                <button type="submit" name="res_btn" value="" class="comment_send_button" >SEND</button>
+                </form>
             </div>
         </div>
 
@@ -191,4 +211,17 @@
 
     const objDiv = document.getElementById('announce_comment_text')
     objDiv.scrollTop = objDiv.scrollHeight;
+
+
+    function toggleComment(id) {
+        if (document.getElementById("b" + id).value == 0) {
+            document.getElementById("b" + id).value = 1;
+            document.getElementById(id).style.display = "";
+            document.getElementById(id+"b").style.display = "";
+        } else {
+            document.getElementById("b" + id).value = 0;
+            document.getElementById(id).style.display = "None";
+            document.getElementById(id+"b").style.display = "None";
+        }
+    }
 </script>

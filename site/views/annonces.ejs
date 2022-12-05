@@ -46,11 +46,14 @@
             <% for (var i = 0; i < announces.length; i++) { %>
 
                 <div class="annonce-element">
+                    <% if (announces[i].visibility == false) { %>
+                        <div class="hide-content">
+                    <% } %>
                     <div class="annonce-top">
                         <div class="annonce-title">
                             <!-- Titre de l'annonce -->
                             <h4><%= announces[i].title %> </h4>
-                            <p class="user_text">From : <%= announces[i].user %> </p>
+                            <p class="user_text">From : <%= announces[i].username %> </p>
                         </div>
                     </div>
                     <div class="annonce-middle">
@@ -65,7 +68,9 @@
                             <%= announces[i].price %>
                         </div>
                         <div class="annonce-button">
-                            <a href="announces/<%= announces[i].id %>">View details</a>
+                            <% if (announces[i].visibility) { %>    
+                                <a href="announces/<%= announces[i].id %>">View details</a>
+                            <% } %>
                             <!-- Bouton de l'annonce -->
                             <!-- <form method="GET" action="announces/<%= announces[i].id %>" style="background-color: rgb(48 17 60);">
                                 <button class="contact-annonce-button" type="submit">Voir l'annonce </button>
@@ -74,8 +79,11 @@
                         </div>
                     </div>
                 </div>
+                <% if (announces[i].visibility == false) { %>
+                </div class="hide-content">
+                <% } %>
             <% } %>
-
+            
             <!-- Fin d'une annonce -->
             
         </div>

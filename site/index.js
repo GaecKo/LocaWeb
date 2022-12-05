@@ -71,19 +71,37 @@ app.get('/signup', function (req, res) {
 app.get('/announces', async function (req, res) {
   let announces = await db.getAllAds();
   res.render('./annonces', {username : req.session.username, error: req.session.error, announces: announces});
-  req.session.error
 });
 
 app.get('/announces/:productId', async function (req, res) {
   const productId = req.params;
   const ad = await db.getAd(productId.productId);
   const comments = await db.getFullComments(ad.comments)
-  res.render("./annonce_main", {username : req.session.username, ad: ad, comments: comments});
+  res.render("./annonce_main", {username : req.session.username, ad: ad, comments: comments, userId: req.session.userId});
 });
 
 app.get('/announces_builder', function (req, res) {
   req.session.error = undefined;
   res.render('./announces_builder', {username : req.session.username, error: req.session.error});
+});
+
+app.post('/announces/:productId', async function (req, res) {
+  let val = req.body.res_btn;
+  let content = req.body.res_content;
+  let adId = req.params.productId;
+  if (val == "") {
+    await db.addComment(adId, content, req.session.userId) 
+  } else {
+    val = val.split("|")
+    if (val[1] == '') {
+      await db.addComment(adId, content, req.session.userId, parseInt(val[0])) // id_m|id_sub
+    } else {
+      await db.addComment(adId, content, req.session.userId, parseInt(val[0]), parseInt(val[1]))
+    }
+  }
+  
+  res.redirect('/announces/' + adId)
+
 });
 
 app.post('/login', async function (req, res) {
