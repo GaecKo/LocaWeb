@@ -1,7 +1,8 @@
 const { Sequelize, DataTypes, Model} = require('sequelize');
 const sequelize = new Sequelize({
     dialect: "sqlite",
-    storage: "./data/database.sqlite"  
+    storage: "./data/database.sqlite",
+    logging: false
 })
 
 class User extends Model {}
@@ -13,10 +14,16 @@ class Comment extends Model {}
 // class Images extends Model {}
 
 User.init({
+    id: {
+        unique: true,
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false
+    },
     username: {
         unique: true,
         type: DataTypes.TEXT,
-        primaryKey: true,
         allowNull: false
     },
     email: {
@@ -80,11 +87,11 @@ Ad.init({
         defaultValue: true
     },
     user: {
-        type: DataTypes.TEXT,
+        type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: User,
-            key: "username"
+            key: "id"
         }
     },
     images: {
@@ -117,11 +124,11 @@ Comment.init({
         defaultValue: 0
     },
     user : {
-        type: DataTypes.TEXT,
+        type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: User,
-            key: "username"
+            key: "id"
         }
     },
     visibility: {
@@ -134,6 +141,14 @@ Comment.init({
         allowNull: false,
         references: {
             model: Ad,
+            key: "id"
+        }
+    },
+    repAuthorId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: User,
             key: "id"
         }
     }

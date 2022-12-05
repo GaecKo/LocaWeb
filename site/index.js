@@ -102,6 +102,7 @@ app.post('/login', async function (req, res) {
       req.session.username = req.body.username
       req.session.email = user.email
       req.session.moderator = user.moderator
+      req.session.userId = await db.getUserId(req.session.username)
       res.redirect('/announces')
 
     } else {
@@ -118,6 +119,7 @@ app.post('/signup', async function (req, res) {
   if (added_user) {
     req.session.username = req.body.username
     req.session.email = req.body.email
+    req.session.userId = await db.getUserId(req.session.username)
     res.redirect('/announces')
   } else {
     req.session.error = "It seems like you already have an account, please login"
@@ -127,7 +129,8 @@ app.post('/signup', async function (req, res) {
 
 app.post("/announces_builder",  upload.single("images" /* "images" is the name of the <file> input type in the form */),(req, res) => {
   const tempPath = req.file.path;
-  const targetPath = path.join(__dirname, "./data/uploads/"+req.file.originalname);
+  const time = Date.now();
+  const targetPath = path.join(__dirname, "./data/uploads/"+time+".png");
 
   if (path.extname(req.file.originalname).toLowerCase() === ".png") { // we can add more file types
     fs.rename(tempPath, targetPath, err => {
@@ -142,9 +145,9 @@ app.post("/announces_builder",  upload.single("images" /* "images" is the name o
       description = req.body.description
       price = req.body.price
       city = req.body.city
-      image = req.file.originalname //we store the name of the image in the database
+      image = time+".png"; //we store the name of the image in the database
 
-      db.addAd(req.session.username, title, description, city, price, image).then((result) => {
+      db.addAd(req.session.userId, title, description, city, price, image).then((result) => {
         if(result){
           console.log("Ad added to the database")
           req.session.error = "Offer added succesfully!"
@@ -174,7 +177,7 @@ app.post("/announces_builder",  upload.single("images" /* "images" is the name o
     });
   }
 });
-
+  
 
 app.get("/image.png", (req, res) => {
   res.sendFile(path.join(__dirname, "./uploads/image.png"));
