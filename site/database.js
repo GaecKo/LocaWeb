@@ -450,6 +450,7 @@ module.exports = {
     getUserId,
     getUser,
     addUser,
+    getUsername,
     setModoState,
     getAllUsers,
     isModo,

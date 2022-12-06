@@ -60,11 +60,12 @@ app.get('/', function (req, res) {
 });
 
 app.get('/login', function (req, res) {
-  res.render('./login', {error: req.session.error});
   req.session.error = undefined;
+  res.render('./login', {error: req.session.error});
 });
 
 app.get('/signup', function (req, res) {
+  req.session.error = undefined;
   res.render('./signup');
 });
 
@@ -77,7 +78,8 @@ app.get('/announces/:productId', async function (req, res) {
   const productId = req.params;
   const ad = await db.getAd(productId.productId);
   const comments = await db.getFullComments(ad.comments)
-  res.render("./annonce_main", {username : req.session.username, ad: ad, comments: comments, userId: req.session.userId});
+  const user = await db.getUsername(ad.user)
+  res.render("./annonce_main", {username : req.session.username, ad: ad, comments: comments, userId: ad.user, user: user});
 });
 
 app.get('/announces_builder', function (req, res) {
