@@ -119,7 +119,6 @@
                         <button type="submit" id="<%= id_m %>b" value="<%= id_m %>|" name="res_btn" style="display: None;">Post</button>
                         </form>
                     </div>
-                    </div>
                     <% for (sub_c in cur_m.responses) { %>
                         <% cur_sub = cur_m.responses[sub_c] %>
                         <% date = cur_sub.createdAt %>
@@ -136,9 +135,10 @@
                         </div>
                         <div class="reply_text">
                             <% if (cur_sub.repAuthorId == userId) { %> <!-- Affiche le content en bleu si c'est une réponse au user conntecté -->
-                                <a style="color: blue;"><%= cur_sub.content %></a> 
+                                <!-- text to highlight                                | text not to highlight -->
+                                <a style="color: blue;"><%= cur_sub.toAuthor %></a> <%= cur_m.content %>
                             <% } else { %>
-                                <%= cur_sub.content %>
+                                <%= cur_sub.toAuthor %> <%= cur_sub.content %>
                             <% } %>
                             <form method="POST" action="./<%= ad.id %>">
                             <button onclick="toggleComment('<%= id_sub %>')" type="button"value="0" id="b<%= id_sub %>">Res</button>

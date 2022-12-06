@@ -371,7 +371,7 @@ async function getFullComments(comments) {
                 date = co.dataValues.createdAt
                 co.dataValues.createdAt = date.toLocaleDateString() + " " + date.getHours() + "h" + goodDate(date.getMinutes())
                 if (co.dataValues.repAuthorId != null) {
-                    co.dataValues.content = "@" + await getUsername(co.dataValues.repAuthorId) + " " + co.dataValues.content
+                    co.dataValues.toAuthor = "@" + await getUsername(co.dataValues.repAuthorId)
                 }
                 co.dataValues.username = await getUsername(co.dataValues.user)
                 mens[co.dataValues.id] = co.dataValues
@@ -478,7 +478,7 @@ async function main(){
 
     // await addComment()
 
-    //await Ad.update({visibility: true}, {where: {id: 1}})
+    // await Ad.update({visibility: false}, {where: {id: 1}})
 
     // ad = await getAd(1)
     // ful = await getFullComments(ad.comments)
