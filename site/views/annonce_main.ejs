@@ -113,10 +113,16 @@
                     
                     <div class="comment_text">
                         <%= cur_m.content %>
-                        <form method="POST" action="./<%= ad.id %>">
-                        <button onclick="toggleComment('<%= id_m %>')" type="button" value="0" id="b<%= id_m %>">Res</button>
-                        <input type="text" id="<%= id_m %>" style="display: None;" name="res_content">
-                        <button type="submit" id="<%= id_m %>b" value="<%= id_m %>|" name="res_btn" style="display: None;">Post</button>
+                        <br>
+                        <div class="icons">
+                            <i class="fas fa-reply"></i>
+                            <i class="fas fa-flag"></i>
+                        </div>
+                        
+                        <form method="POST" class="type_and_send_content" action="./<%= ad.id %>">
+                            <button onclick="toggleComment('<%= id_m %>')" type="button" class="reply_button_left" value="0" id="b<%= id_m %>">Reply</button>
+                            <input type="text" id="<%= id_m %>" style="display: None;" name="res_content" class="comment_type_reply" placeholder="Type your text here">
+                            <button type="submit" class="reply_button_right" id="<%= id_m %>b" value="<%= id_m %>|" name="res_btn" style="display: None;">Post</button>
                         </form>
                     </div>
                     <% for (sub_c in cur_m.responses) { %>
@@ -136,14 +142,20 @@
                         <div class="reply_text">
                             <% if (cur_sub.repAuthorId == userId) { %> <!-- Affiche le content en bleu si c'est une réponse au user conntecté -->
                                 <!-- text to highlight                                | text not to highlight -->
-                                <a style="color: blue;"><%= cur_sub.toAuthor %></a> <%= cur_m.content %>
+                                <a style="padding: 3px; border-radius: 5px; border: 1px solid rgb(255, 0, 0); background-color: #ff00007c;"><%= cur_sub.toAuthor %></a> <%= cur_m.content %>
                             <% } else { %>
                                 <%= cur_sub.toAuthor %> <%= cur_sub.content %>
                             <% } %>
-                            <form method="POST" action="./<%= ad.id %>">
-                            <button onclick="toggleComment('<%= id_sub %>')" type="button"value="0" id="b<%= id_sub %>">Res</button>
-                            <input type="text" id="<%= id_sub %>" style="display: None;" name="res_content">
-                            <button type="submit" id="<%= id_sub %>b" value="<%= id_m %>|<%= id_sub %>" name="res_btn" style="display: None;">Post</button>
+                            <br>
+                            <div class="icons">
+                                <i class="fas fa-reply" onclick="toggleComment('<%= id_sub %>')" type="button" value="0" id="b<%= id_sub %>"></i>
+                                <i class="fas fa-flag"></i>
+                            </div>
+                            
+                            <form method="POST"  id="b<%= id_sub %>" action="./<%= ad.id %>">
+                                <!-- <button onclick="toggleComment('<%= id_sub %>')" type="button"value="0" class="reply_button_left" id="b<%= id_sub %>">Reply</button> -->
+                                <input type="text" id="<%= id_sub %>" style="display: None;" class="comment_type_reply" name="res_content" placeholder="Type your text here">
+                                <button type="submit" class="reply_button_right" id="<%= id_sub %>b" value="<%= id_m %>|<%= id_sub %>" name="res_btn" style="display: None;">Post</button>
                             </form>
                         </div> 
                     </div>
@@ -152,9 +164,9 @@
                 <% } %>
             </div>
             <div class="announce_type_and_send">
-                <form method="POST" action="./<%= ad.id %>">
-                <input type="text" name="res_content" class="comment_type_text" placeholder="Type your text here" required>
-                <button type="submit" name="res_btn" value="" class="comment_send_button" >SEND</button>
+                <form class="type_and_send_content" method="POST" action="./<%= ad.id %>">
+                    <input type="text" name="res_content" class="comment_type_text" placeholder="Type your text here" required>
+                    <button type="submit" name="res_btn" value="" class="comment_send_button" >SEND</button>
                 </form>
             </div>
         </div>

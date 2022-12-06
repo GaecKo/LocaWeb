@@ -321,15 +321,14 @@ i {
     color: aliceblue;
 }
 
-.announce_comment_container > .announce_type_and_send {
+#type_and_send_content {
     border-radius: 10px;
     height: 50px;
     margin: 20px;
-    display: flex;
     border: 1px solid #5e1cc9;
 }
 
-.announce_comment_container > .announce_type_and_send > .comment_type_text {
+.comment_type_text {
     border-style: hidden;
     width: 80%;
     border-radius: 10px 0px 0px 10px;
@@ -341,25 +340,96 @@ i {
     padding-right: 20px;
 }
 
-.announce_comment_container > .announce_type_and_send > .comment_type_text:focus {
+.comment_type_reply {
+    border-style: hidden;
+    width: 80%;
+    background-color: #101728;
+    color: aliceblue;
+    font-family: 'Codec Pro';
+    font-size: 1.1em;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.comment_type_text:focus, .comment_type_reply:focus {
     background-color: #0A2156;
 }
 
-.announce_comment_container > .announce_type_and_send > .comment_send_button {
+.comment_send_button {
     width: 20%;
     background-color: #5e1cc9;
     font-family: 'Codec Pro';
     color: aliceblue;
     border-radius: 0px 10px 10px 0px;
-    margin-right: 2px;
     font-size: 1.3em;
     font-weight: bold;
     border-style: hidden;
     transition: all 0.2s ease-in-out;
 }
 
-.announce_comment_container > .announce_type_and_send > .comment_send_button:hover {
+.reply_button_left {
+    border-radius: 10px 0px 0px 10px;
+    margin-left: 1px;
+}
+
+.reply_button_left, .reply_button_right {
+    width: 10%;
+    background-color: #5e1cc9;
+    font-family: 'Codec Pro';
+    color: aliceblue;
+    font-size: 1.3em;
+    font-weight: bold;
+    border-style: hidden;
+    transition: all 0.2s ease-in-out;
+}
+
+.reply_button_right {
+    border-radius: 0px 10px 10px 0px;
+    margin-right: 1px;
+}
+
+.comment_send_button:hover, .reply_button_left:hover, .reply_button_right:hover {
     background-color: rgb(140, 0, 255);
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+}
+
+.icons {
+    display: none;
+}
+
+.fas.fa-reply {
+    font-size: 1em;
+    display: initial;
+    margin-left: 85%;
+}
+
+.fas.fa-flag {
+    font-size: 1em;
+    display: initial;
+    margin-left: 10px;
+}
+
+.fas.fa-reply:hover, .fas.fa-flag:hover {
+    cursor: pointer;
+} 
+
+.fas.fa-flag:hover {
+    color: rgb(210, 0, 0);
+}
+
+.fas.fa-reply:hover {
+    color: #00ff00;
+}
+
+.comment_text:hover > .icons {
+    display: block;
+    width: 100%;
+    background-color: #0A2156;
+}
+
+.reply_text:hover > .icons {
+    display: block;
+    width: 100%;
+    background-color: #103283;
 }
