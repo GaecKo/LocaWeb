@@ -142,17 +142,17 @@
                         <div class="reply_text">
                             <% if (cur_sub.repAuthorId == userId) { %> <!-- Affiche le content en bleu si c'est une réponse au user conntecté -->
                                 <!-- text to highlight                                | text not to highlight -->
-                                <a style="padding: 3px; border-radius: 5px; border: 1px solid rgb(255, 0, 0); background-color: #ff00007c;"><%= cur_sub.toAuthor %></a> <%= cur_m.content %>
+                                <a style="padding: 3px; border-radius: 5px; border: 1px solid rgb(255, 0, 0); background-color: #ff00007c;"><%= cur_sub.toAuthor %></a> <%= cur_sub.content %>
                             <% } else { %>
                                 <%= cur_sub.toAuthor %> <%= cur_sub.content %>
                             <% } %>
                             <br>
                             <div class="icons">
-                                <i class="fas fa-reply" onclick="toggleComment('<%= id_sub %>')" type="button" value="0" id="b<%= id_sub %>"></i>
+                                <button type="button" class="fas fa-reply" onclick="toggleComment('<%= id_sub %>')" value="0" id="b<%= id_sub %>"></button>
                                 <i class="fas fa-flag"></i>
                             </div>
                             
-                            <form method="POST"  id="b<%= id_sub %>" action="./<%= ad.id %>">
+                            <form method="POST" action="./<%= ad.id %>">
                                 <!-- <button onclick="toggleComment('<%= id_sub %>')" type="button"value="0" class="reply_button_left" id="b<%= id_sub %>">Reply</button> -->
                                 <input type="text" id="<%= id_sub %>" style="display: None;" class="comment_type_reply" name="res_content" placeholder="Type your text here">
                                 <button type="submit" class="reply_button_right" id="<%= id_sub %>b" value="<%= id_m %>|<%= id_sub %>" name="res_btn" style="display: None;">Post</button>
@@ -226,11 +226,14 @@
 
 
     function toggleComment(id) {
+        console.log("in")
         if (document.getElementById("b" + id).value == 0) {
+            console.log(0)
             document.getElementById("b" + id).value = 1;
             document.getElementById(id).style.display = "";
             document.getElementById(id+"b").style.display = "";
         } else {
+            console.log(1)
             document.getElementById("b" + id).value = 0;
             document.getElementById(id).style.display = "None";
             document.getElementById(id+"b").style.display = "None";
