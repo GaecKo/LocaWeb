@@ -164,7 +164,8 @@ app.post("/announces_builder",  upload.single("images" /* "images" is the name o
       title = req.body.title
       description = req.body.description
       price = req.body.price
-      city = req.body.city
+      city = req.body.city  
+      rate = req.body.rate //TODO : add the rate to the database
       image = time+".png"; //we store the name of the image in the database
 
       db.addAd(req.session.userId, title, description, city, price, image).then((result) => {

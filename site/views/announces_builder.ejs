@@ -64,15 +64,26 @@
                 <br>
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 <!-- City -->
-                <input  class="textinput"type="text" id="city" name="city" placeholder="City">
+                <input  class="textinput smallinput"type="text" id="city" name="city" placeholder="City">
                 <br>
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 <!-- Price -->
-                <input  class="textinput" type="number" id="price" name="price" placeholder="Price">
-                <br>
+                <div class="price">
+                    <input  class="textinput smallinput" type="number" id="price" name="price" placeholder="Price" min="1">
+
+                    <select class="textinput" style="width:200px;" name="rate">
+                        <option value="0">Select rate:</option>
+                        <option value="1">€/min</option>
+                        <option value="2">€/halfhour</option>
+                        <option value="3">€/h</option>
+                        <option value="4">€/day</option>
+                        <option value="5">€/week</option>
+                    </select>
+                    <br>
+                </div>
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 <!-- Image -->
-                <input  class="textinput" type="file" id="image" name="images" accept="image/*">
+                <input  class="textinput smallinput" type="file" id="image" name="images" accept="image/*">
                 <br>
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 <!-- submit btn -->
