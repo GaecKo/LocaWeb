@@ -1,4 +1,4 @@
-const {User, Ad, Comment} = require("./tables")
+const {User, Ad, Comment, Report} = require("./tables")
 
 // USERS SECTIONS
 
@@ -98,24 +98,6 @@ async function setModoState(username, state) {
     })        
 }
 
-async function addUserRepport(username) {
-    return User.findOne({
-        where: {
-            username: username
-        },
-        attributes: ["total_report"] }).then(usr => {
-            if (usr) {
-                return User.update({total_report: usr.dataValues.total_report + 1}, {where: {username: username}})
-            } else {
-                console.log("User " + username + " wasn't found..")
-                return false;
-            }
-        }).catch(err => {
-            console.log("Error while working on User " + username + ": " + err)
-            return false;
-        })
-}
-
 async function getAllUsers() {
     /*
     *  Return a list with all the users in it with simple attributes
@@ -163,14 +145,6 @@ async function isModo(username) {
 
 // ADS SECTION
 
-async function checkAdReports() {
-    /*
-    * all ads with more than 3 (or +-) reports will have their visibility to false! 
-    * 
-    */
-   // TODO
-}
-
 async function getUserAd(adId) {
     return Ad.findOne({where: {id: adId}, attributes: ["user"]}).then(usr => {
         if (usr) {
@@ -184,26 +158,6 @@ async function getUserAd(adId) {
         console.log("Error while finding author of ad " + adId + ": " + err)
         return false
     })
-}
-
-async function addAdRepport(adId) {
-    return Ad.findOne({
-        where: {
-            id: adId
-        },
-        attributes: ["reports", "user"] }).then(ad => {
-            if (ad) {
-                return Ad.update({reports: ad.dataValues.reports + 1}, {where: {id: adId}}).then(async state => {
-                    return await addUserRepport(ad.dataValues.user);   
-                })
-            } else {
-                console.log("Ad " + adId + " wasn't found..")
-                return false;
-            }
-        }).catch(err => {
-            console.log("Error while working on add " + adId + ": " + err)
-            return false;
-        })
 }
 
 async function getAd(adId) {
@@ -257,12 +211,9 @@ async function getAllAds() {
             for (ad in ads) {
                 ads[ad].dataValues.username = await getUsername(ads[ad].dataValues.user)
                 lst.push(ads[ad].dataValues)
-            }
-            // Object.entries(ads).forEach(ad => {
-            //     lst.push(Array.from(ad)[1].dataValues) 
-            //     // the object ad contains important data in 
-            //     // Ad : Datavalues : {...}, Ad is located at index 1 of array representing the ad object
-            // })
+            } 
+            // the object ad contains important data in 
+            // Ad : Datavalues : {...} 
             console.log("All ads were retrieved")
             return lst;
         } else {
@@ -276,35 +227,6 @@ async function getAllAds() {
 }
 
 // COMMENTS SECTION
-
-async function checkCommentReports() {
-    /*
-    * all comments with more than 3 (or +-) reports will have their visibility to false! 
-    * 
-    */
-   // TODO
-}
-
-async function addCommentRepport(coId) {
-    return Comment.findOne({
-        where: {
-            id: coId
-        },
-        attributes: ["reports", "user"] }).then(co => {
-            if (co) {
-                console.log(co)
-                return Comment.update({reports: co.dataValues.reports + 1}, {where: {id: coId}}).then(async state => {
-                    return await addUserRepport(co.dataValues.user);   
-                })
-            } else {
-                console.log("Ad " + coId + " wasn't found..")
-                return false;
-            }
-        }).catch(err => {
-            console.log("Error while working on add " + coId + ": " + err)
-            return false;
-        })
-}
 
 async function getAuthors(JSONComment) {
     // TODO
@@ -446,6 +368,202 @@ async function addComment(adId, text, authorId, parentId=null, repId=null) {
     
 }
 
+// REPORTS SECTIONS
+async function addReport(report_text) {
+    /* Return reportId if report has been added successfully  
+    * Return false if not
+    */ 
+    reportId = Report.create({
+        content: report_text
+    }).then(repo => {
+        if (repo) {
+            console.log("Report has been added to database")
+            return repo.dataValues.id
+        } else {
+            console.log("Report could'nt be added to db.")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while adding comment: " + err)
+        return false
+    })
+}
+
+async function addUserReport(userId) {
+    return User.findOne({
+        where: {
+            id: userId
+        },
+        attributes: ["total_report"] }).then(usr => {
+            if (usr) {
+                User.update({total_report: usr.dataValues.total_report + 1}, {where: {id: userId}}).then(usr => {
+                    if (usr == 1) {
+                        return true
+                    } else {
+                        return false
+                    }
+                }).catch(err => {
+                    console.log("Unable to update User with new report: " + err)
+                    return false
+                })
+            } else {
+                console.log("User " + userId + " wasn't found..")
+                return false;
+            }
+        }).catch(err => {
+            console.log("Error while working on User " + userId + ": " + err)
+            return false;
+        })
+}
+
+async function getReportsComment(coId) {
+    return Comment.findOne({where: {id: coId}, attributes: ["reports_list"]}).then(rep_l => {
+        if (rep_l) {
+            console.log("Reports of comment " + coId + " was retrieved")
+            return rep_l.dataValues.reports_list
+        } else {
+            console.log("Repports couldn't be retrieve... Comment: " + coId + " , comment exists?")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while retrieving reports_list of comment " + coId + ": " + err)
+        return false
+    })
+}
+
+async function getReportsAd(adId) {
+    return Ad.findOne({where: {id: adId}, attributes: ["reports_list"]}).then(rep_l => {
+        if (rep_l) {
+            console.log("Reports of ad " + adId + " was retrieved")
+            return rep_l.dataValues.reports_list
+        } else {
+            console.log("Repports couldn't be retrieve... Ad: " + adId + " , ad exists?")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while retrieving reports_list of ad " + adId + ": " + err)
+        return false
+    })
+}
+
+async function deleteReports(reportIdList) {
+    for (id in reportIdList) {
+        await Report.destroy({where: {id: id}}).then(state => {
+            if (state == 1) {
+                console.log("Report with id " + id + " deleted")
+            } else {
+                console.log("Report with id " + id + " couldn't be deleted.. Report exists?")
+            }
+        })
+    }
+    return true
+}
+
+async function clearCommentReports(coId) {
+    let reports_list = await getReportsComment(coId)
+    let deleted = await deleteReports(reports_list)
+    if (deleted) {
+        console.log("reports were deleted successfully")
+    } else {
+        console.log("Reports could'n be deleted")
+    }
+    return Comment.update({
+        reports: 0,
+        visibility: true,
+        reports_list: "[]"
+    }, {where: {id: coId}}).then(state => {
+        if (state == 1) {
+            console.log("Reports on comment " + coId + " have been reset")
+            return true
+        } else {
+            console.log("Reports on comment " + coId + " couldn't be reset, comment exists?")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while reseting report on comment " + coId + ": " + err)
+        return false
+    })
+}
+
+async function clearAdReports(adId) {
+    let reports_list = await getReportsAd(adId)
+    let deleted = await deleteReports(reports_list)
+    if (deleted) {
+        console.log("reports were deleted successfully")
+    } else {
+        console.log("Reports could'n be deleted")
+    }
+    return Ad.update({
+        reports: 0,
+        visibility: true,
+        reports_list: "[]"
+    }, {where: {id: adId}}).then(async state => {
+        if (state == 1) {
+            console.log("Reports on ad " + adId + " have been reset")
+            await deleteReports()
+            return true
+        } else {
+            console.log("Reports on ad " + adId + " couldn't be reset, ad exists?")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while reseting report on ad " + adId + ": " + err)
+        return false
+    })
+}
+
+async function addAdReport(adId, report_text="") {
+    reportId = await addReport(report_text)
+    return Ad.findOne({
+        where: {
+            id: adId
+        },
+        attributes: ["reports", "user", "reports_list"] }).then(ad => {
+            if (ad) {
+                reports = ad.dataValues.reports + 1
+                reports_list = JSON.parse(ad.dataValues.reports_list)
+                reports_list.push(reportId)
+                visibility = (!reports_list.length >= 3)
+                return Ad.update({reports: reports, reports_list: JSON.stringify(reports_list), visibility: visibility}, {where: {id: adId}}).then(async state => {
+                    return await addUserReport(ad.dataValues.user);   
+                })
+            } else {
+                console.log("Ad " + adId + " wasn't found..")
+                return false;
+            }
+        }).catch(err => {
+            console.log("Error while working on add " + adId + ": " + err)
+            return false;
+        })
+}
+
+async function addCommentReport(coId, report_text="") {
+    let reportId = await addReport(report_text)
+    return Comment.findOne({
+        where: {
+            id: coId
+        },
+        attributes: ["reports", "user", "reports_list"] }).then(co => {
+            if (co) {
+                reports = co.dataValues.reports + 1
+                reports_list = JSON.parse(co.dataValues.reports_list)
+                reports_list.push(reportId)
+                visibility = (!reports_list.length >= 3)
+                return Comment.update({reports: reports, reports_list: JSON.stringify(reports_list), visibility: visibility}, {where: {id: coId}}).then(async state => {
+                    console.log("zzzzz " + co.dataValues.user)
+                    return await addUserReport(co.dataValues.user);   
+                })
+            } else {
+                console.log("Ad " + coId + " wasn't found..")
+                return false;
+            }
+        }).catch(err => {
+            console.log("Error while working on add " + coId + ": " )
+            console.log(err)
+            return false;
+        })
+}
+
 module.exports = {
     getUserId,
     getUser,
@@ -454,16 +572,20 @@ module.exports = {
     setModoState,
     getAllUsers,
     isModo,
-    addCommentRepport,
-    addUserRepport,
-    addAdRepport,
+    addCommentReport,
+    addUserReport,
+    addAdReport,
     getAuthors,
     getAd,
     addAd,
     getAllAds,
     getComment,
     addComment,
-    getFullComments
+    getFullComments,
+    checkReportsUser,
+    getUserAd,
+    clearCommentReports, 
+    clearAdReports
 
 }
 
@@ -480,6 +602,8 @@ async function main(){
 
     // await Ad.update({visibility: false}, {where: {id: 1}})
 
+    // await addCommentReport(2, "Je n'aime pas ce message")
+
     // ad = await getAd(1)
     // ful = await getFullComments(ad.comments)
     // const util = require('util')
@@ -488,4 +612,4 @@ async function main(){
     // await User.update({username: "MonNom"}, {where: {id: 1}})
 }
 
-main()
+// main()

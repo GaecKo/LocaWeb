@@ -11,6 +11,8 @@ class Ad extends Model {}
 
 class Comment extends Model {}
 
+class Report extends Model {}
+
 // class Images extends Model {}
 
 User.init({
@@ -44,6 +46,11 @@ User.init({
         type: DataTypes.INTEGER,
         allowNull: true,
         defaultValue: 0
+    },
+    banned: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 }, {sequelize, modelName: 'User'})
 
@@ -71,6 +78,11 @@ Ad.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0
+    },
+    reports_list: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        defaultValue: "[]"
     },
     reports: {
         type: DataTypes.INTEGER,
@@ -118,7 +130,12 @@ Comment.init({
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    reports : {
+    reports_list : {
+        type: DataTypes.TEXT,
+        allowNull: false,
+        defaultValue: "[]"
+    },
+    reports: {
         type: DataTypes.INTEGER,
         allowNull: true,
         defaultValue: 0
@@ -154,6 +171,20 @@ Comment.init({
     }
 }, {sequelize, modelName: 'Comment'})
 
+
+Report.init({
+    id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true
+    },
+    content: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    }
+}, {sequelize, modelName: 'Report'})
+
 // To sync the database, if changes are done in the above init functions, uncomment next line. Be carefull, it's maybe needed to delete database content
 // sequelize.sync({force: true})
 
@@ -161,5 +192,6 @@ Comment.init({
 module.exports = {
     User,
     Ad,
-    Comment
+    Comment,
+    Report
 }
