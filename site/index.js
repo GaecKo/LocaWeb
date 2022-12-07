@@ -87,6 +87,17 @@ app.get('/announces_builder', function (req, res) {
   res.render('./announces_builder', {username : req.session.username, error: req.session.error});
 });
 
+app.get('/admin', function (req, res) {
+  res.render('./moderateur')
+
+  // Check if user is admin  // Uncomment when there is an admin account
+  // if (req.session.moderator == 1) {
+  //   res.render('./modeteur', {username : req.session.username});
+  // } else {
+  //   res.redirect('/')
+  // }
+});
+
 app.post('/announces/:productId', async function (req, res) {
   let adId = req.params.productId;
   if (req.body.type == "comment") {
