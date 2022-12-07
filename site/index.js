@@ -60,8 +60,8 @@ app.get('/', function (req, res) {
 });
 
 app.get('/login', function (req, res) {
-  req.session.error = undefined;
   res.render('./login', {error: req.session.error});
+  req.session.error = undefined;
 });
 
 app.get('/signup', function (req, res) {
@@ -160,13 +160,13 @@ app.post('/signup', async function (req, res) {
   }
 });
 
-app.post("/announces_builder",  upload.single("images" /* "images" is the name of the <file> input type in the form */),(req, res) => {
+app.post("/announces_builder",  upload.single("images" /* "images" is the name of the <file> input type in the form */), async (req, res) => {
   const tempPath = req.file.path;
   const time = Date.now();
   const targetPath = path.join(__dirname, "./data/uploads/"+time+".png");
 
   if (path.extname(req.file.originalname).toLowerCase() === ".png") { // we can add more file types
-    fs.rename(tempPath, targetPath, err => {
+    fs.rename( tempPath, targetPath, async (err) => {
       if (err) return handleError(err, res);
 
       req.session.error = "File uploaded succesfully!"
@@ -181,23 +181,19 @@ app.post("/announces_builder",  upload.single("images" /* "images" is the name o
       rate = req.body.rate //TODO : add the rate to the database
       image = time+".png"; //we store the name of the image in the database
 
-      db.addAd(req.session.userId, title, description, city, price, image).then((result) => {
-        if(result){
-          console.log("Ad added to the database")
-          req.session.error = "Offer added succesfully!"
-          res
-            .status(200)
-            .contentType("text/plain")
-            .redirect('/announces');
-           
-        } else {
-          req.session.error = "Something went wrong, please try again"
-          res.redirect("/announces_builder")
-        }
-        }).catch((err) => {
-        console.log(err)
-       })
-    });
+      let result = await db.addAd(req.session.userId, title, description, city, price, image)
+      if (result) {
+        req.session.error = "Offer added succesfully!"
+        res
+          .status(200)
+          .contentType("text/plain")
+          .redirect('/announces');
+          
+      } else {
+        req.session.error = "Something went wrong, please try again"
+        res.redirect("/announces_builder")
+      }
+      })
     
 
   } else { //if the file is not a png

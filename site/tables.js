@@ -153,6 +153,11 @@ Comment.init({
         allowNull: true,
         defaultValue: true
     },
+    disabled: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+        defaultValue: false
+    },
     ad : {
         type: DataTypes.INTEGER,
         allowNull: false,
