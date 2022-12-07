@@ -79,6 +79,10 @@ Ad.init({
         allowNull: false,
         defaultValue: 0
     },
+    rate: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
     reports_list: {
         type: DataTypes.TEXT,
         allowNull: false,
@@ -152,6 +156,11 @@ Comment.init({
         type: DataTypes.BOOLEAN,
         allowNull: true,
         defaultValue: true
+    },
+    disabled: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+        defaultValue: false
     },
     ad : {
         type: DataTypes.INTEGER,

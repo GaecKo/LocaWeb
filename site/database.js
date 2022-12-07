@@ -196,14 +196,25 @@ async function getAd(adId) {
         return false
     })
 }
+/**
+ * 
+ * @param {int} coId id of the comment which is deleted
+ * @param {int} adId id of the ad in which to search
+ * @returns true if successfull, false otherwise
+ * @post changes the content of a comment because of his undesirable content
+ */
+async function ChangeCommentRef(coId, adId) {
+    return Ad.findOne({where: {id: adId}, attributes: ["comments"]})
+}
 
-async function addAd(userId, title, description, city, price, images) {
+async function addAd(userId, title, description, city, price, rate, images) {
     return Ad.create({
         user : userId,
         title: title,
         description: description,
         city: city,
         price: price,
+        rate: rate,
         images: images,
         comments: JSON.stringify({})
     }).then(ad => {
@@ -243,13 +254,19 @@ async function getAllAds() {
 
 // COMMENTS SECTION
 
-async function getAuthors(JSONComment) {
-    // TODO
-    // this function will be used so that people will be able to contact author of a commentary
-    let Author_list = []
-    while (JSONComment.response != false) {
-        break
-    }
+async function disableComment(coId) {
+    Comment.update({content: "This comment has been suspended for undesirable content.", visibility: true, disabled: true}, {where: {id: coId}}).then(state => {
+        if (state == 1) {
+            console.log("Comment with id " + coId + " has been suspended")
+            return true
+        } else {
+            console.log("Comment with id " + coId + " COULDN'T be suspended")
+            return false
+        }
+    }).catch(err => {
+        console.log("Unable to disable comment with id " + coId + ": " + err)
+        return false
+    })
 }
 
 async function getComment(coId) {
@@ -291,6 +308,7 @@ async function getFullComments(comments) {
       }
     for (main_id in comments) {
         main_Content = await getComment(main_id)
+        console.log(main_Content.createdAt)
         date = main_Content.createdAt
         repAuthorId = main_Content.repAuthorId
         
@@ -307,7 +325,7 @@ async function getFullComments(comments) {
                 co = coms[co]
                 date = co.dataValues.createdAt
                 co.dataValues.createdAt = date.toLocaleDateString() + " " + date.getHours() + "h" + goodDate(date.getMinutes())
-                if (co.dataValues.repAuthorId != null) {
+                if (co.dataValues.repAuthorId != null && !co.dataValues.disabled) {
                     co.dataValues.toAuthor = "@" + await getUsername(co.dataValues.repAuthorId)
                 }
                 co.dataValues.username = await getUsername(co.dataValues.user)
@@ -404,6 +422,20 @@ async function addReport(report_text) {
     })
 }
 
+async function deleteAd(adId) {
+    reports_list = await getReportsAd(adId)
+    deleted = await deleteReports(reports_list)
+    return Ad.destroy({where: {id: adId}}).then(state => {
+        if (state == 1) {
+            console.log("Add " + adId + " its reports deleted successfully")
+            return true
+        } else {
+            console.log("Add " + adId + " its reports deleted successfully")
+            return false
+        }
+    })
+}
+
 async function addUserReport(userId) {
     return User.findOne({
         where: {
@@ -412,7 +444,7 @@ async function addUserReport(userId) {
         attributes: ["total_report"] }).then(usr => {
             if (usr) {
                 let nbr_report = usr.dataValues.total_report + 1
-                let banned = nbr_report > 3
+                let banned = nbr_report > 6
                 User.update({total_report: nbr_report, banned: banned}, {where: {id: userId}}).then(state => {
                     if (state == 1) {
                         return true
@@ -637,7 +669,6 @@ module.exports = {
     addCommentReport,
     addUserReport,
     addAdReport,
-    getAuthors,
     getAd,
     addAd,
     getAllAds,

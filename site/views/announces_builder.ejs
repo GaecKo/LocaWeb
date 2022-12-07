@@ -14,21 +14,7 @@
 
     <div class="main">
 
-        <header id="header">
-            <div id="website-logo">
-                <img class="logo" src="../image/logo.svg"  alt="Gradient Shape Logo Element" loading="lazy">
-                <span class="title" ><a href=".." style="text-decoration:none; color: white;">&nbsp; LocaWeb </a> </span>  
-            </div>
-            
-            <a id="sign_up" href="/login" class="btn-grad">Sign-up / Login</a>
-
-            <% if (username !== undefined) { %>
-                <a id="username" class="btn-grad" href="#"> <%= username %> </a>
-                <script>
-                    document.getElementById('sign_up').style.display='none';
-                </script>
-            <% } %>
-        </header>
+        <%- include('template/header.ejs') %>
 
         <div class="form-title">
             <h1>Créer une annonce</h1>
@@ -71,13 +57,13 @@
                 <div class="price">
                     <input  class="textinput smallinput" type="number" id="price" name="price" placeholder="Price" min="1">
 
-                    <select class="textinput" style="width:200px;" name="rate">
-                        <option value="0">Select rate:</option>
-                        <option value="1">€/min</option>
-                        <option value="2">€/halfhour</option>
-                        <option value="3">€/h</option>
-                        <option value="4">€/day</option>
-                        <option value="5">€/week</option>
+                    <select class="textinput" style="width:200px;" name="rate" required>
+                        <option value="0" disabled>Select rate:</option>
+                        <option value="€/min">€/min</option>
+                        <option value="€/halfhour">€/halfhour</option>
+                        <option value="€/h">€/h</option>
+                        <option value="€/day">€/day</option>
+                        <option value="€/week">€/week</option>
                     </select>
                     <br>
                 </div>
@@ -96,6 +82,7 @@
 
     </div>
 
+    <%- include('template/footer.ejs') %>
     
     </body>
 </html>
