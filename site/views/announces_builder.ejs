@@ -14,21 +14,7 @@
 
     <div class="main">
 
-        <header id="header">
-            <div id="website-logo">
-                <img class="logo" src="../image/logo.svg"  alt="Gradient Shape Logo Element" loading="lazy">
-                <span class="title" ><a href=".." style="text-decoration:none; color: white;">&nbsp; LocaWeb </a> </span>  
-            </div>
-            
-            <a id="sign_up" href="/login" class="btn-grad">Sign-up / Login</a>
-
-            <% if (username !== undefined) { %>
-                <a id="username" class="btn-grad" href="#"> <%= username %> </a>
-                <script>
-                    document.getElementById('sign_up').style.display='none';
-                </script>
-            <% } %>
-        </header>
+        <%- include('template/header.ejs') %>
 
         <div class="form-title">
             <h1>Créer une annonce</h1>
@@ -96,6 +82,7 @@
 
     </div>
 
+    <%- include('template/footer.ejs') %>
     
     </body>
 </html>

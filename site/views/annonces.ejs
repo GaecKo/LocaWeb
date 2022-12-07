@@ -19,25 +19,26 @@
             <span class="title" ><a href=".." style="text-decoration:none; color: white;">&nbsp; LocaWeb </a> </span>  
             </div>
             
-            <a id="sign_up" href="/login" class="btn-grad">Sign-up / Login</a>
+            <a id="login" href="/login" class="btn-login">Login</a>
+            <a id="sign_up" href="/signup" class="btn-grad">Sign-up</a>
 
             <% if (username !== undefined) { %>
                 <a id="username" class="btn-grad" href="#"> <%= username %> </a>
-                <a id="username" class="btn-offers btn-grad" href="/announces_builder"> Create offers </a>
+                <a id="username" class="btn-offers btn-grad" href="/announces_builder"> Create offer </a>
                 <script>
                     document.getElementById('sign_up').style.display='none';
+                    document.getElementById('login').style.display='none';
                 </script>
             <% } %>
         </header>
+
+        <script src="../js/stickyheader.js"></script>
 
         <% if (error != undefined) { %>
             <div class="error-container">
                 <a class="error"> <%= error %></a>
             </div>
         <% } %>
-
-        <!-- <img id="image" src="/uploads/a2.png" alt="screenshot"> -->
-
 
         <div class="annonce-container">
 
@@ -88,5 +89,8 @@
             
         </div>
     </div>
+
+    <%- include('template/footer.ejs') %>
+    
 </body>
 </html>

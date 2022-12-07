@@ -9,31 +9,12 @@
       <link rel="icon" type="image/svg+xml" href="../image/logo.svg">
   </head>
 
-
   <body>
   
     <div class="main">
-      <header id="header">
-        <div id="website-logo">
-          <img class="logo" src="../image/logo.svg"  alt="Gradient Shape Logo Element" loading="lazy">
-          <span class="title"> &nbsp; LocaWeb </span>  
-        </div>
-          
-        <a id="login" href="/login" class="btn-login">Login</a>
-        <a id="sign_up" href="/signup" class="btn-grad">Sign-up</a>
 
-      <% if (username !== undefined) { %>
-        <a id="username" class="btn-grad" href="#"> <%= username %> </a>
-        <a id="username" class="btn-offers btn-grad" href="/announces"> View offers </a>
-        <script>
-            document.getElementById('sign_up').style.display='none';
-            document.getElementById('login').style.display='none';
-        </script>
-      <% } %>
-      </header>
+      <%- include('template/header.ejs') %>
       
-      
-
       <div class="flex1">
         <h1 class="rentingtext"> Renting has never been so easy !</h1>
         <img class="imgphone"src="../image/phone.webp"> </img>
@@ -53,56 +34,10 @@
         
       <img class="imghand"src="../image/hands.webp"> </img>
       </div>
-
     </div>
 
-    <div class="spacer"></div>
-
-    <footer>
-      <div class="footer-inside">
-        <div class="flex3">
-
-          <div class="container3">
-            <img src="../image/logo.svg" style="border-radius:1px; width:50px; background-color: transparent; "  alt="Gradient Shape Logo Element" loading="lazy">
-            <span class="title" style="background-color: transparent;"> &nbsp; LocaWeb </span>
-          </div>
-
-          <div class="container4">
-            <h1 style="background-color: transparent;">Contact</h1>
-            <pre style="background-color: transparent;">01 23 45 68 89
-Adress sympa
-bonjour@gmail.com</pre>
-          </div>
-
-
-        </div>
-      </div>
-    </footer>
+    <%- include('template/footer.ejs') %>
       
-
   </body>
 </html>
 
-<script>
-
-  //the following code comes from W3schools.com
-  
-  // When the user scrolls the page, execute stickHeader 
-  window.onscroll = function() {stickHeader()};
-
-  // Get the header
-  var header = document.getElementById("header");
-
-  // Get the offset position of the navbar
-  var sticky = header.offsetTop;
-
-  // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
-  function stickHeader() {
-    if (window.pageYOffset > sticky) {
-      header.classList.add("sticky");
-    } else {
-      header.classList.remove("sticky");
-    }
-  }
-
-</script>

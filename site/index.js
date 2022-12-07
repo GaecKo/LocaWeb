@@ -60,13 +60,13 @@ app.get('/', function (req, res) {
 });
 
 app.get('/login', function (req, res) {
-  res.render('./login', {error: req.session.error});
+  res.render('./login', {error: req.session.error, username : req.session.username});
   req.session.error = undefined;
 });
 
 app.get('/signup', function (req, res) {
   req.session.error = undefined;
-  res.render('./signup');
+  res.render('./signup',{error: req.session.error, username : req.session.username});
 });
 
 app.get('/announces', async function (req, res) {
