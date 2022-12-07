@@ -74,6 +74,35 @@ body{
     text-decoration: none;
 }
 
+.btn-login{
+    float: right;
+    margin-left: 10px;
+    color: #fff;
+    font-family:'Codec Pro ExtraBold';
+    font-size:17px;
+    display: inline-block;
+    position: relative;
+    width: -moz-fit-content;
+    width: fit-content;
+    
+    background: none;
+    text-decoration: inherit;
+    font-family: system-ui;
+    /* padding: 1rem 2rem; */
+    padding:12px 31px;
+
+    border: 10px solid;
+    border-image-slice: 1;
+    border-width: 3px;
+    border-radius: 30px;
+    border-color: #5b3094;
+    background-color: #5b30944d;
+
+    /* border-image-source: linear-gradient(to left, #743ad5, #d53a9d); */
+
+}
+
+
 .btn-offers{
     margin-right:10px;
 }
@@ -267,6 +296,14 @@ footer {
     }
 
     .btn-grad {
+        margin-top: 5%;
+        display: inline-block;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 15px;
+    }
+
+    .btn-login{
         margin-top: 5%;
         display: inline-block;
         margin-left: auto;
