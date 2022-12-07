@@ -178,10 +178,10 @@ app.post("/announces_builder",  upload.single("images" /* "images" is the name o
       description = req.body.description
       price = req.body.price
       city = req.body.city  
-      rate = req.body.rate //TODO : add the rate to the database
+      rate = req.body.rate 
       image = time+".png"; //we store the name of the image in the database
 
-      let result = await db.addAd(req.session.userId, title, description, city, price, image)
+      let result = await db.addAd(req.session.userId, title, description, city, price, rate, image)
       if (result) {
         req.session.error = "Offer added succesfully!"
         res

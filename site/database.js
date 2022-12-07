@@ -207,13 +207,14 @@ async function ChangeCommentRef(coId, adId) {
     return Ad.findOne({where: {id: adId}, attributes: ["comments"]})
 }
 
-async function addAd(userId, title, description, city, price, images) {
+async function addAd(userId, title, description, city, price, rate, images) {
     return Ad.create({
         user : userId,
         title: title,
         description: description,
         city: city,
         price: price,
+        rate: rate,
         images: images,
         comments: JSON.stringify({})
     }).then(ad => {
@@ -421,6 +422,20 @@ async function addReport(report_text) {
     })
 }
 
+async function deleteAd(adId) {
+    reports_list = await getReportsAd(adId)
+    deleted = await deleteReports(reports_list)
+    return Ad.destroy({where: {id: adId}}).then(state => {
+        if (state == 1) {
+            console.log("Add " + adId + " its reports deleted successfully")
+            return true
+        } else {
+            console.log("Add " + adId + " its reports deleted successfully")
+            return false
+        }
+    })
+}
+
 async function addUserReport(userId) {
     return User.findOne({
         where: {
@@ -429,7 +444,7 @@ async function addUserReport(userId) {
         attributes: ["total_report"] }).then(usr => {
             if (usr) {
                 let nbr_report = usr.dataValues.total_report + 1
-                let banned = nbr_report > 3
+                let banned = nbr_report > 6
                 User.update({total_report: nbr_report, banned: banned}, {where: {id: userId}}).then(state => {
                     if (state == 1) {
                         return true
