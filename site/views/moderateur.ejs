@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/modo.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <!-- Get header (not needed in this case)-->
+    </header>
+
+    <div class="chooseAnnounceOrComment0rAll">
+        <button class="all" onclick="document.getElementById('announce_report_main').style.display='inline-block', document.getElementById('comment_report_main').style.display='inline-block'">Tout</button>
+        <button class="announce" onclick="document.getElementById('announce_report_main').style.display='inline-block', document.getElementById('comment_report_main').style.display='none'">Annonces</button>
+        <button class="comment" onclick="document.getElementById('announce_report_main').style.display='none', document.getElementById('comment_report_main').style.display='inline-block'">Commentaires</button>
+    </div>
+
+    <br><br><br><br>
+
+    <div id="commentAndAnnounces">
+
+        <!-- Partie annonces signalées -->
+
+        <div id="announce_report_main">
+            <h2>Annonces signalées</h2>
+            <!-- La boucle avec les annonces signalées -->
+            <div class="one_announce">
+                <div class="content_reported_announce">
+                    <div class="left_side">
+                        <div class="announce_image">
+                            <!-- Image de l'annonce signalée -->
+                            Image de l'annonce
+                        </div>
+                    </div>
+                    <div class="right_side">
+                        <div class="top">
+                            <div class="announce_title">
+                                <!-- Titre de l'annonce signalée -->
+                                Titre de l'annonce
+                            </div>
+                            <div class="announce_seller">
+                                <!-- Vendeur de l'annonce signalée -->
+                                Vendeur de l'annonce
+                            </div>
+                        </div>
+                        <div class="bottom">
+                            <div class="announce_content">
+                                <!-- Description de l'annonce signalée -->
+                                Description annonce
+                            </div>
+                            <div class="reasons_report_bis">
+                                <div class="reason_announce">
+                                    <!-- La/les raison(s) ici -->
+                                    Raison signalement
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="announce_report_button">
+                        <button class="delete_button_announce">Supprimer l'annonce</button>
+                        <button class="restore_button_announce">Rétablir l'annonce</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Partie commentaires signalés -->
+
+        <div id="comment_report_main">
+            <h2>Commentaires signalés</h2>
+            <!-- La boucle parcourant les commentaires signalés -->
+            <div class="one_comment">
+                <div class="reported_comment">
+                    <div class="user_comment">
+                        <!-- Utilisateur qui a envoyé le commentaire -->
+                        <p class="user">Nom de l'utilisateur</p>
+                    </div>
+                    <div class="top_comment">
+                        <div class="comment_sent">
+                            <!-- Commentaire qui a été signalé -->
+                            Commentaire
+                        </div>
+                        <div class="reasons_report">
+                            <!-- La boucle avec les raisons ici-->
+                            <li class="reason_comment">
+                                <!-- La raison ici -->
+                                Raison
+                            </li>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="comment_report_button">
+                        <button class="delete_button_comment">Supprimer le commentaire</button>
+                        <button class="restore_button_comment">Rétablir le commentaire</button>
+                    </div>       
+                </div>
+            </div>
+        </div>
+    </div>
+       
+    <footer>
+        <!-- Get footer (not needed in this case)-->
+    </footer>
+</body>
+</html>
