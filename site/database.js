@@ -124,21 +124,36 @@ async function getAllUsers() {
     })
 }
 
-async function isModo(username) {
+async function isModo(id) {
     /*
     *  Return true if User with username is modo
     *  return false if not
     */
-    return User.findOne({where: {username: username, moderator: true}}).then(user => {
+    return User.findOne({where: {id: id, moderator: true}}).then(user => {
         if (user) {
-            console.log(username + " is modo")
+            console.log(id + " is modo")
             return true
         } else {
-            console.log(username + " is NOT modo")
+            console.log(id + " is NOT modo")
             return false
         }
     }).catch(err => {
-        console.log("Error while trying to find " + username + " : " + err)
+        console.log("Error while trying to find user with " + id + " : " + err)
+        return false
+    })
+}
+
+async function isBanned(id) {
+    return User.findOne({where: {id: id, banned: true}}).then(user => {
+        if (user) {
+            console.log(id + " is banned")
+            return true
+        } else {
+            console.log(id + " is NOT banned")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while trying to find user with " + id + " : " + err)
         return false
     })
 }
@@ -373,7 +388,7 @@ async function addReport(report_text) {
     /* Return reportId if report has been added successfully  
     * Return false if not
     */ 
-    reportId = Report.create({
+    return Report.create({
         content: report_text
     }).then(repo => {
         if (repo) {
@@ -396,8 +411,10 @@ async function addUserReport(userId) {
         },
         attributes: ["total_report"] }).then(usr => {
             if (usr) {
-                User.update({total_report: usr.dataValues.total_report + 1}, {where: {id: userId}}).then(usr => {
-                    if (usr == 1) {
+                let nbr_report = usr.dataValues.total_report + 1
+                let banned = nbr_report > 3
+                User.update({total_report: nbr_report, banned: banned}, {where: {id: userId}}).then(state => {
+                    if (state == 1) {
                         return true
                     } else {
                         return false
@@ -420,7 +437,7 @@ async function getReportsComment(coId) {
     return Comment.findOne({where: {id: coId}, attributes: ["reports_list"]}).then(rep_l => {
         if (rep_l) {
             console.log("Reports of comment " + coId + " was retrieved")
-            return rep_l.dataValues.reports_list
+            return JSON.parse(rep_l.dataValues.reports_list)
         } else {
             console.log("Repports couldn't be retrieve... Comment: " + coId + " , comment exists?")
             return false
@@ -435,7 +452,7 @@ async function getReportsAd(adId) {
     return Ad.findOne({where: {id: adId}, attributes: ["reports_list"]}).then(rep_l => {
         if (rep_l) {
             console.log("Reports of ad " + adId + " was retrieved")
-            return rep_l.dataValues.reports_list
+            return JSON.parse(rep_l.dataValues.reports_list)
         } else {
             console.log("Repports couldn't be retrieve... Ad: " + adId + " , ad exists?")
             return false
@@ -447,20 +464,60 @@ async function getReportsAd(adId) {
 }
 
 async function deleteReports(reportIdList) {
-    for (id in reportIdList) {
-        await Report.destroy({where: {id: id}}).then(state => {
-            if (state == 1) {
-                console.log("Report with id " + id + " deleted")
-            } else {
-                console.log("Report with id " + id + " couldn't be deleted.. Report exists?")
-            }
-        })
-    }
-    return true
+    return await Report.destroy({where: {id: reportIdList}}).then(state => {
+        if (state == reportIdList.length) {
+            console.log("Reports " + reportIdList + " were deleted")
+            return true
+        } else {
+            console.log("Report  " + reportIdList + " couldn't be deleted.. Report exists?")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while deleting " + reportIdList +": " + err)
+        return false
+    })
+}
+
+/**
+ * @param {int} userID is the id of the user you want to decrease the number of reports
+ * @param {int} nbr the number of reports you want to delete
+ * @returns `true` if successfull, `false` otherwise
+ */
+async function decreaseTotalReportsUser(userId, nbr) {
+    let cur_reports = await User.findOne({where: {id: userId}, attributes: ["total_report"]}).then(usr => {
+        if (usr) {
+            console.log("Total reports of User with id " + userId + " was retrieved")
+            return usr.dataValues.total_report
+        } else {
+            console.log("Couldn't retrieve total reports of User with id " + userId + ", are you sure he exists?")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while retrieving total report of User with id " + userId + " :" + err)
+        return false
+    })
+    return User.update({total_report: cur_reports - nbr}, {where: {id: userId}}).then(state => {
+        if (state == 1) {
+            console.log("Reports were re-adjusted")
+            return true
+        } else {
+            console.log("Couldn't update total reports of User with id " + userId + " does he exists?")
+        }
+    }).catch(err => {
+        console.log("Error while retrieving total report of User with id " + userId + " :" + err)
+        return false
+    })
 }
 
 async function clearCommentReports(coId) {
     let reports_list = await getReportsComment(coId)
+    let userId = await getUserComment(coId)
+    let userUpdate = await decreaseTotalReportsUser(userId, reports_list.length)
+    if (userUpdate) {
+        console.log("User had his comments report re-adjusted")
+    } else {
+        console.log("User DIDN'T had his comments report re-adjusted")
+    }
     let deleted = await deleteReports(reports_list)
     if (deleted) {
         console.log("reports were deleted successfully")
@@ -487,12 +544,22 @@ async function clearCommentReports(coId) {
 
 async function clearAdReports(adId) {
     let reports_list = await getReportsAd(adId)
+    let userId = await getUserAd(adId)
+
+    let userUpdate = await decreaseTotalReportsUser(userId, reports_list.length)
+    if (userUpdate) {
+        console.log("User had his comments report re-adjusted")
+    } else {
+        console.log("User DIDN'T had his comments report re-adjusted")
+    }
+
     let deleted = await deleteReports(reports_list)
     if (deleted) {
         console.log("reports were deleted successfully")
     } else {
         console.log("Reports could'n be deleted")
     }
+
     return Ad.update({
         reports: 0,
         visibility: true,
@@ -500,7 +567,6 @@ async function clearAdReports(adId) {
     }, {where: {id: adId}}).then(async state => {
         if (state == 1) {
             console.log("Reports on ad " + adId + " have been reset")
-            await deleteReports()
             return true
         } else {
             console.log("Reports on ad " + adId + " couldn't be reset, ad exists?")
@@ -514,16 +580,13 @@ async function clearAdReports(adId) {
 
 async function addAdReport(adId, report_text="") {
     reportId = await addReport(report_text)
-    return Ad.findOne({
-        where: {
-            id: adId
-        },
+    return Ad.findOne({where: { id: adId},
         attributes: ["reports", "user", "reports_list"] }).then(ad => {
             if (ad) {
                 reports = ad.dataValues.reports + 1
                 reports_list = JSON.parse(ad.dataValues.reports_list)
                 reports_list.push(reportId)
-                visibility = (!reports_list.length >= 3)
+                visibility = (!reports_list.length > 3)
                 return Ad.update({reports: reports, reports_list: JSON.stringify(reports_list), visibility: visibility}, {where: {id: adId}}).then(async state => {
                     return await addUserReport(ad.dataValues.user);   
                 })
@@ -548,9 +611,8 @@ async function addCommentReport(coId, report_text="") {
                 reports = co.dataValues.reports + 1
                 reports_list = JSON.parse(co.dataValues.reports_list)
                 reports_list.push(reportId)
-                visibility = (!reports_list.length >= 3)
+                visibility = (!reports_list.length > 3)
                 return Comment.update({reports: reports, reports_list: JSON.stringify(reports_list), visibility: visibility}, {where: {id: coId}}).then(async state => {
-                    console.log("zzzzz " + co.dataValues.user)
                     return await addUserReport(co.dataValues.user);   
                 })
             } else {
@@ -585,7 +647,9 @@ module.exports = {
     checkReportsUser,
     getUserAd,
     clearCommentReports, 
-    clearAdReports
+    clearAdReports, 
+    decreaseTotalReportsUser,
+    isBanned
 
 }
 
@@ -598,11 +662,16 @@ async function main(){
     // await addComment(1, "Oui pas de soucis", 2, 1, 1)
     // await addComment(1, "Ok super j'arrive", 1, 1, 2)
 
+
     // await addComment()
 
     // await Ad.update({visibility: false}, {where: {id: 1}})
 
     // await addCommentReport(2, "Je n'aime pas ce message")
+    // for (let i = 0; i < 10; i++) await addAdReport(1, i + ": hephephepo");
+    
+    
+    // await clearAdReports(1)
 
     // ad = await getAd(1)
     // ful = await getFullComments(ad.comments)
@@ -612,4 +681,4 @@ async function main(){
     // await User.update({username: "MonNom"}, {where: {id: 1}})
 }
 
-// main()
+main()

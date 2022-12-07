@@ -79,7 +79,7 @@ app.get('/announces/:productId', async function (req, res) {
   const ad = await db.getAd(productId.productId);
   const comments = await db.getFullComments(ad.comments)
   const user = await db.getUsername(ad.user)
-  res.render("./annonce_main", {username : req.session.username, ad: ad, comments: comments, userId: ad.user, user: user});
+  res.render("./annonce_main", {username : req.session.username, ad: ad, comments: comments, userId: req.session.userId, user: user});
 });
 
 app.get('/announces_builder', function (req, res) {
@@ -88,18 +88,31 @@ app.get('/announces_builder', function (req, res) {
 });
 
 app.post('/announces/:productId', async function (req, res) {
-  let val = req.body.res_btn;
-  let content = req.body.res_content;
   let adId = req.params.productId;
-  if (val == "") {
-    await db.addComment(adId, content, req.session.userId) 
-  } else {
-    val = val.split("|")
-    if (val[1] == '') {
-      await db.addComment(adId, content, req.session.userId, parseInt(val[0])) // id_m|id_sub
+  if (req.body.type == "comment") {
+    let val = req.body.res_btn;
+    let content = req.body.res_content;
+
+    if (val == "") {
+      await db.addComment(adId, content, req.session.userId) 
+
     } else {
-      await db.addComment(adId, content, req.session.userId, parseInt(val[0]), parseInt(val[1]))
-    }
+      val = val.split("|")
+      if (val[1] == '') {
+        await db.addComment(adId, content, req.session.userId, parseInt(val[0])) // id_m|id_sub
+
+      } else {
+        await db.addComment(adId, content, req.session.userId, parseInt(val[0]), parseInt(val[1]))
+      }
+  }
+ } else if (req.body.type == "coreport") {
+    let content = req.body.rep_content
+    let co_id = req.body.rep_btn
+    await db.addCommentReport(co_id, content)
+
+  } else if (req.body.type == "adreport") {
+    let content = req.body.rep_content
+    await db.addAdReport(adId, content)
   }
   
   res.redirect('/announces/' + adId)

@@ -11,9 +11,10 @@
     <title><%= ad.images %></title>
     <link rel="icon" type="image/svg+xml" href="../image/logo.svg">
 </head>
+
 <body>
     <div class="main">
-        <header id="header">
+        <header id="header"> 
             <div id="website-logo">
                 <img class="logo" src="../image/logo.svg"  alt="Gradient Shape Logo Element" loading="lazy">
                 <span class="title" ><a href=".." style="text-decoration:none; color: white;">&nbsp; LocaWeb </a> </span>  
@@ -24,6 +25,13 @@
                 <% if (username !== undefined) { %>
                     <a id="username" class="btn-grad" href="#"> <%= username %> </a>
                     <a id="username" class="btn-offers btn-grad" href="/announces_builder"> Create offers </a>
+                    <button onclick="toggleReport('0')" class="fas fa-flag" title="Report" value="0" id="r0"></button>
+                    <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
+                        <input type="text" placeholder="Reason of the report" name="rep_content" id="0re" style="display: None;">
+                        <button type="submit" name="type" value="adreport" id="0r" style="display: None;" >Rep</button>
+                    </form>
+                    
+
                     <script>
                         document.getElementById('sign_up').style.display='none';
                     </script>
@@ -44,6 +52,7 @@
                     <div class="images_container" style=" height: 100%; width: 100%;">
                         <!-- Multiple images here -->
                         <img style="height: 100%; width: 100%; object-fit: contain;"  class="image" src="/uploads/<%= ad.images %>" alt="<%= ad.images %>">
+
                     </div>
                 </div>
             </div>
@@ -109,6 +118,12 @@
                         <div class="comment_date">
                             <%= date %>
                         </div>
+                        <button onclick="toggleReport('<%= id_m %>')" class="fas fa-flag" title="Report" value="0" id="r<%= id_m %>"></button>
+                        <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
+                            <input type="hidden" name="type" value="coreport">
+                            <input type="text" placeholder="Reason of the report" name="rep_content" id="<%= id_m %>re" style="display: None;">
+                            <button type="submit" name="rep_btn" value="<%= id_m %>" id="<%= id_m %>r" style="display: None;" >Rep</button>
+                        </form>
                     </div>
                     
                     <div class="comment_text">
@@ -122,6 +137,7 @@
                         <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
                             <!-- <button onclick="toggleComment('<%= id_m %>')" type="button" class="reply_button_left" value="0" id="b<%= id_m %>">Reply</button> -->
                             <div class="type_and_send_content_reply" id="<%= id_m %>">
+                                <input type="hidden" name="type" value="comment">
                                 <input type="text" id="<%= id_m %>c" style="display: None;" class="comment_type_reply" name="res_content" placeholder="Type your text here">
                                 <button type="submit" class="reply_button_right" id="<%= id_m %>b" value="<%= id_m %>|" name="res_btn" style="display: None;">Post</button>
                             </div>
@@ -139,6 +155,12 @@
                             </div>
                             <div class="comment_reply_date">
                                 <%= date %>
+                                <button onclick="toggleReport('<%= id_sub %>')" class="fas fa-flag" title="Report" value="0" id="r<%= id_sub %>"></button>
+                                <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
+                                    <input type="hidden" name="type" value="coreport">
+                                    <input type="text" placeholder="Reason of the report" name="rep_content" id="<%= id_sub %>re" style="display: None;">
+                                    <button type="submit" name="rep_btn" value="<%= id_sub %>" id="<%= id_sub %>r" style="display: None;" >Rep</button>
+                                </form>
                             </div>
                         </div>
                         <div class="reply_text">
@@ -155,8 +177,9 @@
                             </div>
                             
                             <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
-                                <!-- <button onclick="toggleComment('<%= id_sub %>')" type="button"value="0" class="reply_button_left" id="b<%= id_sub %>">Reply</button> -->
+                                
                                 <div class="type_and_send_content_reply" id="<%= id_sub %>">
+                                    <input type="hidden" name="type" value="comment">
                                     <input type="text" id="<%= id_sub %>c" style="display: None;" class="comment_type_reply" name="res_content" placeholder="Type your text here">
                                     <button type="submit" class="reply_button_right" id="<%= id_sub %>b" value="<%= id_m %>|<%= id_sub %>" name="res_btn" style="display: None;">Post</button>
                                 </div>
@@ -243,6 +266,17 @@
             document.getElementById(id + "c").style.display = "None";
             document.getElementById(id).style.display="None";
             document.getElementById(id+"b").style.display = "None";
+        }
+    }
+    function toggleReport(id) {
+        if (document.getElementById("r" + id).value == 0) {
+            document.getElementById("r" + id).value = 1;
+            document.getElementById(id+"r").style.display = "";
+            document.getElementById(id + "re").style.display="flex";
+        } else {
+            document.getElementById("r" + id).value = 0;
+            document.getElementById(id+ "re").style.display="None";
+            document.getElementById(id+"r").style.display = "None";
         }
     }
 </script>
