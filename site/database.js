@@ -732,6 +732,74 @@ async function addCommentReport(coId, report_text="") {
         })
 }
 
+
+async function getUserAds(userId) {
+    /* Returns all ads of a user has an array*/
+    return Ad.findAll({where: {user: userId}}).then(ads => {
+        if (ads) {
+            return ads
+        } else {
+            console.log("No ads found for user " + userId)
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while retrieving ads for user " + userId + ": " + err)
+        return false
+    })
+}
+
+async function updatePassword(userId, password) {
+    /* Finds the user in the database 
+    and updates his password with the new one*/
+    return User.update({password: password}, {where: {id: userId}}).then(state => {
+        if (state == 1) {
+            console.log("Password for user " + userId + " has been updated")
+            return true
+        } else {
+            console.log("Password for user " + userId + " couldn't be updated, user exists?")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while updating password for user " + userId + ": " + err)
+        return false
+    })
+}
+
+async function updateUsername(userId, username) {
+    /* Finds the user in the database
+    and updates his username with the new one*/
+    return User.update({username: username}, {where: {id: userId}}).then(state => {
+        if (state == 1) {
+            console.log("Username for user " + userId + " has been updated")
+            return true
+        } else {
+            console.log("Username for user " + userId + " couldn't be updated, user exists?")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while updating username for user " + userId + ": " + err)
+        return false
+    })
+}
+
+async function updateEmail(userId, email) {
+    /* Finds the user in the database
+    and updates his email with the new one*/
+    return User.update({email: email }, {where: {id: userId}}).then(state => {
+        if (state == 1) {
+            console.log("Email for user " + userId + " has been updated")
+            return true
+        } else {
+            console.log("Email for user " + userId + " couldn't be updated, user exists?")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while updating email for user " + userId + ": " + err)
+        return false
+    })
+}
+
+
 module.exports = {
     disableComment,
     deleteAd,
@@ -740,6 +808,7 @@ module.exports = {
     getUser,
     addUser,
     getUsername,
+    getUserAds,
     setModoState,
     getAllUsers,
     isModo,
@@ -757,8 +826,10 @@ module.exports = {
     clearCommentReports, 
     clearAdReports, 
     decreaseTotalReportsUser,
-    isBanned
-
+    isBanned,
+    updatePassword,
+    updateUsername,
+    updateEmail
 }
 
 async function main(){

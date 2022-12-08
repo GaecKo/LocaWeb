@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/annonces.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <title><%= username %></title>
+</head>
+<body>
+
+    <div class="main">
+
+    <%- include('template/header.ejs') %>
+
+    <div class="form-title">
+        <h1>Your profile</h1>
+    </div>
+
+    <hr style="width: 80%; border: 3px dashed white;">
+
+    <h3 class="screen_message"><%= screen_message %></h3>
+
+    <h3> All your active offers :</h3>
+
+    <div class="annonce-container">
+
+    <% for (var i = 0; i < announces.length; i++) { %>
+        <div class="annonce-element">
+            <% if (announces[i].visibility == false) { %>
+                <div class="hide-content">
+            <% } %>
+            <div class="annonce-top">
+                <div class="annonce-title">
+                    <!-- Titre de l'annonce -->
+                    <h4><%= announces[i].title %> </h4>
+                    <p class="user_text">From : You</p>
+                </div>
+            </div>
+            <div class="annonce-middle">
+                <div class="annonce-image">
+                    <!-- Image de l'annonce -->
+                    <img  class="image" src="/uploads/<%= announces[i].images %>" alt="<%= announces[i].images %>">
+                </div>
+            </div>
+            <div class="annonce-bottom">
+                <div class="annonce-price">
+                    <!-- Prix de l'annonce -->
+                    <%= announces[i].price %> <span style="font-weight:bold;"><%= announces[i].rate %></span>
+                </div>
+                <div class="annonce-button">
+                    <% if (announces[i].visibility) { %>    
+                        <a href="announces/<%= announces[i].id %>">View details</a>
+                    <% } %>
+                    <!-- Bouton de l'annonce -->
+                    <!-- <form method="GET" action="announces/<%= announces[i].id %>" style="background-color: rgb(48 17 60);">
+                        <button class="contact-annonce-button" type="submit">Voir l'annonce </button>
+                    </form> -->
+                        
+                </div>
+            </div>
+        </div>
+        <% if (announces[i].visibility == false) { %>
+        </div class="hide-content">
+        <% } %>
+    <% } %>
+    </div>
+
+    <hr style="width: 80%; border: 3px dashed white; margin-top: 35px;">
+
+    <h3 class="info"> All your information :</h3>
+
+    <h5>Change your personnal information</h5>
+
+    <form method="POST"  action="/profile">
+        <input name="new_username" class="textinput" type="text" id="title" name="title" value="<%= user.username %>">
+        <input name="new_email"  class="textinput" type="email" id="title" name="title" value="<%= user.email %>">
+        <br>
+        <input type="submit" name="change_info" class="btn-login comfirm-btn" value="Save"></a>
+    </form>
+
+    <br>
+    <br>
+
+    <h5>Reset your password</h5>
+
+   
+
+    <form method="POST" action="/profile">
+        <input id="new_password" class="textinput" name="new_password" type="text" id="title" name="title" placeholder="New password">
+        <input id="comf_new_password" class="textinput" name="comf_new_password" type="text" id="title" name="title" placeholder="Comfirm">
+        <br>
+        <input id="change_password" type="submit" name="change_password" class="btn-login comfirm-btn" value="Change password"></input>
+    </form>
+
+    <br>
+    <br>
+
+    <h5>User Stats</h5>
+    <h6>total reports : <%= user.total_report %></h6>
+
+    </div>
+
+    <%- include('template/footer.ejs') %>
+
+    <script>
+    document.querySelector('#change_password').onclick = function(){
+        const password = document.querySelector('#new_password').value,
+            confirmPassword = document.querySelector('#comf_new_password').value;
+
+        if(password == "") {
+            alert("Please insert a password!");
+            return false
+        }
+        else if(password.length < 8) {
+            alert("The password has less than 8 chracters!");
+            return false
+        }
+        else if(password != confirmPassword) {
+            alert("Passwords don't match!");
+            return false
+        }
+        return true
+    }
+    </script>
+    
+</body>
+</html>

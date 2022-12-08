@@ -1,0 +1,50 @@
+h1 {
+    color:  #9340FF;
+    font-family: 'Codec Pro ExtraBold';
+    font-size: 50px;
+    text-align: center;
+}
+
+h3{
+    color:  #9340FF;
+    font-family: 'Codec Pro ExtraBold';
+    text-align: left;
+    margin-left: 40px;
+    font-size: 2em;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+h5{
+    color:  #9340FF;
+    font-family: 'Codec Pro ExtraBold';
+    text-align: left;
+    font-size: 15px;
+    margin-top: 88px;
+    margin-bottom: 10px;
+    font-size: 1.5em;
+}
+
+.comfirm-btn{
+    float: left;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+.info{
+    margin-bottom: -52px
+}
+
+h6{
+    color:  #6d71e3;
+    font-family: 'Codec Pro';
+    text-align: left;
+    font-size: 15px;
+    font-size: 1.5em;
+    margin-top: 3%;
+}
+
+.screen_message{
+    color: rgb(107, 211, 27);
+    text-align: center;
+}

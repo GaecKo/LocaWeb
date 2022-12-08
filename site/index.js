@@ -13,6 +13,7 @@ const bcrypt = require('bcryptjs');
 const { type } = require('os');
 var salt = bcrypt.genSaltSync(10);
 const multer = require("multer");
+const { application } = require('express');
 
 const handleError = (err, res) => {
   res
@@ -69,6 +70,19 @@ app.get('/signup', function (req, res) {
   res.render('./signup',{error: req.session.error, username : req.session.username});
 });
 
+app.get('/profile', async function (req, res) {
+
+  if (req.session.username) {
+    const user = await db.getUser(req.session.username);
+    const announces = await db.getUserAds(user.id);
+
+    res.render('./profile', {username : req.session.username, user: user, announces: announces, screen_message: req.session.screen_message});
+    req.session.screen_message = undefined;
+  } else {
+    res.redirect('/login')
+  }
+});
+
 app.get('/announces', async function (req, res) {
   let announces = await db.getAllAds();
   let moderator = await db.isModo(req.session.userId)
@@ -89,15 +103,14 @@ app.get('/announces_builder', function (req, res) {
 });
 
 app.get('/admin', async function (req, res) {
-  reports = await db.getFullReports()
-  res.render('./moderateur', {reports: reports})
 
-  // Check if user is admin  // Uncomment when there is an admin account
-  // if (req.session.moderator == 1) {
-  //   res.render('./modeteur', {username : req.session.username});
-  // } else {
-  //   res.redirect('/')
-  // }
+  //Check if user is admin
+  if (req.session.moderator == 1) {
+    reports = await db.getFullReports()
+    res.render('./moderateur', {username : req.session.username, reports: reports});
+  } else {
+    res.redirect('/')
+  }
 });
 
 app.post('/announces/:productId', async function (req, res) {
@@ -241,8 +254,43 @@ app.post("/admin", async function (req, res) {
   res.redirect("/admin")
 })
 
-app.get("/image.png", (req, res) => {
-  res.sendFile(path.join(__dirname, "./uploads/image.png"));
+app.post("/profile", async function (req, res) {
+  console.log(req.body)
+
+  if (req.body.change_password != undefined) {
+    const password = req.body.new_password;
+
+    //update the password
+    const changepswd = await db.updatePassword(req.session.userId, bcrypt.hashSync(password, salt))
+    if (changepswd) {
+      req.session.screen_message = "Password changed succesfully!"
+    } else {
+      req.session.screen_message = "Something went wrong, please try again"
+    }
+
+  } else if (req.body.change_info != undefined) {
+    const new_username = req.body.new_username;
+    const email = req.body.new_email;
+
+    // update the username
+    const changeusername = await db.updateUsername(req.session.userId, new_username)
+    if (changeusername) {
+      req.session.username = new_username
+    }
+
+    // update the new_email
+    const changeemail = await db.updateEmail(req.session.userId, email)
+    if (changeemail) {
+      req.session.email = email
+    }
+
+    if (changeusername && changeemail) {
+      req.session.screen_message = "Information changed succesfully!"
+    }
+
+  }
+
+  res.redirect("/profile")
 });
 
 
