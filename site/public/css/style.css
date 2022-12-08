@@ -89,7 +89,7 @@ body{
     text-decoration: inherit;
     font-family: system-ui;
     /* padding: 1rem 2rem; */
-    padding:12px 31px;
+    padding:10px 31px;
 
     border: 10px solid;
     border-image-slice: 1;
@@ -99,9 +99,7 @@ body{
     background-color: #5b30944d;
 
     /* border-image-source: linear-gradient(to left, #743ad5, #d53a9d); */
-
 }
-
 
 .btn-offers{
     margin-right:10px;

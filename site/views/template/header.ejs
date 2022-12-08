@@ -1,0 +1,20 @@
+<header id="header">
+    <div id="website-logo">
+      <img class="logo" src="../image/logo.svg"  alt="Gradient Shape Logo Element" loading="lazy">
+      <span class="title"><a href=".." style="text-decoration:none; color: white;">&nbsp; LocaWeb </a> </span>  
+    </div>
+      
+    <a id="login" href="/login" class="btn-login">Login</a>
+    <a id="sign_up" href="/signup" class="btn-grad">Sign-up</a>
+
+  <% if (username !== undefined) { %>
+    <a id="username" class="btn-grad" href="#"> <%= username %> </a>
+    <a id="username" class="btn-offers btn-grad" href="/announces"> View offers </a>
+    <script>
+        document.getElementById('sign_up').style.display='none';
+        document.getElementById('login').style.display='none';
+    </script>
+  <% } %>
+</header>
+
+<script src="../js/stickyheader.js"></script>

@@ -60,13 +60,13 @@ app.get('/', function (req, res) {
 });
 
 app.get('/login', function (req, res) {
-  res.render('./login', {error: req.session.error});
+  res.render('./login', {error: req.session.error, username : req.session.username});
   req.session.error = undefined;
 });
 
 app.get('/signup', function (req, res) {
   req.session.error = undefined;
-  res.render('./signup');
+  res.render('./signup',{error: req.session.error, username : req.session.username});
 });
 
 app.get('/announces', async function (req, res) {
@@ -85,6 +85,17 @@ app.get('/announces/:productId', async function (req, res) {
 app.get('/announces_builder', function (req, res) {
   req.session.error = undefined;
   res.render('./announces_builder', {username : req.session.username, error: req.session.error});
+});
+
+app.get('/admin', function (req, res) {
+  res.render('./moderateur')
+
+  // Check if user is admin  // Uncomment when there is an admin account
+  // if (req.session.moderator == 1) {
+  //   res.render('./modeteur', {username : req.session.username});
+  // } else {
+  //   res.redirect('/')
+  // }
 });
 
 app.post('/announces/:productId', async function (req, res) {
