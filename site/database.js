@@ -251,7 +251,6 @@ async function getAllAds() {
         return false;
     })
 }
-
 // COMMENTS SECTION
 
 async function disableComment(coId) {
@@ -308,7 +307,6 @@ async function getFullComments(comments) {
       }
     for (main_id in comments) {
         main_Content = await getComment(main_id)
-        console.log(main_Content.createdAt)
         date = main_Content.createdAt
         repAuthorId = main_Content.repAuthorId
         
@@ -427,10 +425,10 @@ async function deleteAd(adId) {
     deleted = await deleteReports(reports_list)
     return Ad.destroy({where: {id: adId}}).then(state => {
         if (state == 1) {
-            console.log("Add " + adId + " its reports deleted successfully")
+            console.log("Ad " + adId + " its reports deleted successfully")
             return true
         } else {
-            console.log("Add " + adId + " its reports deleted successfully")
+            console.log("Ad " + adId + " its reports deleted successfully")
             return false
         }
     })
@@ -493,6 +491,82 @@ async function getReportsAd(adId) {
         console.log("Error while retrieving reports_list of ad " + adId + ": " + err)
         return false
     })
+}
+
+async function getFullReports() {
+    all_reports = {}
+    reportedAds = await Ad.findAll({where: {visibility: false}}).then(async ads => {
+        if (Object.keys(ads).length > 0) {
+            console.log("Ads that were reported have been retrieved")
+            for (ad in ads) {
+                ads[ad] = ads[ad].dataValues
+                ads[ad].user = await getUsername(ads[ad].user)
+                reports = JSON.parse(ads[ad].reports_list)
+                ads[ad].reports_list = await Report.findAll({where: {id: reports}}).then(reps => {
+                    if (Object.keys(reps).length > 0) {
+                        console.log("Reports were retrieved")
+                        for (rep in reps) {
+                            reps[rep] = reps[rep].dataValues
+                        }
+                        return reps
+                    } else {
+                        console.log("No reports found...")
+                        return false
+                    }
+                }).catch(err => {
+                    console.log("Error while retrieving reports: " + err)
+                    return false
+                })
+            }
+            return ads;
+        } else {
+            console.log("No ads are reported")
+            return {}
+        }
+    }).catch(err => {
+        console.log("Error while retrieving reported ads: " + err)
+        return {}
+    })
+    if (Object.keys(reportedAds).length == 0) {
+        all_reports["ads"] = null
+    } else {
+        all_reports["ads"] = reportedAds
+    }
+
+    reportedComments = await Comment.findAll({where: {visibility: false}}).then(async cos => {
+        if (Object.keys(cos).length > 0) {
+            for (co in cos) {
+                cos[co] = cos[co].dataValues
+                cos[co].user = await getUsername(cos[co].user)
+                reports = JSON.parse(cos[co].reports_list)
+                cos[co].reports_list = await Report.findAll({where: {id: reports}}).then(reps => {
+                    if (Object.keys(reps).length > 0) {
+                        console.log("Reports were retrieved")
+                        for (rep in reps) {
+                            reps[rep] = reps[rep].dataValues
+                        }
+                        return reps
+                    } else {
+                        console.log("No reports found...")
+                        return false
+                    }
+                }).catch(err => {
+                    console.log("Error while retrieving reports: " + err)
+                    return false
+                })
+            }
+            return cos
+        } else {
+            console.log("No comments are reported")
+            return {}
+        }
+    })
+    if (Object.keys(reportedComments).length == 0) {
+        all_reports["comments"] = null
+    } else {
+        all_reports["comments"] = reportedComments
+    }
+    return all_reports
 }
 
 async function deleteReports(reportIdList) {
@@ -648,7 +722,7 @@ async function addCommentReport(coId, report_text="") {
                     return await addUserReport(co.dataValues.user);   
                 })
             } else {
-                console.log("Ad " + coId + " wasn't found..")
+                console.log("Comment " + coId + " wasn't found..")
                 return false;
             }
         }).catch(err => {
@@ -659,6 +733,9 @@ async function addCommentReport(coId, report_text="") {
 }
 
 module.exports = {
+    disableComment,
+    deleteAd,
+    getFullReports,
     getUserId,
     getUser,
     addUser,
@@ -701,15 +778,27 @@ async function main(){
     // await addCommentReport(2, "Je n'aime pas ce message")
     // for (let i = 0; i < 10; i++) await addAdReport(1, i + ": hephephepo");
     
+    // a = await getFullReports()
+    // const util = require('util')
+    // console.log(util.inspect(a, {showHidden: false, depth: null, colors: true}))
     
+    
+
+    // await addAdReport(1, "pas cool")
+    // await addAdReport(1, "pas nice")
+    // await addCommentReport(1, "pas sympas")
+    // await addCommentReport(1, "pas sympas")
+    // await addCommentReport(1, "pas sympas")
+
     // await clearAdReports(1)
 
     // ad = await getAd(1)
     // ful = await getFullComments(ad.comments)
-    // const util = require('util')
+    
     // console.log(util.inspect(ful, {showHidden: false, depth: null, colors: true}))
     // ad = await getAllAds()
     // await User.update({username: "MonNom"}, {where: {id: 1}})
+    // await setModoState("GaecKo", true)
 }
 
 main()

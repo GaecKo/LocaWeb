@@ -26,13 +26,15 @@
 
         <div id="announce_report_main">
             <h2>Annonces signalées</h2>
+            <% for (ad in reports.ads) {%>
+                <% cur_ad = reports.ads[ad]%>
             <!-- La boucle avec les annonces signalées -->
             <div class="one_announce">
                 <div class="content_reported_announce">
                     <div class="left_side">
                         <div class="announce_image">
                             <!-- Image de l'annonce signalée -->
-                            Image de l'annonce
+                            <img style="height: 100%; width: 100%; object-fit: contain;"  class="image" src="/uploads/<%= cur_ad.images %>" alt="<%= cur_ad.images %>">
                         </div>
                     </div>
                     <div class="right_side">
@@ -40,31 +42,38 @@
                             <div class="announce_title">
                                 <!-- Titre de l'annonce signalée -->
                                 Titre de l'annonce
+                                <%= cur_ad.title %>
                             </div>
                             <div class="announce_seller">
                                 <!-- Vendeur de l'annonce signalée -->
-                                Vendeur de l'annonce
+                                <%= cur_ad.user %>
                             </div>
                         </div>
                         <div class="bottom">
                             <div class="announce_content">
                                 <!-- Description de l'annonce signalée -->
-                                Description annonce
+                                <%= cur_ad.description %>
                             </div>
                             <div class="reasons_report_bis">
                                 <div class="reason_announce">
                                     <!-- La/les raison(s) ici -->
-                                    Raison signalement
+                                    <% for (rep in cur_ad.reports_list) { %>
+                                        <li><%= cur_ad.reports_list[rep].content %></li>
+                                    <% } %>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="announce_report_button">
-                        <button class="delete_button_announce">Supprimer l'annonce</button>
-                        <button class="restore_button_announce">Rétablir l'annonce</button>
+                        <form action="/admin" method="POST">
+                            <input value="ad" type="hidden" name="type">
+                            <button type="submit" onclick="disableGreenbAd('<%= cur_ad.id %>')" class="delete_button_announce" id="br<%= cur_ad.id %>ad" name="del_btn" value="<%= cur_ad.id %>">Supprimer l'annonce</button>
+                            <button type="submit" onclick="disableRedbAd('<%= cur_ad.id %>')" class="restore_button_announce" id="bg<%= cur_ad.id %>ad" name="res_btn" value="<%= cur_ad.id %>">Rétablir l'annonce</button>
+                        </form>
                     </div>
                 </div>
             </div>
+            <% } %>
         </div>
 
         <!-- Partie commentaires signalés -->
@@ -72,33 +81,42 @@
         <div id="comment_report_main">
             <h2>Commentaires signalés</h2>
             <!-- La boucle parcourant les commentaires signalés -->
+            <% for (co in reports.comments) {%>
+                <% cur_co = reports.comments[co]%>
             <div class="one_comment">
                 <div class="reported_comment">
                     <div class="user_comment">
                         <!-- Utilisateur qui a envoyé le commentaire -->
-                        <p class="user">Nom de l'utilisateur</p>
+                        <p class="user"><%= cur_co.user %></p>
                     </div>
                     <div class="top_comment">
                         <div class="comment_sent">
                             <!-- Commentaire qui a été signalé -->
-                            Commentaire
+                            <%= cur_co.content %>
+                            
                         </div>
                         <div class="reasons_report">
                             <!-- La boucle avec les raisons ici-->
                             <li class="reason_comment">
                                 <!-- La raison ici -->
-                                Raison
+                                <% for (rep in cur_co.reports_list ) { %>
+                                    <li><%= cur_co.reports_list[rep].content %></li>
+                                <% } %>
                             </li>
                             <br>
                         </div>
                     </div>
                     <div class="comment_report_button">
-                        <button class="delete_button_comment">Supprimer le commentaire</button>
-                        <button class="restore_button_comment">Rétablir le commentaire</button>
+                        <form action="/admin" method="POST">
+                            <input value="co" type="hidden" name="type">
+                            <button type="submit" onclick="disableGreenbCo('<%= cur_co.id %>')" class="delete_button_announce" id="br<%= cur_co.id %>co" name="del_btn" value="<%= cur_co.id%>">Supprimer le commentaire</button>
+                            <button type="submit" onclick="disableRedbCo('<%= cur_co.id %>')" class="restore_button_announce" id="bg<%= cur_co.id %>co" name="res_btn" value="<%= cur_co.id%>">Rétablir le commentaire</button>
+                        </form>
                     </div>       
                 </div>
             </div>
-        </div>
+            <% } %>
+        </div> 
     </div>
        
     <footer>
@@ -106,3 +124,18 @@
     </footer>
 </body>
 </html>
+<script>
+    function disableRedbAd(id) {
+        document.getElementById("br" + id + "ad").value = "";
+    }
+    function disableGreenbAd(id) {
+        document.getElementById("bg" + id + "ad").value = "";
+    }
+
+    function disableRedbCo(id) {
+        document.getElementById("br" + id + "co").value = "";
+    }
+    function disableGreenbCo(id) {
+        document.getElementById("bg" + id + "co").value = "";
+    }
+</script>

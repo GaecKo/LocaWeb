@@ -71,7 +71,8 @@ app.get('/signup', function (req, res) {
 
 app.get('/announces', async function (req, res) {
   let announces = await db.getAllAds();
-  res.render('./annonces', {username : req.session.username, error: req.session.error, announces: announces});
+  let moderator = await db.isModo(req.session.userId)
+  res.render('./annonces', {username : req.session.username, error: req.session.screen_message, announces: announces, moderator: moderator});
 });
 
 app.get('/announces/:productId', async function (req, res) {
@@ -87,8 +88,9 @@ app.get('/announces_builder', function (req, res) {
   res.render('./announces_builder', {username : req.session.username, error: req.session.error});
 });
 
-app.get('/admin', function (req, res) {
-  res.render('./moderateur')
+app.get('/admin', async function (req, res) {
+  reports = await db.getFullReports()
+  res.render('./moderateur', {reports: reports})
 
   // Check if user is admin  // Uncomment when there is an admin account
   // if (req.session.moderator == 1) {
@@ -180,7 +182,7 @@ app.post("/announces_builder",  upload.single("images" /* "images" is the name o
     fs.rename( tempPath, targetPath, async (err) => {
       if (err) return handleError(err, res);
 
-      req.session.error = "File uploaded succesfully!"
+      req.session.screen_message = "File uploaded succesfully!"
 
       console.log(req.file.originalname + " has been uploaded !")
 
@@ -194,14 +196,14 @@ app.post("/announces_builder",  upload.single("images" /* "images" is the name o
 
       let result = await db.addAd(req.session.userId, title, description, city, price, rate, image)
       if (result) {
-        req.session.error = "Offer added succesfully!"
+        req.session.screen_message = "Offer added succesfully!"
         res
           .status(200)
           .contentType("text/plain")
           .redirect('/announces');
           
       } else {
-        req.session.error = "Something went wrong, please try again"
+        req.session.screen_message = "Something went wrong, please try again"
         res.redirect("/announces_builder")
       }
       })
@@ -218,7 +220,26 @@ app.post("/announces_builder",  upload.single("images" /* "images" is the name o
     });
   }
 });
-  
+
+app.post("/admin", async function (req, res) {
+  console.log("Type: " + req.body.type)
+  console.log("Restore: " + req.body.res_btn)
+  console.log("Delete: " + req.body.del_btn)
+  if (req.body.type == "ad") {
+    if (req.body.del_btn == undefined) {
+      db.clearAdReports(parseInt(req.body.res_btn))
+    } else {
+      db.deleteAd(parseInt(req.body.del_btn))
+    }
+  } else if (req.body.type == "co") {
+    if (req.body.del_btn == undefined) {
+      db.clearCommentReports(parseInt(req.body.res_btn))
+    } else {
+      db.disableComment(parseInt(req.body.del_btn))
+    }
+  }
+  res.redirect("/admin")
+})
 
 app.get("/image.png", (req, res) => {
   res.sendFile(path.join(__dirname, "./uploads/image.png"));

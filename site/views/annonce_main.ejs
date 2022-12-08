@@ -177,6 +177,7 @@
             </div>
             <div class="announce_type_and_send">
                 <form class="type_and_send_content" method="POST" action="./<%= ad.id %>">
+                    <input type="hidden" name="type" value="comment">
                     <input type="text" name="res_content" class="comment_type_text" placeholder="Type your text here" required>
                     <button type="submit" name="res_btn" value="" class="comment_send_button" >SEND</button>
                 </form>
@@ -233,15 +234,12 @@
 
 
     function toggleComment(id) {
-        console.log("in")
         if (document.getElementById("b" + id).value == 0) {
-            console.log(0)
             document.getElementById("b" + id).value = 1;
             document.getElementById(id + "c").style.display = "";
             document.getElementById(id+"b").style.display = "";
             document.getElementById(id).style.display="flex";
         } else {
-            console.log(1)
             document.getElementById("b" + id).value = 0;
             document.getElementById(id + "c").style.display = "None";
             document.getElementById(id).style.display="None";

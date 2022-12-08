@@ -25,6 +25,9 @@
             <% if (username !== undefined) { %>
                 <a id="username" class="btn-grad" href="#"> <%= username %> </a>
                 <a id="username" class="btn-offers btn-grad" href="/announces_builder"> Create offer </a>
+                <% if (moderator) { %>
+                    <a id="username" class="btn-offers btn-grad" href="/admin"> Moderation </a>
+                <% } %>
                 <script>
                     document.getElementById('sign_up').style.display='none';
                     document.getElementById('login').style.display='none';
