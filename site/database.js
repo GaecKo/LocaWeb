@@ -28,6 +28,21 @@ async function getUser(username){
     })
 }
 
+async function getUserAds(userId) {
+    /* Returns all ads of a user has an array*/
+    return Ad.findAll({where: {user: userId}}).then(ads => {
+        if (ads) {
+            return ads
+        } else {
+            console.log("No ads found for user " + userId)
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while retrieving ads for user " + userId + ": " + err)
+        return false
+    })
+}
+
 async function getUserId(username) {
     return User.findOne({where: {username: username}, attributes: ["id"]}).then(usr => {
         if (usr) {
@@ -158,6 +173,58 @@ async function isBanned(id) {
     })
 }
 
+async function updatePassword(userId, password) {
+    /* Finds the user in the database 
+    and updates his password with the new one*/
+    return User.update({password: password}, {where: {id: userId}}).then(state => {
+        if (state == 1) {
+            console.log("Password for user " + userId + " has been updated")
+            return true
+        } else {
+            console.log("Password for user " + userId + " couldn't be updated, user exists?")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while updating password for user " + userId + ": " + err)
+        return false
+    })
+}
+
+async function updateUsername(userId, username) {
+    /* Finds the user in the database
+    and updates his username with the new one*/
+    return User.update({username: username}, {where: {id: userId}}).then(state => {
+        if (state == 1) {
+            console.log("Username for user " + userId + " has been updated")
+            return true
+        } else {
+            console.log("Username for user " + userId + " couldn't be updated, user exists?")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while updating username for user " + userId + ": " + err)
+        return false
+    })
+}
+
+async function updateEmail(userId, email) {
+    /* Finds the user in the database
+    and updates his email with the new one*/
+    return User.update({email: email }, {where: {id: userId}}).then(state => {
+        if (state == 1) {
+            console.log("Email for user " + userId + " has been updated")
+            return true
+        } else {
+            console.log("Email for user " + userId + " couldn't be updated, user exists?")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while updating email for user " + userId + ": " + err)
+        return false
+    })
+}
+
+
 // ADS SECTION
 
 async function getUserAd(adId) {
@@ -196,16 +263,7 @@ async function getAd(adId) {
         return false
     })
 }
-/**
- * 
- * @param {int} coId id of the comment which is deleted
- * @param {int} adId id of the ad in which to search
- * @returns true if successfull, false otherwise
- * @post changes the content of a comment because of his undesirable content
- */
-async function ChangeCommentRef(coId, adId) {
-    return Ad.findOne({where: {id: adId}, attributes: ["comments"]})
-}
+
 
 async function addAd(userId, title, description, city, price, rate, images) {
     return Ad.create({
@@ -251,6 +309,8 @@ async function getAllAds() {
         return false;
     })
 }
+
+
 // COMMENTS SECTION
 
 async function disableComment(coId) {
@@ -420,7 +480,45 @@ async function addReport(report_text) {
     })
 }
 
+async function deleteComments(comments) {
+    /* comments: array of comment ids
+    *  Return true if all comments have been deleted successfully
+    *  Return false if not
+    */
+   for (co in comments) {
+       co = comments[co]
+       await deleteReports(getReportsComment(co))
+   }
+    return Comment.destroy({where: {id: comments}}).then(state => {
+        if (state == comments.length) {
+            console.log("Comments deleted successfully")
+            return true
+        } else {
+            console.log("Comments couldn't be deleted")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while deleting comments: " + err)
+        return false
+    })
+}
+
+async function getCommentsAd(adId) {
+    return Comment.findAll({where: {ad: adId}}).then(coms => {
+        let comments = []
+        for (co in coms) {
+            comments.push(coms[co].dataValues.id)
+        }
+        return comments
+    }).catch(err => {
+        console.log("Error while getting comments: " + err)
+        return false
+    })
+}
+
 async function deleteAd(adId) {
+    comments = await getCommentsAd(adId)
+    await deleteComments(comments)
     reports_list = await getReportsAd(adId)
     deleted = await deleteReports(reports_list)
     return Ad.destroy({where: {id: adId}}).then(state => {
@@ -732,74 +830,6 @@ async function addCommentReport(coId, report_text="") {
         })
 }
 
-
-async function getUserAds(userId) {
-    /* Returns all ads of a user has an array*/
-    return Ad.findAll({where: {user: userId}}).then(ads => {
-        if (ads) {
-            return ads
-        } else {
-            console.log("No ads found for user " + userId)
-            return false
-        }
-    }).catch(err => {
-        console.log("Error while retrieving ads for user " + userId + ": " + err)
-        return false
-    })
-}
-
-async function updatePassword(userId, password) {
-    /* Finds the user in the database 
-    and updates his password with the new one*/
-    return User.update({password: password}, {where: {id: userId}}).then(state => {
-        if (state == 1) {
-            console.log("Password for user " + userId + " has been updated")
-            return true
-        } else {
-            console.log("Password for user " + userId + " couldn't be updated, user exists?")
-            return false
-        }
-    }).catch(err => {
-        console.log("Error while updating password for user " + userId + ": " + err)
-        return false
-    })
-}
-
-async function updateUsername(userId, username) {
-    /* Finds the user in the database
-    and updates his username with the new one*/
-    return User.update({username: username}, {where: {id: userId}}).then(state => {
-        if (state == 1) {
-            console.log("Username for user " + userId + " has been updated")
-            return true
-        } else {
-            console.log("Username for user " + userId + " couldn't be updated, user exists?")
-            return false
-        }
-    }).catch(err => {
-        console.log("Error while updating username for user " + userId + ": " + err)
-        return false
-    })
-}
-
-async function updateEmail(userId, email) {
-    /* Finds the user in the database
-    and updates his email with the new one*/
-    return User.update({email: email }, {where: {id: userId}}).then(state => {
-        if (state == 1) {
-            console.log("Email for user " + userId + " has been updated")
-            return true
-        } else {
-            console.log("Email for user " + userId + " couldn't be updated, user exists?")
-            return false
-        }
-    }).catch(err => {
-        console.log("Error while updating email for user " + userId + ": " + err)
-        return false
-    })
-}
-
-
 module.exports = {
     disableComment,
     deleteAd,
@@ -843,7 +873,7 @@ async function main(){
 
 
     // await addComment()
-
+    // await deleteAd(2)
     // await Ad.update({visibility: false}, {where: {id: 1}})
 
     // await addCommentReport(2, "Je n'aime pas ce message")

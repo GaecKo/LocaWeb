@@ -240,15 +240,15 @@ app.post("/admin", async function (req, res) {
   console.log("Delete: " + req.body.del_btn)
   if (req.body.type == "ad") {
     if (req.body.del_btn == undefined) {
-      db.clearAdReports(parseInt(req.body.res_btn))
+      await db.clearAdReports(parseInt(req.body.res_btn))
     } else {
-      db.deleteAd(parseInt(req.body.del_btn))
+      await db.deleteAd(parseInt(req.body.del_btn))
     }
   } else if (req.body.type == "co") {
     if (req.body.del_btn == undefined) {
-      db.clearCommentReports(parseInt(req.body.res_btn))
+      await db.clearCommentReports(parseInt(req.body.res_btn))
     } else {
-      db.disableComment(parseInt(req.body.del_btn))
+      await db.disableComment(parseInt(req.body.del_btn))
     }
   }
   res.redirect("/admin")

@@ -103,21 +103,32 @@
                         <div class="comment_date">
                             <%= date %>
                         </div>
-                        <button onclick="toggleReport('<%= id_m %>')" class="fas fa-flag" title="Report" value="0" id="r<%= id_m %>"></button>
-                        <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
-                            <input type="hidden" name="type" value="coreport">
-                            <input type="text" placeholder="Reason of the report" name="rep_content" id="<%= id_m %>re" style="display: None;">
-                            <button type="submit" name="rep_btn" value="<%= id_m %>" id="<%= id_m %>r" style="display: None;" >Rep</button>
-                        </form>
+                        <% if (!cur_m.disabled && cur_m.visibility) {%>
+                            <button onclick="toggleReport('<%= id_m %>')" class="fas fa-flag" title="Report" value="0" id="r<%= id_m %>"></button>
+                            <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
+                                <input type="hidden" name="type" value="coreport">
+                                <input type="text" placeholder="Reason of the report" name="rep_content" id="<%= id_m %>re" style="display: None;">
+                                <button type="submit" name="rep_btn" value="<%= id_m %>" id="<%= id_m %>r" style="display: None;" >Rep</button>
+                            </form>
+                        <% } %>
                     </div>
                     
                     <div class="comment_text">
-                        <%= cur_m.content %>
+                         <% if (cur_m.disabled) { %>
+                            <em style="color:orangered"><%= cur_m.content %></em> <!-- @DRU PLEASE ADD EYE CROSSED, to make clear the comment is disabled -->
+                        <% } else if (!cur_m.visibility) { %> 
+                            <%= cur_m.content %> <!-- @DRU PLEASE BLUR THIS -->
+                        <% } else { %>
+                            <%= cur_m.content %>
+                        <% } %> 
                         <!-- <br> -->
                         <div class="icons">
-                            <button type="button" class="fas fa-reply" onclick="toggleComment('<%= id_m %>')" value="0" id="b<%= id_m %>" title="Reply"></button>
-                            <i class="fas fa-flag" title="Report"></i>
+                            <% if (!cur_sub.disabled && cur_sub.visibility) {%>
+                                <button type="button" class="fas fa-reply" onclick="toggleComment('<%= id_m %>')" value="0" id="b<%= id_m %>" title="Reply"></button>
+                                <i class="fas fa-flag" title="Report"></i>
+                            <% } %>
                         </div>
+                        
                         
                         <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
                             <!-- <button onclick="toggleComment('<%= id_m %>')" type="button" class="reply_button_left" value="0" id="b<%= id_m %>">Reply</button> -->
@@ -140,25 +151,34 @@
                             </div>
                             <div class="comment_reply_date">
                                 <%= date %>
+                                <% if (!cur_sub.disabled && cur_sub.visibility) {%>
                                 <button onclick="toggleReport('<%= id_sub %>')" class="fas fa-flag" title="Report" value="0" id="r<%= id_sub %>"></button>
                                 <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
                                     <input type="hidden" name="type" value="coreport">
                                     <input type="text" placeholder="Reason of the report" name="rep_content" id="<%= id_sub %>re" style="display: None;">
                                     <button type="submit" name="rep_btn" value="<%= id_sub %>" id="<%= id_sub %>r" style="display: None;" >Rep</button>
                                 </form>
+                                <% } %>
                             </div>
                         </div>
                         <div class="reply_text">
-                            <% if (cur_sub.repAuthorId == userId) { %> <!-- Affiche le content en bleu si c'est une réponse au user conntecté -->
+                            <% if (cur_sub.repAuthorId == userId && cur_sub.visibility && !cur_sub.disabled) { %> <!-- Affiche le content @ en rouge si c'est une réponse au user conntecté -->
                                 <!-- text to highlight                                | text not to highlight -->
                                 <a style="padding: 3px; border-radius: 5px; border: 1px solid rgb(255, 0, 0); background-color: #ff00007c;"><%= cur_sub.toAuthor %></a> <%= cur_sub.content %>
+                            <% } else if (cur_sub.visibility && cur_sub.disabled) { %>
+                                <em style="color:orangered"><%= cur_sub.content %></em> <!-- @DRU PLEASE ADD EYE CROSSED, to make clear the comment is disabled -->
+                            <% } else if (!cur_sub.visibility) { %>
+                                 <%= cur_sub.content %>  <!-- @DRU PLEASE BLUR THIS -->
                             <% } else { %>
-                                <%= cur_sub.toAuthor %> <%= cur_sub.content %>
+                                <%= cur_sub.content %> 
+
                             <% } %>
                             <!-- <br> -->
                             <div class="icons">
-                                <button type="button" class="fas fa-reply" onclick="toggleComment('<%= id_sub %>')" value="0" id="b<%= id_sub %>" title="Reply"></button>
-                                <i class="fas fa-flag" title="Report"></i>
+                                <% if (!cur_sub.disabled && cur_sub.visibility) {%>
+                                    <button type="button" class="fas fa-reply" onclick="toggleComment('<%= id_sub %>')" value="0" id="b<%= id_sub %>" title="Reply"></button>
+                                    <i class="fas fa-flag" title="Report"></i>
+                                <% } %>
                             </div>
                             
                             <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
