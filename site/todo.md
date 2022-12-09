@@ -35,5 +35,5 @@ aussi)
     * [X] On peut pas reply si il est visibility true mais disable true
 * [X] page non accessible si ad blur
 * [X] admin page non accessible
-* [ ] comment le code :/
+* [X] comment le code :/
 * [X] report impossible sur son commentaire / annonce
