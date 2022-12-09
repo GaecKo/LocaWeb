@@ -13,7 +13,6 @@ class Comment extends Model {}
 
 class Report extends Model {}
 
-// class Images extends Model {}
 
 User.init({
     id: {

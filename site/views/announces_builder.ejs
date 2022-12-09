@@ -69,7 +69,9 @@
                 </div>
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 <!-- Image -->
-                <input  class="textinput smallinput" type="file" id="image" name="images" accept="image/*">
+                <input id="files" type="file" accept="image/png" name="images" class="textinput smallinput"  multiple>  
+                <a class="remove" onclick="removeLastPicture()"> X </a>
+                <div id="preview"></div>
                 <br>
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 <!-- submit btn -->
@@ -78,9 +80,33 @@
             </form>
 
         </div>
-
-
     </div>
+
+    <script>
+        // Preview image
+        const preview = (file) => {
+            const fr = new FileReader();
+            fr.onload = () => {
+                const img = document.createElement("img");
+                img.src = fr.result;  // String Base64 
+                img.alt = file.name;
+                document.querySelector('#preview').append(img);
+            };
+            fr.readAsDataURL(file);
+        };
+
+        document.querySelector("#files").addEventListener("change", (ev) => {
+            if (!ev.target.files) return; // Do nothing.
+            [...ev.target.files].forEach(preview);
+        });
+
+        //remove all the pictures at once and reset the name of the file
+        function removeLastPicture(){ 
+            var preview = document.getElementById('preview');
+            while (preview.firstChild) preview.removeChild(preview.firstChild);
+            document.getElementById('files').value = "";
+        }
+    </script>
 
     <%- include('template/footer.ejs') %>
     

@@ -39,3 +39,14 @@
 .smallinput{
     width: auto;
 }
+
+#preview img { 
+    max-height: 100px; 
+    margin-top: 10px;
+}
+
+.remove{
+  color:red;
+  font-size:1.5em;
+  margin-left: 10px;
+}

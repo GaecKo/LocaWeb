@@ -186,53 +186,63 @@ app.post('/signup', async function (req, res) {
   }
 });
 
-app.post("/announces_builder",  upload.single("images" /* "images" is the name of the <file> input type in the form */), async (req, res) => {
-  const tempPath = req.file.path;
-  const time = Date.now();
-  const targetPath = path.join(__dirname, "./data/uploads/"+time+".png");
+app.post("/announces_builder",  upload.array("images" /* "images" is the name of the <file> input type in the form */), async (req, res) => {
 
-  if (path.extname(req.file.originalname).toLowerCase() === ".png") { // we can add more file types
-    fs.rename( tempPath, targetPath, async (err) => {
-      if (err) return handleError(err, res);
+  //the files should be in the temp folder, we need to move them to the data/uploads folder
+  //list with all the paths of the images
+  let images = []
 
-      req.session.screen_message = "File uploaded succesfully!"
+  for (let i = 0; i < req.files.length; i++) {
+    const tempPath = req.files[i].path;
+    const time = Date.now();
+    const targetPath = path.join(__dirname, "./data/uploads/"+time+".png");
 
-      console.log(req.file.originalname + " has been uploaded !")
+    if (path.extname(req.files[i].originalname).toLowerCase() === ".png") { //if the file is a png
+      fs.rename
+      ( tempPath, targetPath, async (err) => {
+        if (err) return handleError(err, res);
 
-      //now that the image is uploaded, we can add the announce to the database
-      title = req.body.title
-      description = req.body.description
-      price = req.body.price
-      city = req.body.city  
-      rate = req.body.rate 
-      image = time+".png"; //we store the name of the image in the database
-
-      let result = await db.addAd(req.session.userId, title, description, city, price, rate, image)
-      if (result) {
-        req.session.screen_message = "Offer added succesfully!"
+        req.session.screen_message = "File uploaded succesfully!"
+        images.push(time+".png")
+        console.log(req.files[i].originalname + " has been uploaded has " + time + ".png ! ")
+      });
+    } else { //if the file is not a png
+      fs.unlink(tempPath, err => {
+        if (err) return handleError(err, res);
+  
         res
-          .status(200)
+          .status(403)
           .contentType("text/plain")
-          .redirect('/announces');
-          
-      } else {
-        req.session.screen_message = "Something went wrong, please try again"
-        res.redirect("/announces_builder")
-      }
-      })
-    
-
-  } else { //if the file is not a png
-    fs.unlink(tempPath, err => {
-      if (err) return handleError(err, res);
-
-      res
-        .status(403)
-        .contentType("text/plain")
-        .end("Only .png files are allowed!");
-    });
+          .end("Only .png files are allowed!");
+      });
+    }
   }
+
+  //wait for the images to be uploaded
+  await new Promise(r => setTimeout(r, 1000));
+
+  //now that the images are uploaded, we can add the announce to the database
+  title = req.body.title
+  description = req.body.description
+  price = req.body.price
+  city = req.body.city
+  rate = req.body.rate
+  images = images.toString() // list of all the images
+
+  let result = await db.addAd(req.session.userId, title, description, city, price, rate, images)
+  if (result) {
+    req.session.screen_message = "Offer added succesfully!"
+    res
+      .status(200)
+      .contentType("text/plain")
+      .redirect('/announces');
+      
+  } else {
+    req.session.screen_message = "Something went wrong, please try again"
+    res.redirect("/announces_builder")
+}
 });
+
 
 app.post("/admin", async function (req, res) {
   console.log("Type: " + req.body.type)
@@ -252,7 +262,7 @@ app.post("/admin", async function (req, res) {
     }
   }
   res.redirect("/admin")
-})
+});
 
 app.post("/profile", async function (req, res) {
   console.log(req.body)
