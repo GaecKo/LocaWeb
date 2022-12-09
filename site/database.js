@@ -2,14 +2,6 @@ const {User, Ad, Comment, Report} = require("./tables")
 
 // USERS SECTIONS
 
-async function checkReportsUser() {
-    /*
-    * Function to check if Users are +- banned
-    * 
-    */
-   // TODO
-}
-
 async function getUser(username){
     /*
     * Return user (object with user's info) if finded, false if not
@@ -895,7 +887,6 @@ module.exports = {
     getComment,
     addComment,
     getFullComments,
-    checkReportsUser,
     getUserAd,
     clearCommentReports, 
     clearAdReports, 

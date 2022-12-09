@@ -16,8 +16,10 @@
     <div class="main">
 
         <%- include('template/header.ejs') %>
-        <% reported = ad.reporters.includes(userId) || userId == ad.reporters%>
-        <% if (!reported ){ %>
+        <% has_reported = ad.reporters.includes(userId) || userId == ad.reporters || (ad.user == userId)%>
+        <!-- has_Reported is used to define whether or not the user should see the buttons to report and ad / comments -->
+        <!-- This represents the case where someone has already reported an ad / comments or that he is the creator of the ad / comment -->
+        <% if (!has_reported ){ %>
         <button onclick="toggleReport('0')" class="fas fa-flag" title="Report" value="0" id="r0"></button>
         <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
             <input type="text" placeholder="Reason of the report" name="rep_content" id="0re" style="display: None;">
@@ -98,7 +100,7 @@
                     });
                 </script>
 
-            <% } %>
+                <% } %>
 
             </div>
 
@@ -163,8 +165,9 @@
                         <div class="comment_date">
                             <%= date %>
                         </div>
-                        <% reported = (cur_m.reporters.includes(userId)) || (userId == cur_m.reporters) %>
-                        <% if (!cur_m.disabled && cur_m.visibility && !(userId in cur_m.reporters) && !reported) {%>
+                        <!-- see line 20 for has_reported explaination -->
+                        <% has_reported = (cur_m.reporters.includes(userId)) || (userId == cur_m.reporters) || (cur_m.user == userId) %>
+                        <% if (!cur_m.disabled && cur_m.visibility && !(userId in cur_m.reporters) && !has_reported) {%>
                             <button onclick="toggleReport('<%= id_m %>')" class="fas fa-flag" title="Report" value="0" id="r<%= id_m %>"></button>
                             <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
                                 <input type="hidden" name="type" value="coreport">
@@ -192,7 +195,6 @@
                         
                         
                         <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
-                            <!-- <button onclick="toggleComment('<%= id_m %>')" type="button" class="reply_button_left" value="0" id="b<%= id_m %>">Reply</button> -->
                             <div class="type_and_send_content_reply" id="<%= id_m %>">
                                 <input type="hidden" name="type" value="comment">
                                 <input type="text" id="<%= id_m %>c" style="display: None;" class="comment_type_reply" name="res_content" placeholder="Type your text here">
@@ -212,8 +214,8 @@
                             </div>
                             <div class="comment_reply_date">
                                 <%= date %>
-                                <% reported = (cur_sub.reporters.includes(userId)) || (userId == cur_sub.reporters) %>
-                                <% if (!cur_sub.disabled && cur_sub.visibility && (!(userId in cur_sub.reporters) && !reported)) { %>
+                                <% has_reported = (cur_sub.reporters.includes(userId)) || (userId == cur_sub.reporters) || (cur_sub.user == userId) %>
+                                <% if (!cur_sub.disabled && cur_sub.visibility && (!(userId in cur_sub.reporters) && !has_reported)) { %>
                                 <button onclick="toggleReport('<%= id_sub %>')" class="fas fa-flag" title="Report" value="0" id="r<%= id_sub %>"></button>
                                 <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
                                     <input type="hidden" name="type" value="coreport">
@@ -222,6 +224,7 @@
                                 </form>
                                 <% } %>
                             </div>
+                            
                         </div>
                         <div class="reply_text">
                             <% if (cur_sub.repAuthorId == userId && cur_sub.visibility && !cur_sub.disabled) { %> <!-- Affiche le content @ en rouge si c'est une réponse au user conntecté -->
