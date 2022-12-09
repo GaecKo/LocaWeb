@@ -252,6 +252,7 @@ async function getAd(adId) {
             console.log("ad: " + adId + " was found and retrieved.")
             ad = ad.dataValues
             ad.comments = JSON.parse(ad.comments)
+            ad.reporters = await getReportedUserIdofAd(ad.id)
             return ad 
         } else {
             console.log("ad: " + adId + " was NOT found.")
@@ -371,7 +372,8 @@ async function getFullComments(comments) {
         repAuthorId = main_Content.repAuthorId
         
         main_Content.createdAt = date.toLocaleDateString() + " " + date.getHours() + "h" + goodDate(date.getMinutes())
-        main_Content.username = await getUsername(main_Content.user)      
+        main_Content.username = await getUsername(main_Content.user)    
+        main_Content.reporters =   await getReportedUserIdofComment(main_Content.id)
         val = {
             responses : comments[main_id],
         }
@@ -383,6 +385,7 @@ async function getFullComments(comments) {
                 co = coms[co]
                 date = co.dataValues.createdAt
                 co.dataValues.createdAt = date.toLocaleDateString() + " " + date.getHours() + "h" + goodDate(date.getMinutes())
+                co.dataValues.reporters = await getReportedUserIdofComment(co.dataValues.id)
                 if (co.dataValues.repAuthorId != null && !co.dataValues.disabled) {
                     co.dataValues.toAuthor = "@" + await getUsername(co.dataValues.repAuthorId)
                 }
@@ -460,12 +463,15 @@ async function addComment(adId, text, authorId, parentId=null, repId=null) {
 }
 
 // REPORTS SECTIONS
-async function addReport(report_text) {
+async function addReport(report_text, userId, adId=null, coId=null) {
     /* Return reportId if report has been added successfully  
     * Return false if not
     */ 
     return Report.create({
-        content: report_text
+        content: report_text,
+        userId: userId,
+        adId: adId,
+        commentId: coId
     }).then(repo => {
         if (repo) {
             console.log("Report has been added to database")
@@ -682,6 +688,38 @@ async function deleteReports(reportIdList) {
     })
 }
 
+async function getReportedUserIdofComment(coId) {
+    return Report.findAll({where: {commentId: coId}, attributes: ["userId"]}).then(usrs => {
+        if (usrs) {
+            for (usr in usrs) {
+                usrs[usr] = usrs[usr].dataValues.userId
+            }
+            return usrs
+        } else {
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while retrieving userId of comment report: " + err)
+        return false
+    })
+}
+
+async function getReportedUserIdofAd(adId) {
+    return Report.findAll({where: {adId: adId}, attributes: ["userId"]}).then(usrs => {
+        if (usrs) {
+            for (usr in usrs) {
+                usrs[usr] = usrs[usr].dataValues.userId
+            }
+            return usrs
+        } else {
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while retrieving userId of comment report: " + err)
+        return false
+    })
+}
+
 /**
  * @param {int} userID is the id of the user you want to decrease the number of reports
  * @param {int} nbr the number of reports you want to delete
@@ -782,15 +820,15 @@ async function clearAdReports(adId) {
     })
 }
 
-async function addAdReport(adId, report_text="") {
-    reportId = await addReport(report_text)
+async function addAdReport(adId, report_text="", userId) {
+    reportId = await addReport(report_text, userId, adId)
     return Ad.findOne({where: { id: adId},
         attributes: ["reports", "user", "reports_list"] }).then(ad => {
             if (ad) {
                 reports = ad.dataValues.reports + 1
                 reports_list = JSON.parse(ad.dataValues.reports_list)
                 reports_list.push(reportId)
-                visibility = (!reports_list.length > 3)
+                visibility = !(reports_list.length > 3)
                 return Ad.update({reports: reports, reports_list: JSON.stringify(reports_list), visibility: visibility}, {where: {id: adId}}).then(async state => {
                     return await addUserReport(ad.dataValues.user);   
                 })
@@ -804,8 +842,8 @@ async function addAdReport(adId, report_text="") {
         })
 }
 
-async function addCommentReport(coId, report_text="") {
-    let reportId = await addReport(report_text)
+async function addCommentReport(coId, report_text="", userId) {
+    let reportId = await addReport(report_text, userId, null, coId=coId)
     return Comment.findOne({
         where: {
             id: coId
@@ -815,7 +853,7 @@ async function addCommentReport(coId, report_text="") {
                 reports = co.dataValues.reports + 1
                 reports_list = JSON.parse(co.dataValues.reports_list)
                 reports_list.push(reportId)
-                visibility = (!reports_list.length > 3)
+                visibility = !(reports_list.length > 3)
                 return Comment.update({reports: reports, reports_list: JSON.stringify(reports_list), visibility: visibility}, {where: {id: coId}}).then(async state => {
                     return await addUserReport(co.dataValues.user);   
                 })
@@ -865,7 +903,7 @@ module.exports = {
 async function main(){
     // await addUser("Max", "gagxxx", "password")
     // await addUser("GaecKo", "mohem", "password")
-    // await addAd(1, "titredelad", "descript", "city", "3000", "path")
+    // await addAd(1, "titredelad", "descript", "city", "3000", "$", "path")
 
     // await addComment(1, "Bonjour puis-je venir", 1)
     // await addComment(1, "Oui pas de soucis", 2, 1, 1)
@@ -887,7 +925,8 @@ async function main(){
 
     // await addAdReport(1, "pas cool")
     // await addAdReport(1, "pas nice")
-    // await addCommentReport(1, "pas sympas")
+    // await addCommentReport(1, "pas sympas", 1)
+
     // await addCommentReport(1, "pas sympas")
     // await addCommentReport(1, "pas sympas")
 

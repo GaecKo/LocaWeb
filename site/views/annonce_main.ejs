@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/main_annonce.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
-    <title><%= ad.images %></title> 
+    <title><%= ad.title %></title> 
     <link rel="icon" type="image/svg+xml" href="../image/logo.svg">
 </head>
 
@@ -16,12 +16,14 @@
     <div class="main">
 
         <%- include('template/header.ejs') %>
-
+        <% reported = ad.reporters.includes(userId) || userId == ad.reporters%>
+        <% if (!reported ){ %>
         <button onclick="toggleReport('0')" class="fas fa-flag" title="Report" value="0" id="r0"></button>
         <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
             <input type="text" placeholder="Reason of the report" name="rep_content" id="0re" style="display: None;">
             <button type="submit" name="type" value="adreport" id="0r" style="display: None;" >Rep</button>
         </form>
+        <% } %>
 
         <div class="main_announce_container">
             <div class="announce_container_left">
@@ -103,7 +105,8 @@
                         <div class="comment_date">
                             <%= date %>
                         </div>
-                        <% if (!cur_m.disabled && cur_m.visibility) {%>
+                        <% reported = (cur_m.reporters.includes(userId)) || (userId == cur_m.reporters) %>
+                        <% if (!cur_m.disabled && cur_m.visibility && !(userId in cur_m.reporters) && !reported) {%>
                             <button onclick="toggleReport('<%= id_m %>')" class="fas fa-flag" title="Report" value="0" id="r<%= id_m %>"></button>
                             <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
                                 <input type="hidden" name="type" value="coreport">
@@ -151,7 +154,8 @@
                             </div>
                             <div class="comment_reply_date">
                                 <%= date %>
-                                <% if (!cur_sub.disabled && cur_sub.visibility) {%>
+                                <% reported = (cur_sub.reporters.includes(userId)) || (userId == cur_sub.reporters) %>
+                                <% if (!cur_sub.disabled && cur_sub.visibility && (!(userId in cur_sub.reporters) && !reported)) { %>
                                 <button onclick="toggleReport('<%= id_sub %>')" class="fas fa-flag" title="Report" value="0" id="r<%= id_sub %>"></button>
                                 <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
                                     <input type="hidden" name="type" value="coreport">

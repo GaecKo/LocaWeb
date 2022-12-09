@@ -93,7 +93,7 @@ app.get('/announces/:productId', async function (req, res) {
   const productId = req.params;
   const ad = await db.getAd(productId.productId);
   if (!ad.visibility) {
-    req.session.screen_message = "This announce is currently been checked because due to reports."
+    req.session.screen_message = "This announce is currently been checked due to reports."
     res.redirect("/announces")
   }
   const comments = await db.getFullComments(ad.comments)
@@ -143,11 +143,11 @@ app.post('/announces/:productId', async function (req, res) {
  } else if (req.body.type == "coreport") {
     let content = req.body.rep_content
     let co_id = req.body.rep_btn
-    await db.addCommentReport(co_id, content)
+    await db.addCommentReport(co_id, content, req.session.userId)
 
   } else if (req.body.type == "adreport") {
     let content = req.body.rep_content
-    await db.addAdReport(adId, content)
+    await db.addAdReport(adId, content, req.session.userId)
   }
   
   res.redirect('/announces/' + adId)

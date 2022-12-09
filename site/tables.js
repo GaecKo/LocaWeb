@@ -187,6 +187,31 @@ Report.init({
         autoIncrement: true,
         primaryKey: true
     },
+    userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: User,
+            key: "id"
+        }
+    },
+    commentId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: Comment,
+            key: "id"
+        }
+    },
+    adId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: Ad,
+            key: "id"
+        }
+    },
+
     content: {
         type: DataTypes.TEXT,
         allowNull: false
