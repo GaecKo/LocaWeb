@@ -46,7 +46,6 @@
         <div class="annonce-container">
 
             <!-- La boucle qui parcourt les annonces commencera ici -->
-
             <% for (var i = 0; i < announces.length; i++) { %>
 
                 <div class="annonce-element">
@@ -63,7 +62,7 @@
                     <div class="annonce-middle">
                         <div class="annonce-image">
                             <!-- Image de l'annonce -->
-                            <img  class="image" src="/uploads/<%= announces[i].images %>" alt="<%= announces[i].images %>">
+                            <img  class="image" src="/uploads/<%= announces[i].images[0] %>" alt="<%= announces[i].images[0] %>">
                         </div>
                     </div>
                     <div class="annonce-bottom">
