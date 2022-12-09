@@ -1,6 +1,8 @@
 @DRU 
 * [ ] si un commentaire est diabled, ajouter une icone d'oeuil barré avant le content ( ou comme tu veux, juste faut que ce soit claire que le commentaire a été disabled) la condition ejs a déjà été faite
 * [ ] Button disconnect (+ form), je ferai le index.js
+* [ ] Restylisé / rendre les pages d'annonces plus remplies (titres de sections, style, ...)
+* [ ] Light / Dark mode 
 * [ ] Faire un truc clean pour les reports (commentaires et ads)
 * [ ] Rendre la page admin un rien plus propre histoire que ce soit pas non plus trop trop complêtement hors style du site (faut pas qu'on croit que ça ait été fait en dernière minute quoi)
 * [ ] Si une annonce est pas visible dans la page des annonces (condition ejs déjà faite), qu'elle soit bien flouté, que ce soit claire qu'elle soit pas accessible (p-ê ajouter un petit text en rouge dans le cadre indiquant qu'elle est pas dispo
