@@ -92,6 +92,10 @@ app.get('/announces', async function (req, res) {
 app.get('/announces/:productId', async function (req, res) {
   const productId = req.params;
   const ad = await db.getAd(productId.productId);
+  if (!ad.visibility) {
+    req.session.screen_message = "This announce is currently been checked because due to reports."
+    res.redirect("/announces")
+  }
   const comments = await db.getFullComments(ad.comments)
   const user = await db.getUsername(ad.user)
   res.render("./annonce_main", {username : req.session.username, ad: ad, comments: comments, userId: req.session.userId, user: user});
