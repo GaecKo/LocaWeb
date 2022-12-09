@@ -1,14 +1,17 @@
 const {User, Ad, Comment, Report} = require("./tables")
 
+
 // USERS SECTIONS
 
+/**
+ * 
+ * @param {str} username of the user 
+ * @returns a dic {id: ..., username: ..., ...}
+ */
 async function getUser(username){
-    /*
-    * Return user (object with user's info) if finded, false if not
-    */
     return User.findOne({where: {username: username}}).then(user => {
         if (user) {   
-            return user.dataValues
+            return user.dataValues // where the values are located
         } else {
             console.log("User not found")
             return false
@@ -20,12 +23,16 @@ async function getUser(username){
     })
 }
 
+/**
+ * 
+ * @param {int} id of the user to get the ads from 
+ * @returns an object [{id: 1, comments: [...], ...}, {...}, ...] representing the ads 
+ * of an author as an array
+ */
 async function getUserAds(userId) {
-    /* Returns all ads of a user has an array*/
     return Ad.findAll({where: {user: userId}}).then(ads => {
         if (ads) {
-            //ads.images = JSON.parse(ads.images)
-            for (let i = 0; i < ads.length; i++) {
+            for (let i = 0; i < ads.length; i++) { // convert string representation of the object to real object
                 ads[i].images = JSON.parse(ads[i].images)
             }
             return ads
@@ -39,10 +46,15 @@ async function getUserAds(userId) {
     })
 }
 
+/**
+ * 
+ * @param {str} username of the User to get the id from 
+ * @returns the id of the User with the given username
+ */
 async function getUserId(username) {
     return User.findOne({where: {username: username}, attributes: ["id"]}).then(usr => {
         if (usr) {
-            return usr.dataValues.id
+            return usr.dataValues.id // the id we are looking for
         } else {
             console.log("Couldn't find id of User " + username)
             return false
@@ -53,10 +65,15 @@ async function getUserId(username) {
     })
 }
 
+/**
+ * 
+ * @param {int} id of the User to get the username from 
+ * @returns the username of the User with the given id
+ */
 async function getUsername(id) {
     return User.findOne({where: {id: id}, attributes: ["username"]}).then(usr => {
         if (usr) {
-            return usr.dataValues.username
+            return usr.dataValues.username // the username we are looking for
         } else {
             console.log("Couldn't find username of User " + id)
             return false
@@ -67,11 +84,14 @@ async function getUsername(id) {
     })
 }
 
+/**
+ * 
+ * @param {str} username of the new User to add
+ * @param {str} email of the new User to add
+ * @param {hashed_str} password (hashed) of the new User to add
+ * @returns true if added, false if not
+ */
 async function addUser(username, email, password) {
-    /*
-     * return true if User has been added to database
-     * return false if error
-     */
 
     return User.create({
         username: username,
@@ -79,26 +99,28 @@ async function addUser(username, email, password) {
         password: password
     }).then(user => {
         console.log("User added: " + user.dataValues.username);
-        return true;
+        return true; // displays if user added or not
     }).catch(err => {
         console.log("User already exists?: " + err);
         return false;
     })
 }
 
-async function setModoState(username, state) {
-    /*
-    *  Update User (username) to the given state (true or false)
-    *  return true if updated, false if not    
-    */
+/**
+ * 
+ * @param {str} username of the user to change role
+ * @param {boolean} state in which to put the moderation role of the user
+ * @returns true if updated, false if not
+ */
+async function setModoState(id, state) {
     if (typeof state !== 'boolean') {
         console.log("Wrong State input")
         return false;
     }
-    return User.update({moderator: state}, {where: {username: username}}).then(state => {
+    return User.update({moderator: state}, {where: {id: id}}).then(state => {
         if (state == 1) {
             console.log("User: " + username + " has been updated: " + state)
-            return true
+            return true // displays if user had his modo state changed
         } else {
             console.log("User couldn't be updated (not found).")
             return false
@@ -109,37 +131,12 @@ async function setModoState(username, state) {
     })        
 }
 
-async function getAllUsers() {
-    /*
-    *  Return a list with all the users in it with simple attributes
-    *  return false if no users
-    */
-    const lst = []
-
-    return User.findAll().then(users => {
-        if (users.length > 0) {
-            Object.entries(users).forEach(user => {
-                lst.push(Array.from(user)[1].dataValues) 
-                // the object user contains important data in 
-                // User : Datavalues : {...}, User is located at index 1 of array representing the user object
-            })
-            console.log("All users were retrieved")
-            return lst;
-        } else {
-            console.log("No user found")
-            return false;
-        }
-    }).catch(err => {
-        console.log("Error occuried while retrieving all Users data: " + err);
-        return false;
-    })
-}
-
+/**
+ * 
+ * @param {id} id of the user 
+ * @returns true if the user if modo, false if not
+ */
 async function isModo(id) {
-    /*
-    *  Return true if User with username is modo
-    *  return false if not
-    */
     return User.findOne({where: {id: id, moderator: true}}).then(user => {
         if (user) {
             console.log(id + " is modo")
@@ -154,6 +151,11 @@ async function isModo(id) {
     })
 }
 
+/**
+ * 
+ * @param {int} id of the User 
+ * @returns true if the User is banned, false if not
+ */
 async function isBanned(id) {
     return User.findOne({where: {id: id, banned: true}}).then(user => {
         if (user) {
@@ -169,13 +171,19 @@ async function isBanned(id) {
     })
 }
 
+/**
+ * 
+ * @param {int} userId the id of the User to set the password to 
+ * @param {str} password the password (already hashed) to set on User
+ * @returns true if done, false if not
+ */
 async function updatePassword(userId, password) {
     /* Finds the user in the database 
     and updates his password with the new one*/
     return User.update({password: password}, {where: {id: userId}}).then(state => {
         if (state == 1) {
             console.log("Password for user " + userId + " has been updated")
-            return true
+            return true // displays if the user has been added
         } else {
             console.log("Password for user " + userId + " couldn't be updated, user exists?")
             return false
@@ -186,6 +194,12 @@ async function updatePassword(userId, password) {
     })
 }
 
+/**
+ * 
+ * @param {int} userId the id of the User to change the username to
+ * @param {*} username the username to set on the User
+ * @returns true if done, false if not
+ */
 async function updateUsername(userId, username) {
     /* Finds the user in the database
     and updates his username with the new one*/
@@ -203,6 +217,12 @@ async function updateUsername(userId, username) {
     })
 }
 
+/**
+ * 
+ * @param {id} userId the id of the User to change the username to
+ * @param {*} email the email to set on the User
+ * @returns true if done, false if not
+ */
 async function updateEmail(userId, email) {
     /* Finds the user in the database
     and updates his email with the new one*/
@@ -262,7 +282,6 @@ async function getAd(adId) {
     })
 }
 
-
 async function addAd(userId, title, description, city, price, rate, images) {
     return Ad.create({
         user : userId,
@@ -312,8 +331,14 @@ async function getAllAds() {
 
 // COMMENTS SECTION
 
+/**
+ * 
+ * @param {int} coId the id that has to be disabled
+ * @return true if done, false if not
+ */
 async function disableComment(coId) {
-    Comment.update({content: "This comment has been suspended for undesirable content.", visibility: true, disabled: true}, {where: {id: coId}}).then(state => {
+    return Comment.update({content: "This comment has been suspended for undesirable content.", visibility: true, disabled: true}, {where: {id: coId}}).then(state => {
+        // visibility set to true (false = to be moderated), disabled so it's clear it has been moderated, content of the comment is also adapted
         if (state == 1) {
             console.log("Comment with id " + coId + " has been suspended")
             return true
@@ -327,6 +352,12 @@ async function disableComment(coId) {
     })
 }
 
+/**
+ * 
+ * @param {int} coId the if of the comment to retrieve
+ * @returns the comment as an object {id: ...., user: ..., ...} or 
+ *          false if the comment doesnt exist
+ */
 async function getComment(coId) {
     return Comment.findOne({where: {id: coId}}).then(co => {
         if (co) {
@@ -341,6 +372,12 @@ async function getComment(coId) {
     })
 }
 
+/**
+ * 
+ * @param {int} coId the id of the comment from which to retrieve the user 
+ * @returns the id of the creator if the comment, 
+ *          false of the comment doesnt exist 
+ */
 async function getUserComment(coId) {
     return Comment.findOne({where: {id: coId}, attributes: ["user"]}).then(async co => {
         if (co) {
@@ -356,6 +393,21 @@ async function getUserComment(coId) {
     })
 }
 
+/**
+ * 
+ * @param {object} comments the comment object ({11: [12, 13, 14], 15: [16]}) 
+ *                          representing the main comment and sub comments 
+ * @returns an onject representing the structure of the comment sections with all the data needed
+ *          for displaying it on the page: 
+ *             {main_id: {
+ *                  id: ...
+ *                  ...
+ *                  responses: [
+ *                      {
+ *                        id: ...
+ *                          ...
+ *                      }]}}
+ */
 async function getFullComments(comments) {
     function goodDate(date) {
         // Returns a string of length two corresponding to the minutes (4 -> 04, 15 -> 15)
@@ -365,21 +417,25 @@ async function getFullComments(comments) {
         return date;
       }
     for (main_id in comments) {
-        main_Content = await getComment(main_id)
+        main_Content = await getComment(main_id) // retrieve the main content in a for loop
         date = main_Content.createdAt
-        repAuthorId = main_Content.repAuthorId
+        repAuthorId = main_Content.repAuthorId 
         
-        main_Content.createdAt = date.toLocaleDateString() + " " + date.getHours() + "h" + goodDate(date.getMinutes())
-        main_Content.username = await getUsername(main_Content.user)    
+        main_Content.createdAt = date.toLocaleDateString() + " " + date.getHours() + "h" + goodDate(date.getMinutes()) 
+        // create a nice looking date
+        main_Content.username = await getUsername(main_Content.user) // gets the username of the userId, id known in the data 
         main_Content.reporters =   await getReportedUserIdofComment(main_Content.id)
+        // gets the reporters ids, used so only non reporters can still report the comment
         val = {
             responses : comments[main_id],
         }
         val = Object.assign(val, main_Content)
+        // val is used as a temp var
 
         val.responses = await Comment.findAll({where: {id: val.responses}}).then(async coms => {
-            let mens = {}
+            let mens = {} // retrieve the data of the sub comment
             for (co in coms) {
+                // these following lines are similar to the above one, just applied on sub comments instead of main comment
                 co = coms[co]
                 date = co.dataValues.createdAt
                 co.dataValues.createdAt = date.toLocaleDateString() + " " + date.getHours() + "h" + goodDate(date.getMinutes())
@@ -393,30 +449,36 @@ async function getFullComments(comments) {
             return mens
         }).catch(err => {
             console.log(err)
-        })
+        }) // array responses is filled up with each sub comment data
         
         comments[main_id] = val
     }
     return comments
 }
 
+/**
+ * 
+ * @param {int} adId the id of the ad on which the comment was added
+ * @param {str} text the content of the comment
+ * @param {int} authorId the id of the author
+ * @param {int} parentId the id of the parent comment (so if this comment 
+ *                       if a sub comment(= a reponse))
+ * @param {int} repId the id of the comment of which this comment is a 
+ *                    response of, used for tagging purpose
+ * @returns true if correctly added, false if not
+ */
 async function addComment(adId, text, authorId, parentId=null, repId=null) {
     /* parentId: main comment, in which this comment is a subcomment
     *  repId: id to who the comment is responding (could be the same as parentId)
     */
     if (parentId != null && repId == null) {
-        repId = parentId
+        repId = parentId // the tag will be applied on the parentId
     }
     let ad = await getAd(adId)
     let comments = ad.comments
-    repAuthorId = null
-    if (repId != null) {
-        repAuthorId = await getUserComment(repId)
-    } else {
-        if (parentId != null) {
-            repAuthorId = await getUserComment(parentId)
-        }   
-    }
+    repAuthorId = await getUserComment(repId) 
+    // the id of the user in which this comment is a response to 
+    
     cId = await Comment.create({
         content: text,
         user: authorId,
@@ -439,9 +501,9 @@ async function addComment(adId, text, authorId, parentId=null, repId=null) {
         return 
     }
     if (parentId == null) {
-        comments[cId] = []
+        comments[cId] = [] // if its a main comment
     } else {
-        comments[parentId].push(cId)
+        comments[parentId].push(cId) // if its a sub comment
     } 
         
     return Ad.update({comments: JSON.stringify(comments)}, {where: {id: adId}}).then(state => {
@@ -455,12 +517,14 @@ async function addComment(adId, text, authorId, parentId=null, repId=null) {
     }).catch(err => {
         console.log("unable to add comment: " + err)
         return false
-    })
+    }) // update the comment with the new comments structure 
 
     
 }
 
+
 // REPORTS SECTIONS
+
 async function addReport(report_text, userId, adId=null, coId=null) {
     /* Return reportId if report has been added successfully  
     * Return false if not
@@ -876,7 +940,6 @@ module.exports = {
     getUsername,
     getUserAds,
     setModoState,
-    getAllUsers,
     isModo,
     addCommentReport,
     addUserReport,
@@ -938,4 +1001,4 @@ async function main(){
     // await setModoState("GaecKo", true)
 }
 
-main()
+// main()
