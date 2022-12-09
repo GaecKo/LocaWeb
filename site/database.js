@@ -32,6 +32,10 @@ async function getUserAds(userId) {
     /* Returns all ads of a user has an array*/
     return Ad.findAll({where: {user: userId}}).then(ads => {
         if (ads) {
+            //ads.images = JSON.parse(ads.images)
+            for (let i = 0; i < ads.length; i++) {
+                ads[i].images = JSON.parse(ads[i].images)
+            }
             return ads
         } else {
             console.log("No ads found for user " + userId)

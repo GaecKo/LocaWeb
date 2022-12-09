@@ -43,6 +43,8 @@
 
                 </div>
 
+                <% if (imgArray) { %>
+
                 <script>
 
                     // TODO display the current image number under the image
@@ -50,10 +52,9 @@
                     //when the right arrow is clicked
                     document.getElementById("arrow_right").addEventListener("click", function(){
 
-                        var imageArray = "<%= ad.images %>"
                         //change the string array to a js array
-                        var imageArray = imageArray.split(",")
-
+                        var imageArray = <%- JSON.stringify(imgArray) %>;
+                        
                         //find in the array where the current image is
                         var currentImage = document.querySelector(".image");
                         var currentImageSrc = currentImage.src.split("/")[4];
@@ -75,9 +76,8 @@
                     //when the left arrow is clicked
                     document.getElementById("arrow_left").addEventListener("click", function(){
 
-                        var imageArray = "<%= ad.images %>"
-                        //change the string array to a js array
-                        var imageArray = imageArray.split(",")
+                       //change the string array to a js array
+                       var imageArray = <%- JSON.stringify(imgArray) %>;
 
                         //find in the array where the current image is
                         var currentImage = document.querySelector(".image");
@@ -97,6 +97,9 @@
                         currentImage.src = "/uploads/" + nextImage;
                     });
                 </script>
+
+            <% } %>
+
             </div>
 
             <div class="announce_container_right">

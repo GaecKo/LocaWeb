@@ -102,9 +102,10 @@ app.get('/announces/:productId', async function (req, res) {
     req.session.screen_message = "This announce is currently been checked due to reports."
     res.redirect("/announces")
   }
+  var imgArray = ad.images //get the images array
   const comments = await db.getFullComments(ad.comments)
   const user = await db.getUsername(ad.user)
-  res.render("./annonce_main", {username : req.session.username, ad: ad, comments: comments, userId: req.session.userId, user: user});
+  res.render("./annonce_main", {username : req.session.username, ad: ad, comments: comments, userId: req.session.userId, user: user, imgArray: imgArray});
 });
 
 app.get('/announces_builder', function (req, res) {
