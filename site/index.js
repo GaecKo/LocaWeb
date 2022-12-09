@@ -102,8 +102,13 @@ app.get('/announces/:productId', async function (req, res) {
 });
 
 app.get('/announces_builder', function (req, res) {
-  req.session.error = undefined;
-  res.render('./announces_builder', {username : req.session.username, error: req.session.error});
+  //check if user is logged in
+  if (req.session.username) {
+    req.session.error = undefined;
+    res.render('./announces_builder', {username : req.session.username, error: req.session.error});
+  } else {
+    res.redirect('/login')
+  }
 });
 
 app.get('/admin', async function (req, res) {
@@ -206,10 +211,37 @@ app.post("/announces_builder",  upload.array("images" /* "images" is the name of
       ( tempPath, targetPath, async (err) => {
         if (err) return handleError(err, res);
 
-        req.session.screen_message = "File uploaded succesfully!"
-        images.push(time+".png")
-        console.log(req.files[i].originalname + " has been uploaded has " + time + ".png ! ")
+          req.session.screen_message = "File uploaded succesfully!"
+          await images.push(time+".png")
+          console.log(req.files[i].originalname + " has been uploaded has " + time + ".png ! ")
+
+          // check if images ar all uploaded
+          if (images.length == req.files.length) {
+            //console.log("jeaijezijaej zaheoiz a")
+
+            //now that the images are uploaded, we can add the announce to the database
+            title = req.body.title
+            description = req.body.description
+            price = req.body.price
+            city = req.body.city
+            rate = req.body.rate
+            images = JSON.stringify(images) // list of all the images
+
+            let result = await db.addAd(req.session.userId, title, description, city, price, rate, images)
+            if (result) {
+              req.session.screen_message = "Offer added succesfully!"
+              res
+                .status(200)
+                .contentType("text/plain")
+                .redirect('/announces');
+                
+            } else {
+              req.session.screen_message = "Something went wrong, please try again"
+              res.redirect("/announces_builder")
+            }
+          }
       });
+
     } else { //if the file is not a png
       fs.unlink(tempPath, err => {
         if (err) return handleError(err, res);
@@ -221,30 +253,6 @@ app.post("/announces_builder",  upload.array("images" /* "images" is the name of
       });
     }
   }
-
-  //wait for the images to be uploaded
-  await new Promise(r => setTimeout(r, 1000));
-
-  //now that the images are uploaded, we can add the announce to the database
-  title = req.body.title
-  description = req.body.description
-  price = req.body.price
-  city = req.body.city
-  rate = req.body.rate
-  images = images.toString() // list of all the images
-
-  let result = await db.addAd(req.session.userId, title, description, city, price, rate, images)
-  if (result) {
-    req.session.screen_message = "Offer added succesfully!"
-    res
-      .status(200)
-      .contentType("text/plain")
-      .redirect('/announces');
-      
-  } else {
-    req.session.screen_message = "Something went wrong, please try again"
-    res.redirect("/announces_builder")
-}
 });
 
 
