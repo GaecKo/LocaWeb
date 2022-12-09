@@ -194,7 +194,7 @@ Report.init({
 }, {sequelize, modelName: 'Report'})
 
 // To sync the database, if changes are done in the above init functions, uncomment next line. Be carefull, it's maybe needed to delete database content
-// sequelize.sync({force: true})
+//sequelize.sync({force: true})
 
 
 module.exports = {

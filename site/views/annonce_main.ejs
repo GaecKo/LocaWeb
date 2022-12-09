@@ -36,10 +36,65 @@
 
                     <div class="images_container" style=" height: 100%; width: 100%;">
                         <!-- Multiple images here -->
-                        <img style="height: 100%; width: 100%; object-fit: contain;"  class="image" src="/uploads/<%= ad.images %>" alt="<%= ad.images %>">
-
+                        <img style="height: 100%; width: 100%; object-fit: contain;"  class="image" src="/uploads/<%= ad.images[0] %>" alt="<%= ad.images[0] %>">
                     </div>
+
                 </div>
+
+                <script>
+
+                    // TODO display the current image number under the image
+                    
+                    //when the right arrow is clicked
+                    document.getElementById("arrow_right").addEventListener("click", function(){
+
+                        var imageArray = "<%= ad.images %>"
+                        //change the string array to a js array
+                        var imageArray = imageArray.split(",")
+
+                        //find in the array where the current image is
+                        var currentImage = document.querySelector(".image");
+                        var currentImageSrc = currentImage.src.split("/")[4];
+
+                        var index = imageArray.indexOf(currentImageSrc);
+
+                        //get the next image
+                        var nextImage = imageArray[index+1];
+
+                        //if there is no next image, go back to the first image
+                        if (nextImage == undefined){
+                            nextImage = imageArray[0];
+                        }
+
+                        //change the image
+                        currentImage.src = "/uploads/" + nextImage;
+                    });
+
+                    //when the left arrow is clicked
+                    document.getElementById("arrow_left").addEventListener("click", function(){
+
+                        var imageArray = "<%= ad.images %>"
+                        //change the string array to a js array
+                        var imageArray = imageArray.split(",")
+
+                        //find in the array where the current image is
+                        var currentImage = document.querySelector(".image");
+                        var currentImageSrc = currentImage.src.split("/")[4];
+
+                        var index = imageArray.indexOf(currentImageSrc);
+
+                        //get the next image
+                        var nextImage = imageArray[index-1];
+
+                        //if there is no next image, go back to the first image
+                        if (nextImage == undefined){
+                            nextImage = imageArray[imageArray.length-1];
+                        }
+
+                        //change the image
+                        currentImage.src = "/uploads/" + nextImage;
+                    });
+                </script>
             </div>
 
             <div class="announce_container_right">

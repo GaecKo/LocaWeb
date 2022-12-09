@@ -85,6 +85,12 @@ app.get('/profile', async function (req, res) {
 
 app.get('/announces', async function (req, res) {
   let announces = await db.getAllAds();
+  //console.log(announces)
+  //for each ad get log the image array
+  for (let i = 0; i < announces.length; i++) {
+    let images = announces[i].images
+    //console.log(images)
+  }
   let moderator = await db.isModo(req.session.userId)
   res.render('./annonces', {username : req.session.username, error: req.session.screen_message, announces: announces, moderator: moderator});
 });
@@ -156,7 +162,7 @@ app.post('/login', async function (req, res) {
 
   if (!user) {
     req.session.error = "It seems like you don't have an account. Please create one."
-    res.redirect('/login')
+    res.redirect('/signup')
 
   } else {
     let correctPassword = await bcrypt.compare(req.body.password, user.password)
@@ -200,7 +206,7 @@ app.post("/announces_builder",  upload.array("images" /* "images" is the name of
   for (let i = 0; i < req.files.length; i++) {
     const tempPath = req.files[i].path;
     const time = Date.now();
-    const targetPath = path.join(__dirname, "./data/uploads/"+time+".png");
+    const targetPath = path.join(__dirname, "./data/uploads/"+req.files[i].originalname+time+".png");
 
     if (path.extname(req.files[i].originalname).toLowerCase() === ".png") { //if the file is a png
       fs.rename
@@ -208,8 +214,8 @@ app.post("/announces_builder",  upload.array("images" /* "images" is the name of
         if (err) return handleError(err, res);
 
           req.session.screen_message = "File uploaded succesfully!"
-          await images.push(time+".png")
-          console.log(req.files[i].originalname + " has been uploaded has " + time + ".png ! ")
+          await images.push(req.files[i].originalname+time+".png")
+          console.log(req.files[i].originalname + " has been uploaded has "+req.files[i].originalname+time+ ".png ! ")
 
           // check if images ar all uploaded
           if (images.length == req.files.length) {
@@ -221,7 +227,19 @@ app.post("/announces_builder",  upload.array("images" /* "images" is the name of
             price = req.body.price
             city = req.body.city
             rate = req.body.rate
+
+            console.log( "FIRST :" + images)
+            console.log(images[0])
+
             images = JSON.stringify(images) // list of all the images
+
+            console.log( "SECOND :" + images)
+            console.log(images[0])
+
+            test = JSON.parse(images)
+
+            console.log( "THIRD :" + test)
+            console.log(test[0])
 
             let result = await db.addAd(req.session.userId, title, description, city, price, rate, images)
             if (result) {
@@ -273,7 +291,6 @@ app.post("/admin", async function (req, res) {
 });
 
 app.post("/profile", async function (req, res) {
-  console.log(req.body)
 
   if (req.body.change_password != undefined) {
     const password = req.body.new_password;

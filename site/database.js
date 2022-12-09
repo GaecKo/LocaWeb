@@ -251,6 +251,7 @@ async function getAd(adId) {
         if (ad) {
             console.log("ad: " + adId + " was found and retrieved.")
             ad = ad.dataValues
+            ad.images = JSON.parse(ad.images)
             ad.comments = JSON.parse(ad.comments)
             return ad 
         } else {
@@ -294,6 +295,7 @@ async function getAllAds() {
         if (ads.length > 0) {
             for (ad in ads) {
                 ads[ad].dataValues.username = await getUsername(ads[ad].dataValues.user)
+                ads[ad].dataValues.images = JSON.parse(ads[ad].dataValues.images)
                 lst.push(ads[ad].dataValues)
             } 
             // the object ad contains important data in 
