@@ -223,6 +223,12 @@ async function updateEmail(userId, email) {
 
 // ADS SECTION
 
+/**
+ * 
+ * @param {int} adId  the id of the ad
+ * @returns int the id of the user who created the ad
+ *          false if the ad doesnt exist
+ */
 async function getUserAd(adId) {
     return Ad.findOne({where: {id: adId}, attributes: ["user"]}).then(usr => {
         if (usr) {
@@ -238,6 +244,12 @@ async function getUserAd(adId) {
     })
 }
 
+/**
+ * 
+ * @param {int} adId the id of the ad
+ * @returns the ad object with that id
+ *          false if the ad doesnt exist
+ */
 async function getAd(adId) {
     /*
     *  Return an object: {id, desc, title, reports, comments, userId}
@@ -262,7 +274,18 @@ async function getAd(adId) {
     })
 }
 
-
+/**
+ * 
+ * @param {int} userId the id of the user
+ * @param {str} title the title of the ad
+ * @param {str} description the description of the ad
+ * @param {str} city the city of the ad
+ * @param {int} price the price of the ad
+ * @param {str} rate the rate of the ad
+ * @param {str} images the path to the images of the ad
+ * @returns true if the ad was added
+ *          false if the ad was not added
+ */
 async function addAd(userId, title, description, city, price, rate, images) {
     return Ad.create({
         user : userId,
@@ -281,6 +304,11 @@ async function addAd(userId, title, description, city, price, rate, images) {
     })
 }
 
+
+/**
+ * 
+ * @returns {object} all the ads in the database
+ */
 async function getAllAds() {
     /*
     *  Return a list with all the ads in it with simple attributes
@@ -461,6 +489,16 @@ async function addComment(adId, text, authorId, parentId=null, repId=null) {
 }
 
 // REPORTS SECTIONS
+
+/**
+ * 
+ * @param {str} report_text the text of the report
+ * @param {int} userId the id of the user who reported
+ * @param {int} adId the id of the ad reported
+ * @param {int} coId the id of the comment reported
+ * @returns int the id of the report if it has been added successfully
+ *          false if not
+ */
 async function addReport(report_text, userId, adId=null, coId=null) {
     /* Return reportId if report has been added successfully  
     * Return false if not
@@ -484,6 +522,12 @@ async function addReport(report_text, userId, adId=null, coId=null) {
     })
 }
 
+/**
+ * 
+ * @param {array[int]} comments array of comment ids 
+ * @returns true if all comments have been deleted successfully
+ *          false if not
+ */
 async function deleteComments(comments) {
     /* comments: array of comment ids
     *  Return true if all comments have been deleted successfully
@@ -507,6 +551,12 @@ async function deleteComments(comments) {
     })
 }
 
+/**
+ * 
+ * @param {int} adId the id of the ad
+ * @returns array of the ids of the comments of the ad
+ *          false if not
+ */
 async function getCommentsAd(adId) {
     return Comment.findAll({where: {ad: adId}}).then(coms => {
         let comments = []
@@ -520,6 +570,12 @@ async function getCommentsAd(adId) {
     })
 }
 
+/**
+ * 
+ * @param {int} adId the id of the ad
+ * @returns true if the ad has been deleted successfully
+ *          false if not
+ */
 async function deleteAd(adId) {
     comments = await getCommentsAd(adId)
     await deleteComments(comments)
@@ -536,6 +592,12 @@ async function deleteAd(adId) {
     })
 }
 
+/**
+ * 
+ * @param {int} userId the id of the user
+ * @returns true if the report has been added to the user successfully
+ *          false if not
+ */
 async function addUserReport(userId) {
     return User.findOne({
         where: {
@@ -565,6 +627,12 @@ async function addUserReport(userId) {
         })
 }
 
+/**
+ * 
+ * @param {int} coId the id of the comment
+ * @returns array of the ids of the reports of the comment
+ *          false if not
+ */
 async function getReportsComment(coId) {
     return Comment.findOne({where: {id: coId}, attributes: ["reports_list"]}).then(rep_l => {
         if (rep_l) {
@@ -580,6 +648,12 @@ async function getReportsComment(coId) {
     })
 }
 
+/**
+ * 
+ * @param {int} adId the id of the ad
+ * @returns array of the ids of the reports of the ad
+ *          false if not
+ */
 async function getReportsAd(adId) {
     return Ad.findOne({where: {id: adId}, attributes: ["reports_list"]}).then(rep_l => {
         if (rep_l) {
@@ -595,6 +669,11 @@ async function getReportsAd(adId) {
     })
 }
 
+/**
+ * 
+ * @returns array of all the reports
+ *          false if there is no reports
+ */
 async function getFullReports() {
     all_reports = {}
     reportedAds = await Ad.findAll({where: {visibility: false}}).then(async ads => {
@@ -671,6 +750,12 @@ async function getFullReports() {
     return all_reports
 }
 
+/**
+ * 
+ * @param {int} reportIdList the list of the ids of the reports to delete
+ * @returns true if the reports were deleted
+ *          false if not
+ */
 async function deleteReports(reportIdList) {
     return await Report.destroy({where: {id: reportIdList}}).then(state => {
         if (state == reportIdList.length) {
@@ -686,6 +771,12 @@ async function deleteReports(reportIdList) {
     })
 }
 
+/**
+ * 
+ * @param {int} coId the id of the comment
+ * @returns array of the ids of the users who reported the comment
+ *          false if not
+ */
 async function getReportedUserIdofComment(coId) {
     return Report.findAll({where: {commentId: coId}, attributes: ["userId"]}).then(usrs => {
         if (usrs) {
@@ -702,6 +793,12 @@ async function getReportedUserIdofComment(coId) {
     })
 }
 
+/**
+ * 
+ * @param {int} adId the id of the ad
+ * @returns array of the ids of the users who reported the ad
+ *          false if not
+ */
 async function getReportedUserIdofAd(adId) {
     return Report.findAll({where: {adId: adId}, attributes: ["userId"]}).then(usrs => {
         if (usrs) {
@@ -721,7 +818,8 @@ async function getReportedUserIdofAd(adId) {
 /**
  * @param {int} userID is the id of the user you want to decrease the number of reports
  * @param {int} nbr the number of reports you want to delete
- * @returns `true` if successfull, `false` otherwise
+ * @returns true if successfull 
+ *          false otherwise
  */
 async function decreaseTotalReportsUser(userId, nbr) {
     let cur_reports = await User.findOne({where: {id: userId}, attributes: ["total_report"]}).then(usr => {
@@ -749,6 +847,12 @@ async function decreaseTotalReportsUser(userId, nbr) {
     })
 }
 
+/**
+ * 
+ * @param {int} coId the id of the comment
+ * @returns true if the comment reports were cleared
+ *          false if not
+ */
 async function clearCommentReports(coId) {
     let reports_list = await getReportsComment(coId)
     let userId = await getUserComment(coId)
@@ -782,6 +886,12 @@ async function clearCommentReports(coId) {
     })
 }
 
+/**
+ * 
+ * @param {int} adId the id of the ad
+ * @returns true if the ad reports were cleared
+ *          false if not
+ */
 async function clearAdReports(adId) {
     let reports_list = await getReportsAd(adId)
     let userId = await getUserAd(adId)
@@ -818,6 +928,14 @@ async function clearAdReports(adId) {
     })
 }
 
+/**
+ * 
+ * @param {int} adId the id of the ad
+ * @param {str} report_text the text of the report
+ * @param {int} userId the id of the user who reported the ad
+ * @returns true if the ad was reported
+ *          false if not
+ */
 async function addAdReport(adId, report_text="", userId) {
     reportId = await addReport(report_text, userId, adId)
     return Ad.findOne({where: { id: adId},
@@ -840,6 +958,14 @@ async function addAdReport(adId, report_text="", userId) {
         })
 }
 
+/**
+ * 
+ * @param {int} coId the id of the comment
+ * @param {str} report_text the text of the report
+ * @param {int} userId the id of the user who reported the comment
+ * @returns true if the comment was reported
+ *          false if not
+ */
 async function addCommentReport(coId, report_text="", userId) {
     let reportId = await addReport(report_text, userId, null, coId=coId)
     return Comment.findOne({
