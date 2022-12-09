@@ -13,8 +13,8 @@
 * [ ] Bouton pour revenir à la page principale dans la page de report
 
 @Thomas_devl 
-* [ ] ajouter plusieurs images 
-* [ ] faire fonctionner les flèches 
+* [X] ajouter plusieurs images 
+* [X] faire fonctionner les flèches 
 * [ ] faire en sorte qu'on puisse ajouter un report sur un truc qu'on a déjà report
 * [ ] faire en sorte qu'on puisse ajouter un report sur un truc qu'on a nous même mis
 * [ ] quand une ad est delete (voir database.js: deleteAd(adId), faire en sorte que l'image dans upload soit delete aussi)
