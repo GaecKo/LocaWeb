@@ -20,13 +20,17 @@
         <!-- has_Reported is used to define whether or not the user should see the buttons to report and ad / comments -->
         <!-- This represents the case where someone has already reported an ad / comments or that he is the creator of the ad / comment -->
         <% if (!has_reported ){ %>
-        <button onclick="toggleReport('0')" class="fas fa-flag" title="Report" value="0" id="r0"></button>
-        <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
-            <div class="report_announce_container" id="0s">
-                <input type="text" placeholder="Reason of the report" name="rep_content" id="0re" required>
-                <button type="submit" name="type" value="adreport" id="0r">Report</button>
+            <div class="report_announce_container_bis">
+                <button onclick="toggleReport('0')" class="fas fa-flag" title="Report the announce" style="font-size: 1.3em; float: left;" value="0" id="r0"></button>
+                <input class="text_replacing_form_report" disabled id="p0" placeholder="<-      Click the Flag on the left to report the announce">
+                <form method="POST" style="background-color: transparent; width: 100%; float:right;" action="./<%= ad.id %>">
+                    <div class="report_announce_container" id="0p">
+                        <input type="text" class="announce_report_text" placeholder="Reason of the report" name="rep_content" required>
+                        <button type="submit" class="announce_report_button" name="type" value="adreport">Report</button>
+                    </div>
+                </form>
             </div>
-        </form>
+                
         <% } %>
 
         <div class="main_announce_container">
@@ -348,6 +352,7 @@
             document.getElementById("r" + id).value = 1;
             //document.getElementById(id+"r").style.display = "block";
             document.getElementById(id+"p").style.display = "flex";
+            document.getElementById("p"+id).style.display = "none";
             document.getElementById(id+"s").style.display = "flex";
             //document.getElementById(id+"re").style.display="block";
         } else {
@@ -355,8 +360,8 @@
             //document.getElementById(id+"re").style.display="None";
             //document.getElementById(id+"r").style.display = "None";
             document.getElementById(id+"p").style.display = "None";
+            document.getElementById("p"+id).style.display = "flex";
             document.getElementById(id+"s").style.display = "None";
-            
         }
     }
 </script>

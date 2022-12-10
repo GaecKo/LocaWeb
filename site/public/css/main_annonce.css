@@ -322,7 +322,13 @@ i {
     color: aliceblue;
 }
 
-.type_and_send_content, .type_and_send_content_reply, .type_and_send_content_report {
+.report_announce_container {
+    margin-top: 0px;
+    border-radius: 10px;
+    height: 50px;
+}
+
+.type_and_send_content, .type_and_send_content_reply, .type_and_send_content_report, .report_announce_container_bis {
     border-radius: 10px;
     height: 50px;
     margin: 20px;
@@ -337,6 +343,13 @@ i {
     display: none;
 }
 
+.text_replacing_form_report {
+    display: flex;
+    width: 100%;
+    font-size: 1.3em;
+    text-align: center;
+}
+
 .comment_type_text {
     border-style: hidden;
     width: 80%;
@@ -349,7 +362,7 @@ i {
     padding-right: 20px;
 }
 
-.comment_type_reply, .comment_type_report {
+.comment_type_reply, .comment_type_report, .announce_report_text {
     border-style: hidden;
     border-radius: 10px 0px 0px 10px;
     width: 80%;
@@ -361,7 +374,7 @@ i {
     padding-right: 20px;
 }
 
-.comment_type_text:focus, .comment_type_reply:focus, .comment_type_report:focus {
+.comment_type_text:focus, .comment_type_reply:focus, .comment_type_report:focus, .announce_report_text:focus {
     background-color: #0A2156;
 }
 
@@ -378,7 +391,7 @@ i {
     transition: all 0.2s ease-in-out;
 }
 
-.reply_button_right, .report_button {
+.reply_button_right, .report_button, .announce_report_button {
     width: 20%;
     height: 50px;
     background-color: #5e1cc9;
@@ -391,10 +404,17 @@ i {
     transition: all 0.2s ease-in-out;
 }
 
-.comment_send_button:hover, .reply_button_right:hover, .report_button:hover {
+.comment_send_button:hover, .reply_button_right:hover, .report_button:hover, .announce_report_button:hover {
     background-color: rgb(140, 0, 255);
     cursor: pointer;
     transition: all 0.2s ease-in-out;
+}
+
+.report_announce_container_bis {
+    display: flex;
+    width: 90%;
+    margin-left: auto;  
+    margin-right: auto;
 }
 
 .icons {
