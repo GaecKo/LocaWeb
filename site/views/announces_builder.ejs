@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/login.css">
     <link rel="stylesheet" href="../css/annonce-builder.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <title>Annonce builder</title>
     <link rel="icon" type="image/svg+xml" href="../image/logo.svg">
 </head>
@@ -49,12 +50,11 @@
                 <textarea class = "textinput" id="description" name="description" placeholder="Description of the offer" maxlength="500" style="height:200px;resize: none;"></textarea>
                 <br>
                 <hr style="width: 80%; border: 3px dashed transparent;">
-                <!-- City -->
-                <input  class="textinput smallinput"type="text" id="city" name="city" placeholder="City">
-                <br>
-                <hr style="width: 80%; border: 3px dashed transparent;">
+                
                 <!-- Price -->
                 <div class="price">
+                    <!-- City -->
+                    <input  class="textinput smallinput"type="text" id="city" name="city" placeholder="City">
                     <input  class="textinput smallinput" type="number" id="price" name="price" placeholder="Price" min="1">
 
                     <select class="textinput" style="width:200px;" name="rate" required>
@@ -70,7 +70,7 @@
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 <!-- Image -->
                 <input id="files" type="file" accept="image/png" name="images" class="textinput smallinput"  multiple>  
-                <a class="remove" onclick="removeLastPicture()"> X </a>
+                <a class="remove" title="Remove the last image added" onclick="removeLastPicture()"> <i class="fas fa-times"></i> </a>
                 <div id="preview"></div>
                 <br>
                 <hr style="width: 80%; border: 3px dashed transparent;">

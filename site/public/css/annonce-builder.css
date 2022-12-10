@@ -34,10 +34,11 @@
 .price{
     display: flex; 
     gap: 4%;
+    width: 95%;
 }
 
 .smallinput{
-    width: auto;
+    width: inherit;
 }
 
 #preview img { 
@@ -49,4 +50,14 @@
   color:red;
   font-size:1.5em;
   margin-left: 10px;
+}
+
+.remove:hover {
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all .2s ease-in-out;
+}
+
+.fas.fa-times {
+    background-color: transparent;
 }
