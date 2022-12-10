@@ -322,15 +322,18 @@ i {
     color: aliceblue;
 }
 
-.type_and_send_content, .type_and_send_content_reply {
+.type_and_send_content, .type_and_send_content_reply, .type_and_send_content_report {
     border-radius: 10px;
     height: 50px;
     margin: 20px;
-    display: flex;
     border: 1px solid #5e1cc9;
 }
 
-.type_and_send_content_reply {
+.type_and_send_content {
+    display: flex;
+}
+
+.type_and_send_content_reply, .type_and_send_content_report, .report_announce_container {
     display: none;
 }
 
@@ -346,7 +349,7 @@ i {
     padding-right: 20px;
 }
 
-.comment_type_reply {
+.comment_type_reply, .comment_type_report {
     border-style: hidden;
     border-radius: 10px 0px 0px 10px;
     width: 80%;
@@ -358,7 +361,7 @@ i {
     padding-right: 20px;
 }
 
-.comment_type_text:focus, .comment_type_reply:focus {
+.comment_type_text:focus, .comment_type_reply:focus, .comment_type_report:focus {
     background-color: #0A2156;
 }
 
@@ -375,11 +378,7 @@ i {
     transition: all 0.2s ease-in-out;
 }
 
-.reply_button_left {
-    border-radius: 10px 0px 0px 10px;
-}
-
-.reply_button_left, .reply_button_right {
+.reply_button_right, .report_button {
     width: 20%;
     height: 50px;
     background-color: #5e1cc9;
@@ -387,15 +386,12 @@ i {
     color: aliceblue;
     font-size: 1.2em;
     font-weight: bold;
+    border-radius: 0px 5px 5px 0px;
     border-style: hidden;
     transition: all 0.2s ease-in-out;
 }
 
-.reply_button_right {
-    border-radius: 0px 5px 5px 0px;
-}
-
-.comment_send_button:hover, .reply_button_left:hover, .reply_button_right:hover {
+.comment_send_button:hover, .reply_button_right:hover, .report_button:hover {
     background-color: rgb(140, 0, 255);
     cursor: pointer;
     transition: all 0.2s ease-in-out;
@@ -418,6 +414,9 @@ i {
     margin-right: 10px;
     display: initial;
     margin-left: 10px;
+    background-color: transparent;
+    border-style: none;
+    color: white;
 }
 
 .fas.fa-reply:hover, .fas.fa-flag:hover {
@@ -442,4 +441,13 @@ i {
     display: block;
     float: right;
     background-color: #103283;
+}
+
+.blurred_content {
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+    background-color: rgb(147, 147, 147);
 }

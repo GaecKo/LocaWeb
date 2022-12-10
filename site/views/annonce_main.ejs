@@ -22,8 +22,10 @@
         <% if (!has_reported ){ %>
         <button onclick="toggleReport('0')" class="fas fa-flag" title="Report" value="0" id="r0"></button>
         <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
-            <input type="text" placeholder="Reason of the report" name="rep_content" id="0re" style="display: None;">
-            <button type="submit" name="type" value="adreport" id="0r" style="display: None;" >Rep</button>
+            <div class="report_announce_container" id="0s">
+                <input type="text" placeholder="Reason of the report" name="rep_content" id="0re" required>
+                <button type="submit" name="type" value="adreport" id="0r">Report</button>
+            </div>
         </form>
         <% } %>
 
@@ -167,18 +169,10 @@
                         </div>
                         <!-- see line 20 for has_reported explaination -->
                         <% has_reported = (cur_m.reporters.includes(userId)) || (userId == cur_m.reporters) || (cur_m.user == userId) %>
-                        <% if (!cur_m.disabled && cur_m.visibility && !(userId in cur_m.reporters) && !has_reported) {%>
-                            <button onclick="toggleReport('<%= id_m %>')" class="fas fa-flag" title="Report" value="0" id="r<%= id_m %>"></button>
-                            <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
-                                <input type="hidden" name="type" value="coreport">
-                                <input type="text" placeholder="Reason of the report" name="rep_content" id="<%= id_m %>re" style="display: None;">
-                                <button type="submit" name="rep_btn" value="<%= id_m %>" id="<%= id_m %>r" style="display: None;" >Rep</button>
-                            </form>
-                        <% } %>
                     </div>
                     
                     <div class="comment_text">
-                         <% if (cur_m.disabled) { %>
+                        <% if (cur_m.disabled) { %>
                             <em style="color:orangered"><%= cur_m.content %></em> <!-- @DRU PLEASE ADD EYE CROSSED, to make clear the comment is disabled -->
                         <% } else if (!cur_m.visibility) { %> 
                             <%= cur_m.content %> <!-- @DRU PLEASE BLUR THIS -->
@@ -189,18 +183,28 @@
                         <div class="icons">
                             <% if (!cur_m.disabled && cur_m.visibility) {%>
                                 <button type="button" class="fas fa-reply" onclick="toggleComment('<%= id_m %>')" value="0" id="b<%= id_m %>" title="Reply"></button>
-                                <i class="fas fa-flag" title="Report"></i>
+                                <button onclick="toggleReport('<%= id_m %>')" class="fas fa-flag" title="Report" value="0" id="r<%= id_m %>"></button>
                             <% } %>
                         </div>
-                        
-                        
+
                         <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
                             <div class="type_and_send_content_reply" id="<%= id_m %>">
                                 <input type="hidden" name="type" value="comment">
-                                <input type="text" id="<%= id_m %>c" style="display: None;" class="comment_type_reply" name="res_content" placeholder="Type your text here">
-                                <button type="submit" class="reply_button_right" id="<%= id_m %>b" value="<%= id_m %>|" name="res_btn" style="display: None;">Post</button>
+                                <input type="text" id="<%= id_m %>c" style="display: None;" class="comment_type_reply" name="res_content" placeholder="Type your text here" required>
+                                <button type="submit" class="reply_button_right" id="<%= id_m %>b" value="<%= id_m %>|" name="res_btn" style="display: None;">Reply</button>
                             </div>
                         </form>
+
+                        <% if (!cur_m.disabled && cur_m.visibility && !(userId in cur_m.reporters) && !has_reported) {%>
+                            <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
+                                <div class="type_and_send_content_report" id="<%= id_m %>p">
+                                    <input type="hidden" name="type" value="coreport">
+                                    <input type="text" placeholder="Reason of the report" class="comment_type_report" name="rep_content" id="<%= id_m %>re" required>
+                                    <button type="submit" class="report_button" name="rep_btn" value="<%= id_m %>" id="<%= id_m %>r" >Report</button>
+                                </div>
+                            </form>
+                        <% } %>
+
                     </div>
                     <% for (sub_c in cur_m.responses) { %>
                         <% cur_sub = cur_m.responses[sub_c] %>
@@ -215,14 +219,6 @@
                             <div class="comment_reply_date">
                                 <%= date %>
                                 <% has_reported = (cur_sub.reporters.includes(userId)) || (userId == cur_sub.reporters) || (cur_sub.user == userId) %>
-                                <% if (!cur_sub.disabled && cur_sub.visibility && (!(userId in cur_sub.reporters) && !has_reported)) { %>
-                                <button onclick="toggleReport('<%= id_sub %>')" class="fas fa-flag" title="Report" value="0" id="r<%= id_sub %>"></button>
-                                <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
-                                    <input type="hidden" name="type" value="coreport">
-                                    <input type="text" placeholder="Reason of the report" name="rep_content" id="<%= id_sub %>re" style="display: None;">
-                                    <button type="submit" name="rep_btn" value="<%= id_sub %>" id="<%= id_sub %>r" style="display: None;" >Rep</button>
-                                </form>
-                                <% } %>
                             </div>
                             
                         </div>
@@ -231,29 +227,45 @@
                                 <!-- text to highlight                                | text not to highlight -->
                                 <a style="padding: 3px; border-radius: 5px; border: 1px solid rgb(255, 0, 0); background-color: #ff00007c;"><%= cur_sub.toAuthor %></a> <%= cur_sub.content %>
                             <% } else if (cur_sub.visibility && cur_sub.disabled) { %>
-                                <em style="color:orangered"><%= cur_sub.content %></em> <!-- @DRU PLEASE ADD EYE CROSSED, to make clear the comment is disabled -->
+                                <em style="color:orangered"><%= cur_sub.content %></em> 
+                                <i class="fas fa-eye-slash">
+                                </i><!-- @DRU PLEASE ADD EYE CROSSED, to make clear the comment is disabled -->
                             <% } else if (!cur_sub.visibility) { %>
-                                 <%= cur_sub.content %>  <!-- @DRU PLEASE BLUR THIS -->
+                                 <div class="blurred_content">
+                                    <%= cur_sub.content %> 
+                                 </div>
+                                  <!-- @DRU PLEASE BLUR THIS -->
                             <% } else { %>
                                 <%= cur_sub.content %> 
 
                             <% } %>
                             <!-- <br> -->
                             <div class="icons">
-                                <% if (!cur_sub.disabled && cur_sub.visibility) {%>
-                                    <button type="button" class="fas fa-reply" onclick="toggleComment('<%= id_sub %>')" value="0" id="b<%= id_sub %>" title="Reply"></button>
-                                    <i class="fas fa-flag" title="Report"></i>
-                                <% } %>
+                            <% if (!cur_sub.disabled && cur_sub.visibility) {%>
+                                <button type="button" class="fas fa-reply" onclick="toggleComment('<%= id_sub %>')" value="0" id="b<%= id_sub %>" title="Reply"></button>
+                                <button onclick="toggleReport('<%= id_sub %>')" class="fas fa-flag" title="Report" value="0" id="r<%= id_sub %>"></button>
+                            <% } %>
                             </div>
+
                             
                             <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
                                 
                                 <div class="type_and_send_content_reply" id="<%= id_sub %>">
                                     <input type="hidden" name="type" value="comment">
-                                    <input type="text" id="<%= id_sub %>c" style="display: None;" class="comment_type_reply" name="res_content" placeholder="Type your text here">
+                                    <input type="text" id="<%= id_sub %>c" style="display: None;" class="comment_type_reply" name="res_content" placeholder="Type your text here" required>
                                     <button type="submit" class="reply_button_right" id="<%= id_sub %>b" value="<%= id_m %>|<%= id_sub %>" name="res_btn" style="display: None;">Post</button>
                                 </div>
                             </form>
+
+                            <% if (!cur_sub.disabled && cur_sub.visibility && (!(userId in cur_sub.reporters) && !has_reported)) { %>
+                                <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
+                                    <div class="type_and_send_content_report" id="<%= id_sub %>p">
+                                        <input type="hidden" name="type" value="coreport">
+                                        <input type="text" placeholder="Reason of the report" class="comment_type_report" name="rep_content" id="<%= id_sub %>re" required>
+                                        <button type="submit" class="report_button" name="rep_btn" value="<%= id_m %>" id="<%= id_sub %>r" >Report</button>
+                                    </div>
+                                </form>
+                            <% } %>
                         </div> 
                     </div>
                     <% } %>
@@ -276,7 +288,7 @@
 </html>
 
 <script>
-    const arrow_left = document.getElementById("arrow_left")
+    /*const arrow_left = document.getElementById("arrow_left")
     const arrow_right = document.getElementById("arrow_right")
 
     arrow_left.addEventListener('mousein', mouseIn(arrow_right))
@@ -293,7 +305,7 @@
     function mouseOut(arrow) {
         arrow.setAttribute("style", "display:block;")
         arrow.setAttribute("style", "transition: all 0.2 ease-in-out;")
-    }
+    }*/
 
     //the following code comes from W3schools.com
     // When the user scrolls the page, execute stickHeader 
@@ -334,12 +346,17 @@
     function toggleReport(id) {
         if (document.getElementById("r" + id).value == 0) {
             document.getElementById("r" + id).value = 1;
-            document.getElementById(id+"r").style.display = "";
-            document.getElementById(id + "re").style.display="flex";
+            //document.getElementById(id+"r").style.display = "block";
+            document.getElementById(id+"p").style.display = "flex";
+            document.getElementById(id+"s").style.display = "flex";
+            //document.getElementById(id+"re").style.display="block";
         } else {
             document.getElementById("r" + id).value = 0;
-            document.getElementById(id+ "re").style.display="None";
-            document.getElementById(id+"r").style.display = "None";
+            //document.getElementById(id+"re").style.display="None";
+            //document.getElementById(id+"r").style.display = "None";
+            document.getElementById(id+"p").style.display = "None";
+            document.getElementById(id+"s").style.display = "None";
+            
         }
     }
 </script>
