@@ -505,11 +505,14 @@ async function addComment(adId, text, authorId, parentId=null, repId=null) {
     }
     let ad = await getAd(adId)
     let comments = ad.comments
-    repAuthorId = await getUserComment(repId) 
+    repAuthorId = null
+    if (parentId != null) {
+        repAuthorId = await getUserComment(repId) 
+    }
     // the id of the user in which this comment is a response to 
     
     cId = await Comment.create({
-        content: text,
+        content: text, // creates the comment
         user: authorId,
         ad: adId,
         repAuthorId: repAuthorId
