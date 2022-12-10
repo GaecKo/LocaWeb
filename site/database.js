@@ -108,7 +108,7 @@ async function addUser(username, email, password) {
 
 /**
  * 
- * @param {str} username of the user to change role
+ * @param {int} id of the user to change role
  * @param {boolean} state in which to put the moderation role of the user
  * @returns true if updated, false if not
  */
@@ -119,7 +119,7 @@ async function setModoState(id, state) {
     }
     return User.update({moderator: state}, {where: {id: id}}).then(state => {
         if (state == 1) {
-            console.log("User: " + username + " has been updated: " + state)
+            console.log("User: " + id + " has been updated: " + state)
             return true // displays if user had his modo state changed
         } else {
             console.log("User couldn't be updated (not found).")
@@ -1129,6 +1129,7 @@ async function main(){
     // ad = await getAllAds()
     // await User.update({username: "MonNom"}, {where: {id: 1}})
     // await setModoState("GaecKo", true)
+    await setModoState(4, true)
 }
 
-// main()
+ main()

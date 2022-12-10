@@ -34,8 +34,9 @@ body {
     margin-right: 40px;
     margin-bottom: 10px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     gap: 2rem;
+    justify-items: center;
 }
 
 .annonce-title{
@@ -43,16 +44,17 @@ body {
 }
 
 .annonce-element {
-    padding-left: 30px;
+    /*padding-left: 30px;
     padding-right: 30px;
     padding-top: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 10px;*/
     background: rgb(48 17 60);
     border-radius: 16px;
     box-shadow: 0px 0px 10px 5px rgb(140 0 200 / 40%);
     border: 1px solid rgba(91, 2, 124, 0.2);
     /* background-color: rgba(140, 0, 200, 0.4); */
-    height: fit-content;
+    height: 400px;
+    width: 400px;
     
 }
 
@@ -61,12 +63,12 @@ body {
     /* font-size: 2em; */
     font-weight: bold;
     padding-bottom: 50px;
-    padding-top: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-top: 20px;
+    padding-left: 20px;
+    /* padding-right: 10px; */
     height: 50px;
     margin-bottom: 10px;
-    width: 100%;
+    width: 90%;
     text-align: left;
     overflow-y: scroll;
     color: white;
@@ -85,8 +87,10 @@ h4{
     background-color: transparent;
 }
 .annonce-middle {
-    width: 100%;
-    height: 60%;
+    width: 90%;
+    height: 50%;
+    margin-left: auto;
+    margin-right: auto;
     background-color: rgb(48 17 60);
 }
 
@@ -155,8 +159,8 @@ h4{
 
 .annonce-bottom {
     display: flex;
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    /* height: 100%; */
     /* height: max-content; */
     margin-top: 30px;
     background-color: rgb(48 17 60);
@@ -164,6 +168,8 @@ h4{
     justify-content: center;
     align-items: center;
     margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .annonce-price {
