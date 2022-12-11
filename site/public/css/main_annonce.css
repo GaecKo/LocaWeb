@@ -13,7 +13,7 @@ a {
 .main_announce_container {
     margin-top: 20px;
     width: 90%;
-    height: 650px;
+    height: 600px;
     margin-left: auto;
     margin-right: auto;
 
@@ -48,21 +48,42 @@ a {
     width: 90%;
     height: 90%;
 }
+#arrow_right {
+    position: relative;
+    float: right;
+    margin-right: 10px;
+}
 
-.main_announce_container > .announce_container_left > .announce_images_container > #arrow_left {
-    display: block;
+#arrow_left {
     position: absolute;
-    transform: translateY(-50%);
     float: left;
+    margin-left: 10px;
+}
+
+#arrow_left, #arrow_right {
+    display: block;
+    transform: translateY(-50%);
     width: 5vh;
     height: 5vh;
-    margin-left: 10px;
-    margin-top: 300px;
+    margin-top: 250px;
     background-color: rgba(255, 255, 255, 0.425);
     border-radius: 50%;
     border: 1px solid rgba(0, 0, 0, 0.425);
     cursor: pointer;
     z-index: 3;
+    transition: all 0.2s ease-in-out;
+}
+
+#arrow_left:hover, #arrow_right:hover {
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0px 0px 20px black;
+    font-size: 1.1em;
+    transition: all 0.2s ease-in-out;
+}
+
+#arrow_left:hover + #arrow_right,
+#arrow_left:has(+ #arrow_right:hover) {
+    display: none; 
     transition: all 0.2s ease-in-out;
 }
 
@@ -72,31 +93,6 @@ i {
     transform: translate(-50%, -50%);
     font-size: 2em;
     background-color: transparent;
-}
-
-.main_announce_container > .announce_container_left > .announce_images_container > #arrow_right {
-    display: block;
-    position: relative;
-    transform: translateY(-50%);
-    float: right;
-    width: 5vh;
-    height: 5vh;
-    margin-right: 10px;
-    margin-top: 300px;
-    background-color: rgba(255, 255, 255, 0.425);
-    border-radius: 50%;
-    border: 1px solid rgba(0, 0, 0, 0.425);
-    cursor: pointer;
-    z-index: 3;
-    transition: all 0.2s ease-in-out;
-}
-
-.main_announce_container > .announce_container_left > .announce_images_container > #arrow_left:hover, 
-.main_announce_container > .announce_container_left > .announce_images_container > #arrow_right:hover {
-    background-color: rgba(255, 255, 255, 1);
-    box-shadow: 0px 0px 20px black;
-    font-size: 1.1em;
-    transition: all 0.2s ease-in-out;
 }
 
 .main_announce_container > .announce_container_right > .announce_seller,
@@ -133,7 +129,7 @@ i {
     margin-top: 30px;
     margin-left: auto;
     margin-right: auto;
-    height: 100px;
+    height: 90px;
     width: 90%;
     display: flex;
     gap: 10px;
@@ -352,6 +348,7 @@ i {
 .text_replacing_form_report {
     display: flex;
     width: 100%;
+    border-style: none;
     font-size: 1.3em;
     text-align: center;
 }
@@ -476,4 +473,13 @@ i {
     -ms-filter: blur(5px);
     filter: blur(5px);
     background-color: rgb(147, 147, 147);
+}
+
+#modal_profile {
+    display: inline-block;
+    position: relative;
+    top: auto;
+    bottom: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 100;
 }
