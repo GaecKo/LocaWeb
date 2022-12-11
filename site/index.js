@@ -99,7 +99,7 @@ app.get('/announces/:productId', async function (req, res) {
   const productId = req.params;
   const ad = await db.getAd(productId.productId);
   if (!ad.visibility) {
-    req.session.screen_message = "This announce is currently been checked due to reports."
+    req.session.screen_message = "This announce is currently being checked due to reports."
     res.redirect("/announces")
   }
   var imgArray = ad.images //get the images array

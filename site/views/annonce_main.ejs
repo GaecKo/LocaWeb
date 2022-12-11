@@ -22,7 +22,7 @@
         <% if (!has_reported ){ %>
             <div class="report_announce_container_bis">
                 <button onclick="toggleReport('0')" class="fas fa-flag" title="Report the announce" style="font-size: 1.3em; float: left;" value="0" id="r0"></button>
-                <input class="text_replacing_form_report" disabled id="p0" placeholder="<-      Click the Flag on the left to report the announce">
+                <input class="text_replacing_form_report" disabled id="p0" placeholder="Click the Flag on the left to report the announce">
                 <form method="POST" style="background-color: transparent; width: 100%; float:right;" action="./<%= ad.id %>">
                     <div class="report_announce_container" id="0p">
                         <input type="text" class="announce_report_text" placeholder="Reason of the report" name="rep_content" required>
@@ -36,11 +36,11 @@
         <div class="main_announce_container">
             <div class="announce_container_left">
                 <div class="announce_images_container">
-                    <div id="arrow_left">
+                    <div id="arrow_left" title="Previous image">
                         <i class="fas fa-arrow-left"></i>
                     </div>
 
-                    <div id="arrow_right">
+                    <div id="arrow_right" title="Next image">
                         <i class="fas fa-arrow-right"></i>
                     </div>
 
@@ -113,7 +113,7 @@
             <div class="announce_container_right">
                 <div class="announce_seller">
                     <!-- Le vendeur -->
-                    <p class="selle_info">👤<%= user %> - 🏙️ <em><%= ad.city %></em></p>
+                    <p class="selle_info">👤 <%= user %> - 🏙️ <em><%= ad.city %></em></p>
                 </div>
 
                 <div class="announce_price">
@@ -123,6 +123,7 @@
 
                 <div class="rent_article_button">
                     Bouton pour louer
+                    <input type="button" value="show" id="see_profile_button">
                     <!-- Bouton pour louer le bien -->
                 </div>
             </div>
@@ -292,6 +293,10 @@
     </div>
 
     <%- include('template/footer.ejs') %>
+
+    <div id="modal_profile">
+
+    </div>
 
 </body>
 </html>
