@@ -71,13 +71,11 @@
                             <%= announces[i].price %> <span style="font-weight:bold; background-color: transparent;"><%= announces[i].rate %></span>
                         </div>
                         <div class="annonce-button">
-                            <% if (announces[i].visibility) { %>    
-                                <a href="announces/<%= announces[i].id %>">View details</a>
-                            <% } %>
                             <!-- Bouton de l'annonce -->
-                            <!-- <form method="GET" action="announces/<%= announces[i].id %>" style="background-color: rgb(48 17 60);">
-                                <button class="contact-annonce-button" type="submit">Voir l'annonce </button>
-                            </form> -->
+
+                            <% if (announces[i].visibility) { %>    
+                                <a href="announces/<%= announces[i].id %>" class="contact-annonce-button">View details</a>
+                            <% } %>
                                 
                         </div>
                     </div>
