@@ -94,6 +94,32 @@
         <input id="change_password" type="submit" name="change_password" class="btn-login comfirm-btn" value="Change password"></input>
     </form>
 
+    <h5>Custom your experience</h5>
+    <form method="POST" action="/profile">
+        <h6>Change the color of your tag color (<span style="padding: 3px; border-radius: 5px; border: 1px solid rgb(255, 0, 0); background-color: #ff00007c;">@<%= username %></span></h6>
+        <select class="textinput" style="width:200px;" name="tag_color" required>
+            <option value="0" disabled>Select tag color:</option>
+            <option value="">Default</option>
+            <option value="red">Red</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+            <option value="cyan">Cyan</option>
+            <option value="orange">Orange</option>
+        </select>
+
+        <h6>Change the color of the site background color </h6>
+        <select class="textinput" style="width:200px;" name="bg_color" required>
+            <option value="0" disabled>Select background color:</option>
+            <option value="">Default</option>
+            <option value="red">Red</option>
+            <option value="blue">Blue</option>
+            <option value="green">Green</option>
+            <option value="cyan">Cyan</option>
+            <option value="orange">Orange</option>
+        </select>
+
+    </form>
+
     <br>
     <br>
 

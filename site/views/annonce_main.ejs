@@ -230,7 +230,11 @@
                             <% if (cur_sub.repAuthorId == userId && cur_sub.visibility && !cur_sub.disabled) { %> 
                                 <!-- Affiche le content @ en rouge si c'est une réponse au user conntecté -->
                                 <!-- text to highlight                                | text not to highlight -->
-                                <a style="padding: 3px; border-radius: 5px; border: 1px solid rgb(255, 0, 0); background-color: #ff00007c;"><%= cur_sub.toAuthor %></a> <%= cur_sub.content %>
+                                <% if (customs.tag_color != null) { %>
+                                <a style="padding: 3px; border-radius: 5px; border: 1px solid rgb(255, 0, 0); background-color: <%= customs.tag_color %>;"><%= cur_sub.toAuthor %></a> <%= cur_sub.content %>
+                                <% } else { %>
+                                    <a style="padding: 3px; border-radius: 5px; border: 1px solid rgb(255, 0, 0); background-color: #ff00007c;"><%= cur_sub.toAuthor %></a> <%= cur_sub.content %>
+                                <% } %>
                             <% } else if (cur_sub.visibility && cur_sub.disabled) { %>
                                 <em style="color:orangered"><%= cur_sub.content %></em> 
                                 <i class="fas fa-eye-slash">

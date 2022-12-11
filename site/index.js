@@ -178,6 +178,9 @@ app.post('/login', async function (req, res) {
       req.session.email = user.email
       req.session.moderator = user.moderator
       req.session.userId = await db.getUserId(req.session.username)
+      req.session.customs = await db.getCustoms(req.session.userId)
+
+
       res.redirect('/announces')
 
     } else {
@@ -191,10 +194,12 @@ app.post('/login', async function (req, res) {
 
 app.post('/signup', async function (req, res) {
   let added_user = await db.addUser(req.body.username, req.body.email, bcrypt.hashSync(req.body.password, salt))
+  
   if (added_user) {
     req.session.username = req.body.username
     req.session.email = req.body.email
     req.session.userId = await db.getUserId(req.session.username)
+    req.session.customs = await db.addCustoms(req.session.userId)
     res.redirect('/announces')
   } else {
     req.session.error = "It seems like you already have an account, please login"
@@ -327,7 +332,21 @@ app.post("/profile", async function (req, res) {
     if (changeusername && changeemail) {
       req.session.screen_message = "Information changed succesfully!"
     }
-
+  } else if (req.body.tag_color != undefined) {
+    tag_color = null
+    bg_color = null
+    if (req.body.tag_color != "") {
+      tag_color = req.body.tag_color
+      tag_color = await db.updateTagCustom(req.session.userId, tag_color)
+    }
+    if (req.body.bg_color != "") {
+      bg_color = req.body.bg_color
+      bg_color = await db.updateBackGCustom(req.session.userId, bg_color)
+    }
+    
+    if (tag_color && bg_color) {
+      req.session.screen_message = "Color(s) changed succesfully!"
+    }
   }
 
   res.redirect("/profile")

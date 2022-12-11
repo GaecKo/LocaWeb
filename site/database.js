@@ -1,4 +1,4 @@
-const {User, Ad, Comment, Report} = require("./tables")
+const {User, Ad, Comment, Report, Custom} = require("./tables")
 
 
 // USERS SECTIONS
@@ -1060,7 +1060,103 @@ async function addCommentReport(coId, report_text="", userId) {
         })
 }
 
+
+
+// CUSTOMS SECTION
+/**
+ * 
+ * @param {int} userId the id of the User from who to get the customs from
+ */
+async function getCustoms(userId) {
+    return Custom.findOne({where: {user: userId}, attributes: ["tag_color", "bg_color"]}).then(cust => {
+        if (cust) {
+            return cust.dataValues
+        } else {
+            return false
+        }
+    }).catch(err => {
+        console.log("Unable to retrieve customs of User " + userId + ": " + err)
+        return false
+    })
+}
+
+async function updateTagCustom(userId, tag_color) {
+    return Custom.update({tag_color: tag_color}, {where: {user: userId}}).then(state => {
+        if (state == 1){
+            return true
+        } else {
+            return false
+        }
+
+    }).catch(err => {
+        console.log("Error while updating customs: " + err)
+        return false
+    })
+}
+
+async function updateBackGCustom(userId, bg_color) {
+    return Custom.update({bg_color: bg_color}, {where: {user: userId}}).then(state => {
+        if (state == 1){
+            return true
+        } else {
+            return false
+        }
+
+    }).catch(err => {
+        console.log("Error while updating customs: " + err)
+        return false
+    })
+}
+
+/**
+ * 
+ * @param {int} userId 
+ * @param {str} tag_color, the color of the tag: {red, blue, green, orange, pink, ...}
+ * @param {str} bg_color, the color of the background: {red, blue, green, orange, pink, ...}
+ * @returns dataValues of Custom if created, false if not
+ */
+async function addCustoms(userId){
+    return Custom.create({
+        user: userId
+    }).then(cust => {
+        if (cust) {
+            console.log("Custom for user " + userId + " have been set")
+            return cust.dataValues
+        } else {
+            console.log("Custom for user " + userId + " HAVEN'T been set")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while adding customs for user " + userId + ": " + err)
+        return false
+    })
+}
+/**
+ * 
+ * @param {int} userId the id of the user from who to delete the customs from 
+ * @returns 
+ */
+async function deleteCustoms(userId) {
+    return Custom.destroy({where: {user: userId}}).then(state => {
+        if (state == 1) {
+            console.log("Customs of User " + userID + " deleted successfully")
+            return true
+        } else {
+            console.log("Customs of User " + userId + " WERE NOT deleted, user exists?")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while deleting customs of user " + userId + ": " + err)
+        return false
+    })
+}
+
 module.exports = {
+    getCustoms,
+    updateBackGCustom,
+    updateTagCustom,
+    addCustoms,
+    deleteCustoms,
     disableComment,
     deleteAd,
     getFullReports,
@@ -1129,7 +1225,7 @@ async function main(){
     // ad = await getAllAds()
     // await User.update({username: "MonNom"}, {where: {id: 1}})
     // await setModoState("GaecKo", true)
-    await setModoState(4, true)
+    // await setModoState(4, true)
 }
 
- main()
+// main()

@@ -13,6 +13,8 @@ class Comment extends Model {}
 
 class Report extends Model {}
 
+class Custom extends Model {}
+
 
 User.init({
     id: {
@@ -218,13 +220,35 @@ Report.init({
     }
 }, {sequelize, modelName: 'Report'})
 
+
+Custom.init({
+    user: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        references: {
+            model: User,
+            key: "id"
+        }
+    },
+    tag_color: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
+    bg_color: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    }
+}, {sequelize, modelName: 'Custom'})
+
 // To sync the database, if changes are done in the above init functions, uncomment next line. Be carefull, it's maybe needed to delete database content
-//sequelize.sync({force: true})
+// sequelize.sync({force: true})
 
 
 module.exports = {
     User,
     Ad,
     Comment,
-    Report
+    Report,
+    Custom
 }
