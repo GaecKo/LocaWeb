@@ -57,6 +57,7 @@ app.engine('html', require('ejs').renderFile);
 
 // render the accueil.html page 
 app.get('/', function (req, res) {
+  console.log(req.session.customs)
   res.render('./accueil', {username : req.session.username, customs: req.session.customs});
 });
 
