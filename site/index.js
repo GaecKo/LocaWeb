@@ -57,17 +57,17 @@ app.engine('html', require('ejs').renderFile);
 
 // render the accueil.html page 
 app.get('/', function (req, res) {
-  res.render('./accueil', {username : req.session.username});
+  res.render('./accueil', {username : req.session.username, customs: req.session.customs});
 });
 
 app.get('/login', function (req, res) {
-  res.render('./login', {error: req.session.error, username : req.session.username});
+  res.render('./login', {error: req.session.error, username : req.session.username, customs: req.session.customs});
   req.session.error = undefined;
 });
 
 app.get('/signup', function (req, res) {
   req.session.error = undefined;
-  res.render('./signup',{error: req.session.error, username : req.session.username});
+  res.render('./signup',{error: req.session.error, username : req.session.username, customs: req.session.customs});
 });
 
 app.get('/profile', async function (req, res) {
@@ -76,7 +76,7 @@ app.get('/profile', async function (req, res) {
     const user = await db.getUser(req.session.username);
     const announces = await db.getUserAds(user.id);
 
-    res.render('./profile', {username : req.session.username, user: user, announces: announces, screen_message: req.session.screen_message});
+    res.render('./profile', {username : req.session.username, user: user, announces: announces, screen_message: req.session.screen_message, customs: req.session.customs});
     req.session.screen_message = undefined;
   } else {
     res.redirect('/login')
@@ -92,7 +92,7 @@ app.get('/announces', async function (req, res) {
     //console.log(images)
   }
   let moderator = await db.isModo(req.session.userId)
-  res.render('./annonces', {username : req.session.username, error: req.session.screen_message, announces: announces, moderator: moderator});
+  res.render('./annonces', {username : req.session.username, error: req.session.screen_message, announces: announces, moderator: moderator, customs: req.session.customs});
 });
 
 app.get('/announces/:productId', async function (req, res) {
@@ -105,14 +105,14 @@ app.get('/announces/:productId', async function (req, res) {
   var imgArray = ad.images //get the images array
   const comments = await db.getFullComments(ad.comments)
   const user = await db.getUsername(ad.user)
-  res.render("./annonce_main", {username : req.session.username, ad: ad, comments: comments, userId: req.session.userId, user: user, imgArray: imgArray});
+  res.render("./annonce_main", {username : req.session.username, ad: ad, comments: comments, userId: req.session.userId, user: user, imgArray: imgArray, customs: req.session.customs});
 });
 
 app.get('/announces_builder', function (req, res) {
   //check if user is logged in
   if (req.session.username) {
     req.session.error = undefined;
-    res.render('./announces_builder', {username : req.session.username, error: req.session.error});
+    res.render('./announces_builder', {username : req.session.username, error: req.session.error, customs: req.session.customs});
   } else {
     res.redirect('/login')
   }
@@ -332,7 +332,7 @@ app.post("/profile", async function (req, res) {
     if (changeusername && changeemail) {
       req.session.screen_message = "Information changed succesfully!"
     }
-  } else if (req.body.tag_color != undefined) {
+  } else if (req.body.change_customs != undefined) {
     tag_color = null
     bg_color = null
     if (req.body.tag_color != "") {
@@ -344,9 +344,10 @@ app.post("/profile", async function (req, res) {
       bg_color = await db.updateBackGCustom(req.session.userId, bg_color)
     }
     
-    if (tag_color && bg_color) {
+    if (tag_color || bg_color) {
       req.session.screen_message = "Color(s) changed succesfully!"
     }
+    req.session.customs = await db.getCustoms(req.session.userId)
   }
 
   res.redirect("/profile")

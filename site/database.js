@@ -1083,6 +1083,7 @@ async function getCustoms(userId) {
 async function updateTagCustom(userId, tag_color) {
     return Custom.update({tag_color: tag_color}, {where: {user: userId}}).then(state => {
         if (state == 1){
+            console.log("Custom tag_color for User " + userId + " has been set!")
             return true
         } else {
             return false
@@ -1097,6 +1098,7 @@ async function updateTagCustom(userId, tag_color) {
 async function updateBackGCustom(userId, bg_color) {
     return Custom.update({bg_color: bg_color}, {where: {user: userId}}).then(state => {
         if (state == 1){
+            console.log("Custom bg_color for User " + userId + " has been set!")
             return true
         } else {
             return false

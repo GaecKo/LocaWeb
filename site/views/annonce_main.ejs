@@ -232,7 +232,7 @@
                                 <!-- Affiche le content @ en rouge si c'est une réponse au user conntecté -->
                                 <!-- text to highlight                                | text not to highlight -->
                                 <% if (customs.tag_color != null) { %>
-                                <a style="padding: 3px; border-radius: 5px; border: 1px solid rgb(255, 0, 0); background-color: <%= customs.tag_color %>;"><%= cur_sub.toAuthor %></a> <%= cur_sub.content %>
+                                <a style="padding: 3px;  border-radius: 5px; border: 1px solid rgb(255, 0, 0); background-color: <%= customs.tag_color %>; "><%= cur_sub.toAuthor %></a> <%= cur_sub.content %>
                                 <% } else { %>
                                     <a style="padding: 3px; border-radius: 5px; border: 1px solid rgb(255, 0, 0); background-color: #ff00007c;"><%= cur_sub.toAuthor %></a> <%= cur_sub.content %>
                                 <% } %>
@@ -246,7 +246,7 @@
                                  </div>
                                   <!-- @DRU PLEASE BLUR THIS -->
                             <% } else { %>
-                                <%= cur_sub.content %> 
+                                <%= cur_sub.toAuthor %> <%= cur_sub.content %> 
 
                             <% } %>
                             <!-- <br> -->
