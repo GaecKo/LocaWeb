@@ -40,7 +40,9 @@ a {
 .main_announce_container > .announce_container_left > .announce_images_container {
     margin-right: auto;
     margin-left: auto;
-    /* transform: translateY(5%); */
+    margin-top: auto;
+    margin-bottom: auto;
+    transform: translateY(5%);
     /* background-color: rgba(255, 54, 54, 0.425); */
     border-radius: 10px;
     width: 90%;
@@ -49,11 +51,13 @@ a {
 
 .main_announce_container > .announce_container_left > .announce_images_container > #arrow_left {
     display: block;
-    transform: translateY(500%);
+    position: absolute;
+    transform: translateY(-50%);
     float: left;
     width: 5vh;
     height: 5vh;
     margin-left: 10px;
+    margin-top: 300px;
     background-color: rgba(255, 255, 255, 0.425);
     border-radius: 50%;
     border: 1px solid rgba(0, 0, 0, 0.425);
@@ -72,11 +76,13 @@ i {
 
 .main_announce_container > .announce_container_left > .announce_images_container > #arrow_right {
     display: block;
-    transform: translateY(500%);
+    position: relative;
+    transform: translateY(-50%);
     float: right;
     width: 5vh;
     height: 5vh;
     margin-right: 10px;
+    margin-top: 300px;
     background-color: rgba(255, 255, 255, 0.425);
     border-radius: 50%;
     border: 1px solid rgba(0, 0, 0, 0.425);
