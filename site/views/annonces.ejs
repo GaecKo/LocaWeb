@@ -44,7 +44,9 @@
         <% } %>
 
         <div class="annonce-container">
-
+            <% if announces.length == 0) {%>
+                <a class="error"> Il n'y a pas d'annonces pour le moment...</a>
+            <% } %>
             <!-- La boucle qui parcourt les annonces commencera ici -->
             <% for (var i = 0; i < announces.length; i++) { %>
 

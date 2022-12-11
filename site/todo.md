@@ -18,8 +18,6 @@
 @Thomas_devl 
 * [X] ajouter plusieurs images 
 * [X] faire fonctionner les flèches 
-* [ ] faire en sorte qu'on puisse ajouter un report sur un truc qu'on a déjà report
-* [ ] faire en sorte qu'on puisse ajouter un report sur un truc qu'on a nous même mis
 * [ ] quand une ad est delete (voir database.js: deleteAd(adId), faire en sorte que l'image dans upload soit delete 
 aussi)
 * [ ] Prendre en compte le cas où quand le user veut modif son compte, qu'il puisse pas le faire si le username ou email qu'il choisit est déjà attribué à un autre user
@@ -27,8 +25,10 @@ aussi)
 @GaecKo 
 * [ ] Je vais commencer le rapport 
 * [ ] Schéma ORM, ...
+* [ ] Co / déco button
 * [ ] check user experience
 * [ ] remplir le bouton contact de sellor, adaptation tables.js
+* [ ] message particulier si aucune annonce
 * [X] repair double click moderator clear ad
 * [X] visibility of comments 
     * [ ] faut juste que @dru finisse le css des blur / ...
@@ -37,3 +37,5 @@ aussi)
 * [X] admin page non accessible
 * [X] comment le code :/
 * [X] report impossible sur son commentaire / annonce
+* [X] faire en sorte qu'on puisse ajouter un report sur un truc qu'on a déjà report
+* [X] faire en sorte qu'on puisse ajouter un report sur un truc qu'on a nous même mis
