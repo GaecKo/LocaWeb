@@ -7,10 +7,9 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/profile.css">
     <link rel="stylesheet" href="../css/annonces.css">
-    <link rel="stylesheet" href="../css/login.css">
     <title><%= username %></title>
 </head>
-<body>
+<body class="<%= (typeof customs !== 'undefined' && typeof customs.light_mode !== 'undefined') ? (customs.light_mode ? 'light-mode' : 'dark-mode') : 'dark-mode' %>">
 
     <div class="main">
 
@@ -20,7 +19,7 @@
         <h1>Your profile</h1>
     </div>
 
-    <hr style="width: 80%; border: 3px dashed white;">
+    <hr style="width: 80%; border: 3px dashed var(--white)">
 
     <h3 class="screen_message"><%= screen_message %></h3>
 
@@ -69,7 +68,7 @@
     <% } %>
     </div>
 
-    <hr style="width: 80%; border: 3px dashed white; margin-top: 35px;">
+    <hr style="width: 80%; border: 3px dashed var(--white); margin-top: 35px;">
 
     <h3 class="info"> All your information :</h3>
 

@@ -10,9 +10,9 @@
       <script src="../js/changebg.js"></script>
   </head>
 
-  <body>
+  <body class="<%= (typeof customs !== 'undefined' && typeof customs.light_mode !== 'undefined') ? (customs.light_mode ? 'light-mode' : 'dark-mode') : 'dark-mode' %>">
   
-    <div class="main">
+    <div  class="main"> 
 
       <%- include('template/header.ejs') %>
       

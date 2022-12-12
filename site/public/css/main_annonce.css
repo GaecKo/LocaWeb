@@ -20,7 +20,7 @@ a {
 }
 
 .main_announce_container > .announce_container_left {
-    border: 1px solid #5e1cc9;
+    border: 1px solid var(--purple);
     border-radius: 10px;
     /* border-color: blue;
     border-width: 10px; */
@@ -30,7 +30,7 @@ a {
 }
 
 .main_announce_container > .announce_container_right {
-    border: 1px solid #5e1cc9;
+    border: 1px solid var(--purple);
     border-radius: 10px;
     float: right;
     width: 35%;
@@ -102,14 +102,14 @@ i {
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 10px;
-    border: 1px solid #5e1cc9;
+    border: 1px solid var(--purple);
     border-radius: 10px;
     width: 90%;
     height: 30%;
 }
 
 .info_product, .moreless_announce_description {
-    color: aliceblue;
+    color: var(--white);
     text-align: justify;
     font-size: 1.5em;
     margin-left: 10px;
@@ -118,7 +118,7 @@ i {
     font-family: 'Codec Pro';
 }
 .selle_info{
-    color:white;
+    color:var(--white);
     font-family:'Codec Pro';
     font-size:25px;
     text-align: center;
@@ -139,8 +139,8 @@ i {
 .announce_goto_comment_description > .goto_description {
     width: 50%;
     font-family: 'Codec Pro';
-    border: 1px solid #5e1cc9;
-    background-color: #5e1cc9;
+    border: 1px solid var(--purple);
+    background-color: var(--purple);
     border-radius: 10px;
     height: 100%;
     cursor: pointer;
@@ -149,7 +149,7 @@ i {
 
 .announce_goto_comment_description > .goto_comment:hover,
 .announce_goto_comment_description > .goto_description:hover {
-    background-color: rgb(140, 0, 255);
+    background-color: var(--purple);
     transition: all 0.2s ease-in-out;
 }
 
@@ -165,7 +165,7 @@ i {
 .announce_goto_comment_description > .goto_description > .goto_text {
     background-color: transparent;
     font-size: 2em;
-    color: aliceblue;
+    color: var(--white);
     text-align: center;
     margin-bottom: auto;
     margin-left: auto;
@@ -174,7 +174,7 @@ i {
 }
 
 #announce_description {
-    border: 1px solid #5e1cc9;
+    border: 1px solid var(--purple);
     border-radius: 10px;
     margin-top: 100px;
     width: 90%;
@@ -207,13 +207,13 @@ i {
     position: absolute;
     height: calc(2em * var(--line-height));
     width: 100%;
-    background: linear-gradient(to bottom, transparent, #101728);
+    background: linear-gradient(to bottom, transparent, #757b8aa3);
     bottom: 0;
     pointer-events: none;
 }
 
 #announce_description > .moreless_announce_description {
-    background-color: #5e1cc9;
+    background-color: var(--purple);
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -228,7 +228,7 @@ i {
 }
 
 #announce_description > .moreless_announce_description:hover {
-    background-color: rgb(140, 0, 255);
+    background-color: var(--purple);
     transition: all 0.2s ease-in-out;
 }
 
@@ -247,7 +247,7 @@ i {
     width: 90%;
     height: 630px;
     /* background-color: rgba(255, 54, 54, 0.425); */
-    border: 1px solid #5e1cc9;
+    border: 1px solid var(--purple);
     border-radius: 10px;
     color: white;
     font-family: 'Codec Pro';
@@ -259,9 +259,9 @@ i {
     margin: 20px;
     height: 500px;
     border-radius: 10px;
-    border: 1px solid #5e1cc9;
-    background-color: #101728;
-    color: aliceblue;
+    border: 1px solid var(--purple);
+    background-color: var(--comment-background);
+    color: var(--white);
     font-family: 'Codec Pro';
     font-size: 1.5em;
     padding: 10px;
@@ -384,7 +384,7 @@ i {
 .comment_send_button {
     width: 20%;
     height: 50px;
-    background-color: #5e1cc9;
+    background-color: var(--purple);
     font-family: 'Codec Pro';
     color: aliceblue;
     border-radius: 0px 5px 5px 0px;
@@ -397,7 +397,7 @@ i {
 .reply_button_right, .report_button, .announce_report_button {
     width: 20%;
     height: 50px;
-    background-color: #5e1cc9;
+    background-color: var(--purple);
     font-family: 'Codec Pro';
     color: aliceblue;
     font-size: 1.2em;
@@ -408,7 +408,7 @@ i {
 }
 
 .comment_send_button:hover, .reply_button_right:hover, .report_button:hover, .announce_report_button:hover {
-    background-color: rgb(140, 0, 255);
+    background-color: var(--purple);
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 }

@@ -4,7 +4,7 @@
 }
 
 body {
-    background-color: #101728;
+    background-color: var(--blue-bg);
 }
 
 .error{
@@ -53,7 +53,8 @@ body {
 }
 
 .annonce-user {
-    position: fixed;
+    /* position: fixed; */
+    background-color: transparent;
 }
 
 .annonce-element {
@@ -61,9 +62,9 @@ body {
     padding-right: 30px;
     padding-top: 10px;
     padding-bottom: 10px;*/
-    background: rgb(48 17 60);
+    background: var(--cadre-annonce);
     border-radius: 16px;
-    box-shadow: 0px 0px 10px 5px rgb(140 0 200 / 40%);
+    box-shadow: var(--shadow-cadre);
     border: 1px solid rgba(91, 2, 124, 0.2);
     /* background-color: rgba(140, 0, 200, 0.4); */
     height: 400px;
@@ -179,7 +180,7 @@ h4{
     /* height: 100%; */
     /* height: max-content; */
     margin-top: 30px;
-    background-color: rgb(48 17 60);
+    background-color: transparent;
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -202,12 +203,17 @@ h4{
     flex: 1;
 }
 
+.rate{
+    font-weight:bold;
+    background-color: transparent;
+}
+
 .annonce-button {
     width: 60%;
     float: right;
     text-align: right;
     /* margin-top: -30px; */
-    background-color: rgb(48 17 60);
+    background-color: transparent;
 }
 
 .contact-annonce-button {

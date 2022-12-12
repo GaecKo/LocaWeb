@@ -13,6 +13,9 @@
 .form-title{
     font-family: 'Codec Pro ExtraBold';
     margin-left: 20px;
+    text-align: center;
+    font-size: 30px;
+    color: var(--purple);
 }
 
 .form-container{

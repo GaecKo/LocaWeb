@@ -62,21 +62,28 @@ app.get('/', function (req, res) {
 });
 
 app.get('/login', function (req, res) {
-  res.render('./login', {error: req.session.error, username : req.session.username, customs: req.session.customs});
-  req.session.error = undefined;
+  if (req.session.username) {
+    res.redirect('/')
+  } else {
+    res.render('./login', {error: req.session.error, username : req.session.username, customs: req.session.customs});
+    req.session.error = undefined;
+  }
+  
 });
 
 app.get('/signup', function (req, res) {
-  req.session.error = undefined;
-  res.render('./signup',{error: req.session.error, username : req.session.username, customs: req.session.customs});
+  if (req.session.username) {
+    res.redirect('/')
+  } else {
+    req.session.error = undefined;
+    res.render('./signup',{error: req.session.error, username : req.session.username, customs: req.session.customs});
+  }
 });
 
 app.get('/profile', async function (req, res) {
-
   if (req.session.username) {
     const user = await db.getUser(req.session.username);
     const announces = await db.getUserAds(user.id);
-
     res.render('./profile', {username : req.session.username, user: user, announces: announces, screen_message: req.session.screen_message, customs: req.session.customs});
     req.session.screen_message = undefined;
   } else {
@@ -86,12 +93,8 @@ app.get('/profile', async function (req, res) {
 
 app.get('/announces', async function (req, res) {
   let announces = await db.getAllAds();
-  //console.log(announces)
   //for each ad get log the image array
-  for (let i = 0; i < announces.length; i++) {
-    let images = announces[i].images
-    //console.log(images)
-  }
+  for (let i = 0; i < announces.length; i++) {let images = announces[i].images}
   let moderator = await db.isModo(req.session.userId)
   res.render('./annonces', {username : req.session.username, error: req.session.screen_message, announces: announces, moderator: moderator, customs: req.session.customs});
 });
@@ -180,8 +183,6 @@ app.post('/login', async function (req, res) {
       req.session.moderator = user.moderator
       req.session.userId = await db.getUserId(req.session.username)
       req.session.customs = await db.getCustoms(req.session.userId)
-
-
       res.redirect('/announces')
 
     } else {

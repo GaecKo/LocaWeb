@@ -1068,7 +1068,7 @@ async function addCommentReport(coId, report_text="", userId) {
  * @param {int} userId the id of the User from who to get the customs from
  */
 async function getCustoms(userId) {
-    return Custom.findOne({where: {user: userId}, attributes: ["tag_color", "bg_color"]}).then(cust => {
+    return Custom.findOne({where: {user: userId}, attributes: ["tag_color", "light_mode"]}).then(cust => {
         if (cust) {
             return cust.dataValues
         } else {

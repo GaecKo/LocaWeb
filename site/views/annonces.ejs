@@ -9,14 +9,14 @@
     <title>Announces</title>
     <link rel="icon" type="image/svg+xml" href="../image/logo.svg">
 </head>
-<body>
+<body class="<%= (typeof customs !== 'undefined' && typeof customs.light_mode !== 'undefined') ? (customs.light_mode ? 'light-mode' : 'dark-mode') : 'dark-mode' %>">
 
     <div class="main">
 
         <header id="header">
             <div id="website-logo">
             <img class="logo" src="../image/logo.svg"  alt="Gradient Shape Logo Element" loading="lazy">
-            <span class="title" ><a href=".." style="text-decoration:none; color: white;">&nbsp; LocaWeb </a> </span>  
+            <span class="title" ><a href=".." class="head-title">&nbsp; LocaWeb </a> </span>  
             </div>
             
             <a id="login" href="/login" class="btn-login">Login</a>
@@ -72,7 +72,7 @@
                     <div class="annonce-bottom">
                         <div class="annonce-price">
                             <!-- Prix de l'annonce -->
-                            <%= announces[i].price %> <span style="font-weight:bold; background-color: transparent;"><%= announces[i].rate %></span>
+                            <%= announces[i].price %> <span  class="rate"><%= announces[i].rate %></span>
                         </div>
                         <div class="annonce-button">
                             <!-- Bouton de l'annonce -->

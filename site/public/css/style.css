@@ -11,9 +11,55 @@
     src: url('../fonts/codec-pro/CodecPro-Light.ttf');
 }
 
+:root{
+    /* main */
+    --blue-bg: #101728;
+    --white : #ffffff;
+    --purple : #9340FF;
+    --footer-bg: #060730;
+    --header-trans: rgba(16, 23, 40, .9);
+    --wave : url(../image/wave6.svg);
+
+    /* annonce */
+    --cadre-annonce :rgb(48 17 60);
+    --shadow-cadre : 0px 0px 10px 5px rgb(140 0 200 / 40%);
+
+    /* annonce main */
+    --comment-background : #101728;
+
+    /* annonce builder */
+    --input-color : #0A2156;
+}
+
+
+.light-mode{
+    /* main */
+    --blue-bg: #fafafa;
+    --white : #000000;
+    --purple : #154792;
+    --footer-bg: #d2d3db;
+    --header-trans: rgba(250, 250, 250, 0.9);
+    --wave : url(../image/light_wave.svg);
+
+    /* annonce */
+    --cadre-annonce : #484b6a;
+    --shadow-cadre : 0px 0px 10px 5px rgba(184, 223, 235, 0.4);
+
+    /* annonce main */
+    --comment-background : #e4e5f1;
+
+    /* annonce builder */
+    --input-color :  #e4e5f1;
+   
+}
+  
+.dark-mode{
+    --blue-bg: #101728;
+    /* the root values are used here */
+}
 
 *{
-    background-color: #101728;
+    background-color: var(--blue-bg);
 }
 
 body{
@@ -22,24 +68,28 @@ body{
 
 .main{
     width:80%;
-    margin-top: 20px;
     margin-left:auto;
     margin-right:auto;
 }
 
+.head-title{
+    background-color: transparent; 
+    text-decoration:none; 
+    color: var(--white);
+}
 
 .title{
     font-size:40px;
-    color:white;
+    color:var(--white);
     font-family: 'Codec Pro ExtraBold';
-    background-color: rgba(16, 23, 40, 0);
+    background-color: transparent;
     -webkit-backdrop-filter: blur(7px);
 }
 
 .logo {
     border-radius: 1px; 
     width: 50px;
-    background-color: rgba(16, 23, 40, 0);
+    background-color: transparent;
     -webkit-backdrop-filter: blur(7px);
 }
 
@@ -149,7 +199,7 @@ body{
 
 
 .renttext{
-    color:#9340FF;
+    color:var(--purple);
     font-family:'Codec Pro ExtraBold';
     font-size:50px;
     text-align: center;
@@ -157,7 +207,7 @@ body{
 
 
 .smallrenttext {
-    color:white;
+    color:var(--white);
     font-family:'Codec Pro';
     font-size:25px;
     text-align: center;
@@ -180,14 +230,14 @@ body{
 
 
 .ecotext{
-    color:#9340FF;
+    color:var(--purple);
     font-family:'Codec Pro ExtraBold';
     font-size: 50px;
     text-align: center;
 }
 
 .smallecotext{
-    color:white;
+    color:var(--white);
     font-family:'Codec Pro';
     font-size: 25px;
     text-align: center;
@@ -206,18 +256,18 @@ body{
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    background-image: url(../image/wave6.svg);
+    background-image: var(--wave);
 }
 
 footer {
     position: relative;
     height: 0;
     padding-top: 300px;
-    background-color:  #060730;
+    background-color: var(--footer-bg);
 }
 
 .footer-inside {
-    background-color:  #060730;
+    background-color:  transparent;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -227,7 +277,7 @@ footer {
 }
 
 .flex3{
-    background-color:  #060730;
+    background-color: transparent;
     width: 80%;
     margin-left: auto;
     margin-right: auto;
@@ -240,33 +290,55 @@ footer {
     margin-bottom: 10%;
 }
 
+.footer_logo{
+   border-radius:1px; 
+   width:50px; 
+   background-color: transparent;
+}
+
 .container3{
     z-index: 10;
-    background-color: #060730;
+    background-color: transparent;
 }
 
 .container4{
     z-index: 10;
-    background-color: #060730;
+    background-color: transparent;
 }
 
 .container4 h1{
-    color:#9340FF;
+    color:var(--purple);
     font-family:'Codec Pro ExtraBold';
     font-size:50px;
+    background-color: transparent;
 }
 
 .container4 pre{
-    color:white;
+    color:var(--white);
     font-family:'Codec Pro';
     font-size:25px;
+    background-color: transparent;
+}
+
+.textinput {
+    width: 90%;
+    margin-top: 5px; 
+    border-color:#cccccc; 
+    text-align:left; 
+    border-style:hidden; 
+    border-radius:10px; 
+    border-width:0px; 
+    color:#949393; 
+    background-color: var(--input-color); 
+    padding:8px; font-size:22px; 
+    transition: all .5s ease-in-out;
 }
 
 @media only screen and (max-width: 768px) {
 
     .main {
-      width: 90%;
-      margin-left: auto;
+        width: 90%;
+        margin-left: auto;
         margin-right: auto;
         margin-top: 0;
         margin-bottom: 0;
@@ -356,7 +428,7 @@ footer {
 
 #header {
     z-index: 100;
-    background-color: rgba(16, 23, 40, .9);
+    background-color: var(--header-trans);
     width: 100%;
     padding-bottom: 60px;
     padding-top: 30px;
