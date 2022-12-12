@@ -1095,8 +1095,10 @@ async function updateTagCustom(userId, tag_color) {
     })
 }
 
-async function updateBackGCustom(userId, bg_color) {
-    return Custom.update({bg_color: bg_color}, {where: {user: userId}}).then(state => {
+async function updateLightModeCustom(userId, light_mode) {
+    light = (light_mode == "light")
+    console.log(light)
+    return Custom.update({light_mode: light}, {where: {user: userId}}).then(state => {
         if (state == 1){
             console.log("Custom bg_color for User " + userId + " has been set!")
             return true
@@ -1155,7 +1157,7 @@ async function deleteCustoms(userId) {
 
 module.exports = {
     getCustoms,
-    updateBackGCustom,
+    updateLightModeCustom,
     updateTagCustom,
     addCustoms,
     deleteCustoms,

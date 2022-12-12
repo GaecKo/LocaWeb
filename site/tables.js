@@ -235,9 +235,10 @@ Custom.init({
         type: DataTypes.TEXT,
         allowNull: true
     },
-    bg_color: {
-        type: DataTypes.TEXT,
-        allowNull: true
+    light_mode: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+        defaultValue: false
     }
 }, {sequelize, modelName: 'Custom'})
 

@@ -340,12 +340,12 @@ app.post("/profile", async function (req, res) {
       tag_color = req.body.tag_color
       tag_color = await db.updateTagCustom(req.session.userId, tag_color)
     }
-    if (req.body.bg_color != "") {
-      bg_color = req.body.bg_color
-      bg_color = await db.updateBackGCustom(req.session.userId, bg_color)
+    if (req.body.light_mode != "") {
+      light_mode = req.body.light_mode
+      light_mode = await db.updateLightModeCustom(req.session.userId, light_mode)
     }
     
-    if (tag_color || bg_color) {
+    if (tag_color || light_mode) {
       req.session.screen_message = "Color(s) changed succesfully!"
     }
     req.session.customs = await db.getCustoms(req.session.userId)
