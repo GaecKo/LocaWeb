@@ -463,6 +463,10 @@ footer {
         width: 100%;
     }
 
+    .container4 pre{
+        font-size:initial;
+    }
+
 }
 
 #header {
