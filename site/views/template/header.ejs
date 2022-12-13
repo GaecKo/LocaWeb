@@ -8,7 +8,14 @@
     <a id="sign_up" href="/signup" class="btn-grad">Sign-up</a>
 
   <% if (username !== undefined) { %>
-    <a id="username" class="btn-grad" href="/profile"> <%= username %> </a>
+    <div class="btn-grad profile-container"><%= username %>
+      <ul class="dropdown">
+        <li><a id="username" class="btn-grad" href="/profile"> Profile </a></li>
+        <li><a id="username" class="btn-grad" href="/"> Disconnect </a></li>
+      </ul>
+     
+    </div>
+    
     <a id="username" class="btn-offers btn-grad" href="/announces"> View offers </a>
     <script>
         document.getElementById('sign_up').style.display='none';

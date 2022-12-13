@@ -115,7 +115,6 @@ body{
     font-size:17px;
     padding:16px 31px;
     position:relative;
-    
 }
 
 .btn-grad:hover {
@@ -124,6 +123,40 @@ body{
     text-decoration: none;
 }
 
+.dropdown {
+    display: none;
+    width: 50px;
+    height: 50px;
+    background-color: transparent;
+}
+
+.dropdown > li {
+    display: block;
+    display: block;
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.dropdown > li:before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.btn-grad.profile-container {
+    position: relative;
+    display: block;
+}
+
+.btn-grad.profile-container:hover > .dropdown {
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+}
 .btn-login{
     float: right;
     margin-left: 10px;

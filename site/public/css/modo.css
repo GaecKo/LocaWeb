@@ -17,7 +17,7 @@ body > #commentAndAnnounces {
     width: 100%;
 }
 
-.announce, .comment, .all {
+.announce, .comment, .all, .back_to_lobby {
     padding: 20px;
 }
 
