@@ -329,6 +329,12 @@ footer {
    background-color: transparent;
 }
 
+.github-logo {
+    text-decoration: none; 
+    background-color: transparent;
+    margin: 15px;
+}
+
 .container3{
     z-index: 10;
     background-color: transparent;

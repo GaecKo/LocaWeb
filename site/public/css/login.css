@@ -203,6 +203,29 @@ footer {
     font-size:25px;
 }
 
+.footer_logo{
+    border-radius:1px; 
+    width:50px; 
+    background-color: transparent;
+ }
+
+ footer {
+    position: relative;
+    height: 0;
+    padding-top: 300px;
+    background-color: #060730;
+}
+
+.footer-inside {
+    background-color:  transparent;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+}
+
 input[id="username_sign_up"]:invalid:focus, input[id="email_sign_up"]:invalid:focus, input[id="id_password"]:invalid:focus, input[id="confirmmdp"]:invalid:focus, #login_username:invalid:focus, #login_password:invalid:focus {
     border: 2px solid rgb(255, 234, 0);
     transition: all .3s ease;

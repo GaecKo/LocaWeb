@@ -95,6 +95,12 @@ i {
     background-color: transparent;
 }
 
+.edit-btn {
+    text-decoration: none; 
+    background-color: transparent;
+    border:transparent;
+}
+
 .main_announce_container > .announce_container_right > .announce_seller,
 .main_announce_container > .announce_container_right > .announce_price,
 .main_announce_container > .announce_container_right > .rent_article_button {
@@ -207,7 +213,7 @@ i {
     position: absolute;
     height: calc(2em * var(--line-height));
     width: 100%;
-    background: linear-gradient(to bottom, transparent, #757b8aa3);
+    background: linear-gradient(to bottom, transparent, var(--blue-bg));
     bottom: 0;
     pointer-events: none;
 }

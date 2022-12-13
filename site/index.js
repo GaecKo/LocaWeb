@@ -122,6 +122,16 @@ app.get('/announces_builder', function (req, res) {
   }
 });
 
+app.get('/announces_updater', async function (req, res) {
+  //check if user is logged in
+  if (req.session.username) {
+    let ad = await db.getAd(req.session.adIdToUpdate)
+    res.render('./announces_updater', {username : req.session.username, error: req.session.error, customs: req.session.customs, ad : ad});
+  } else {
+    res.redirect('/login')
+  }
+});
+
 app.get('/admin', async function (req, res) {
 
   //Check if user is admin
@@ -162,7 +172,82 @@ app.post('/announces/:productId', async function (req, res) {
   }
   
   res.redirect('/announces/' + adId)
+});
 
+app.post("/announces_updater",  upload.array("images" /* "images" is the name of the <file> input type in the form */), async (req, res) => {
+
+  //delete the old images from the data/uploads folder
+  let adId = req.session.adIdToUpdate
+  let ad = await db.getAd(adId)
+  let to_delete = ad.images
+  for (let i = 0; i < to_delete.length; i++) {
+    try {
+      fs.unlinkSync(path.join(__dirname, "./data/uploads/"+to_delete[i]))
+      console.log("successfully deleted :" +to_delete[i])
+    }
+    catch(err) {
+      console.error(err)
+    }
+  }
+
+  //the new images should be in the temp folder, we need to move them to the data/uploads folder
+  //list with all the paths of the images
+  let images = []
+
+  for (let i = 0; i < req.files.length; i++) {
+    const tempPath = req.files[i].path;
+    const time = Date.now();
+    const targetPath = path.join(__dirname, "./data/uploads/"+req.files[i].originalname+time+".png");
+
+    if (path.extname(req.files[i].originalname).toLowerCase() === ".png") { //if the file is a png
+      fs.rename
+      ( tempPath, targetPath, async (err) => {
+        if (err) return handleError(err, res);
+
+          req.session.screen_message = "File uploaded succesfully!"
+          await images.push(req.files[i].originalname+time+".png")
+          console.log(req.files[i].originalname + " has been uploaded has "+req.files[i].originalname+time+ ".png ! ")
+
+          // check if images ar all uploaded
+          if (images.length == req.files.length) {
+
+            //now that the images are uploaded, we can add the announce to the database
+            title = req.body.title
+            description = req.body.description
+            price = req.body.price
+            city = req.body.city
+            rate = req.body.rate
+            images = JSON.stringify(images) // list of all the images
+
+            let result = await db.updateAdd(adId, title, description, city, price, rate, images)
+            if (result) {
+              req.session.screen_message = "Offer updated succesfully!"
+              res
+                .status(200)
+                .contentType("text/plain")
+                .redirect('/announces');
+                
+            } else {
+              req.session.screen_message = "Something went wrong, please try again"
+              res.redirect("/announces_builder")
+            }
+          }
+      });
+    } else { //if the file is not a png
+      fs.unlink(tempPath, err => {
+        if (err) return handleError(err, res);
+        res
+          .status(403)
+          .contentType("text/plain")
+          .end("Only .png files are allowed!");
+      });
+    }
+  }
+});
+
+app.post('/getAd-for-Update', async function (req, res) {
+  req.session.adIdToUpdate = req.body.adId;
+  res.redirect('/announces_updater')
 });
 
 app.post('/login', async function (req, res) {
@@ -231,7 +316,6 @@ app.post("/announces_builder",  upload.array("images" /* "images" is the name of
 
           // check if images ar all uploaded
           if (images.length == req.files.length) {
-            //console.log("jeaijezijaej zaheoiz a")
 
             //now that the images are uploaded, we can add the announce to the database
             title = req.body.title
@@ -239,19 +323,7 @@ app.post("/announces_builder",  upload.array("images" /* "images" is the name of
             price = req.body.price
             city = req.body.city
             rate = req.body.rate
-
-            console.log( "FIRST :" + images)
-            console.log(images[0])
-
             images = JSON.stringify(images) // list of all the images
-
-            console.log( "SECOND :" + images)
-            console.log(images[0])
-
-            test = JSON.parse(images)
-
-            console.log( "THIRD :" + test)
-            console.log(test[0])
 
             let result = await db.addAd(req.session.userId, title, description, city, price, rate, images)
             if (result) {
@@ -260,7 +332,6 @@ app.post("/announces_builder",  upload.array("images" /* "images" is the name of
                 .status(200)
                 .contentType("text/plain")
                 .redirect('/announces');
-                
             } else {
               req.session.screen_message = "Something went wrong, please try again"
               res.redirect("/announces_builder")

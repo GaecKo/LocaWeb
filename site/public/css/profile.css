@@ -1,12 +1,12 @@
 h1 {
-    color:  #9340FF;
+    color:  var(--purple);
     font-family: 'Codec Pro ExtraBold';
     font-size: 50px;
     text-align: center;
 }
 
 h3{
-    color:  #9340FF;
+    color: var(--purple);
     font-family: 'Codec Pro ExtraBold';
     text-align: left;
     margin-left: 40px;
@@ -16,7 +16,7 @@ h3{
 }
 
 h5{
-    color:  #9340FF;
+    color: var(--purple);
     font-family: 'Codec Pro ExtraBold';
     text-align: left;
     font-size: 15px;
@@ -36,7 +36,7 @@ h5{
 }
 
 h6{
-    color:  #6d71e3;
+    color: var(--purple);
     font-family: 'Codec Pro';
     text-align: left;
     font-size: 15px;

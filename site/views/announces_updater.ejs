@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/annonce-builder.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <script src="https://kit.fontawesome.com/d3562eec23.js" crossorigin="anonymous"></script>
-    <title>Annonce builder</title>
+    <title>Annonce updater</title>
     <link rel="icon" type="image/svg+xml" href="../image/logo.svg">
 </head>
 <body class="<%= (typeof customs !== 'undefined' && typeof customs.light_mode !== 'undefined') ? (customs.light_mode ? 'light-mode' : 'dark-mode') : 'dark-mode' %>">
@@ -18,7 +18,7 @@
         <%- include('template/header.ejs') %>
 
         <div class="form-title">
-            <h1>Créer une annonce</h1>
+            <h1>Update your offer</h1>
         </div>
 
         <% if (error != undefined) { %>
@@ -41,21 +41,21 @@
 
         <div class="form-container">
 
-            <form method="POST" enctype="multipart/form-data" action="/announces_builder">
+            <form method="POST" enctype="multipart/form-data" action="/announces_updater">
                 <!-- Title -->
-                <input class="textinput" type="text" id="title" name="title" placeholder="Title of your offer">
+                <input class="textinput" type="text" id="title" name="title" value="<%= ad.title %>">
                 <br>
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 <!-- Description -->
-                <textarea class = "textinput" id="description" name="description" placeholder="Description of the offer" maxlength="500" style="height:200px;resize: none;"></textarea>
+                <textarea class = "textinput" id="description" name="description" maxlength="500" style="height:200px;resize: none;"><%= ad.description %></textarea>
                 <br>
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 
                 <!-- Price -->
                 <div class="price">
                     <!-- City -->
-                    <input  class="textinput smallinput"type="text" id="city" name="city" placeholder="City">
-                    <input  class="textinput smallinput" type="number" id="price" name="price" placeholder="Price" min="1">
+                    <input  class="textinput smallinput" type="text" id="city" name="city" value="<%= ad.city %>">
+                    <input  class="textinput smallinput" type="number" id="price" name="price" value="<%= ad.price %>" min="1">
 
                     <select class="textinput" style="width:200px;" name="rate" required>
                         <option value="0" disabled>Select rate:</option>
@@ -70,12 +70,12 @@
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 <!-- Image -->
                 <input id="files" type="file" accept="image/png" name="images" class="textinput smallinput"  multiple>  
-                <a class="remove" title="Remove the last image added" onclick="removeLastPicture()"> <i class="fas fa-times"></i> </a>
+                <a class="remove" title="Remove all the pictures" onclick="removeLastPicture()"> <i class="fas fa-times"></i> </a>
                 <div id="preview"></div>
                 <br>
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 <!-- submit btn -->
-                <button class = "btn-grad" type="submit" style="border: 0;display: block;margin: 0 auto; float: inherit;">Créer l'annonce</button> 
+                <button class = "btn-grad" type="submit" style="border: 0;display: block;margin: 0 auto; float: inherit;">Update</button> 
                 <br>
             </form>
 

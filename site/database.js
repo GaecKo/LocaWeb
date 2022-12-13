@@ -293,6 +293,7 @@ async function getAd(adId) {
         return false
     })
 }
+
 /**
  * 
  * @param {int} userId the id of the user
@@ -320,6 +321,42 @@ async function addAd(userId, title, description, city, price, rate, images) {
         return true
     }).catch(err => {
         console.log("Error while adding Ad: " + err)
+    })
+}
+
+
+/**
+ * 
+ * @param {int} adId the id of the ad
+ * @param {str} title the title of the ad
+ * @param {str} description the description of the ad
+ * @param {str} city the city of the ad
+ * @param {int} price the price of the ad
+ * @param {str} rate the rate of the ad
+ * @param {str} images the path to the images of the ad 
+ * @returns true if the ad was updated
+ *          false if the ad was not updated
+ */
+async function updateAdd(adId, title, description, city, price, rate, images) {
+    return Ad.update({
+        title: title,
+        description: description,
+        city: city,
+        price: price,
+        rate: rate,
+        images: images
+        // the comments are not updated
+    }, {where: {id: adId}}).then(state => {
+        if (state == 1) {
+            console.log("Ad " + adId + " has been updated")
+            return true
+        } else {
+            console.log("Ad " + adId + " couldn't be updated, ad exists?")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while updating ad " + adId + ": " + err)
+        return false
     })
 }
 
@@ -1156,38 +1193,48 @@ async function deleteCustoms(userId) {
 }
 
 module.exports = {
-    getCustoms,
-    updateLightModeCustom,
-    updateTagCustom,
-    addCustoms,
-    deleteCustoms,
-    disableComment,
-    deleteAd,
-    getFullReports,
-    getUserId,
+    // USER SECTION
     getUser,
     addUser,
     getUsername,
-    getUserAds,
+    getUserId,
     setModoState,
+    updatePassword,
+    updateUsername,
+    updateEmail,
     isModo,
+
+    // REPORT SECTION
+    getFullReports,
     addCommentReport,
     addUserReport,
     addAdReport,
-    getAd,
-    addAd,
-    getAllAds,
-    getComment,
-    addComment,
-    getFullComments,
-    getUserAd,
     clearCommentReports, 
     clearAdReports, 
     decreaseTotalReportsUser,
     isBanned,
-    updatePassword,
-    updateUsername,
-    updateEmail
+
+    // AD SECTION
+    deleteAd,
+    getUserAds,
+    getAd,
+    addAd,
+    updateAdd,
+    getAllAds,
+    getUserAd,
+
+    // COMMENT SECTION
+    disableComment,
+    getComment,
+    addComment,
+    getFullComments,
+
+    // CUSTOMS SECTION
+    getCustoms,
+    updateLightModeCustom,
+    updateTagCustom,
+    addCustoms,
+    deleteCustoms 
 }
 
 async function main(){

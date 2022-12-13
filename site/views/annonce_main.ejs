@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/main_annonce.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <script src="https://kit.fontawesome.com/d3562eec23.js" crossorigin="anonymous"></script>
     <title><%= ad.title %></title> 
     <link rel="icon" type="image/svg+xml" href="../image/logo.svg">
 </head>
@@ -16,6 +17,7 @@
     <div class="main">
 
         <%- include('template/header.ejs') %>
+
         <% has_reported = ad.reporters.includes(userId) || userId == ad.reporters || (ad.user == userId)%>
         <!-- has_Reported is used to define whether or not the user should see the buttons to report and ad / comments -->
         <!-- This represents the case where someone has already reported an ad / comments or that he is the creator of the ad / comment -->
@@ -32,6 +34,14 @@
             </div>
                 
         <% } %>
+        
+        <% if (ad.user == userId) { %>
+            <form method="POST"  action="/getAd-for-Update">
+                <input type="hidden"  name="adId" value="<%= ad.id %>">
+                <button type="submit" class="edit-btn"><i style="margin: 20px 0 0 100px;" class="fa-solid fa-pen-to-square"></i></button>
+            </form>
+        <% } %>
+        
 
         <div class="main_announce_container">
             <div class="announce_container_left">
@@ -152,8 +162,6 @@
 
                 <p class="info_product">
                     <%= ad.description %>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Et similique nam culpa deserunt ipsa minima vero nulla eaque ipsum illo repellendus molestiae quis ea temporibus, laboriosam odio, laudantium perspiciatis. Aliquam.
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab suscipit architecto ipsum fugiat numquam aliquid, provident magnam omnis repellat, quaerat quae est adipisci magni ipsa tempora velit optio. Nostrum, quaerat?
                 </p>
                 
             </div>
@@ -294,13 +302,15 @@
         </div>
     </div>
 
+    <div id="modal_profile">
+
+    </div>
+
     <%- include('template/footer.ejs') %>
 
     <%- include('template/customs.ejs') %>
 
-    <div id="modal_profile">
-
-    </div>
+    
 
 </body>
 </html>

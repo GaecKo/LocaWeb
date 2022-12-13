@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/profile.css">
     <link rel="stylesheet" href="../css/annonces.css">
+    <script src="https://kit.fontawesome.com/d3562eec23.js" crossorigin="anonymous"></script>
     <title><%= username %></title>
 </head>
 <body class="<%= (typeof customs !== 'undefined' && typeof customs.light_mode !== 'undefined') ? (customs.light_mode ? 'light-mode' : 'dark-mode') : 'dark-mode' %>">
@@ -48,17 +49,12 @@
             <div class="annonce-bottom">
                 <div class="annonce-price">
                     <!-- Prix de l'annonce -->
-                    <%= announces[i].price %> <span style="font-weight:bold;"><%= announces[i].rate %></span>
+                    <%= announces[i].price %> <span class="inner-price" style="font-weight:bold;"><%= announces[i].rate %></span>
                 </div>
                 <div class="annonce-button">
                     <% if (announces[i].visibility) { %>    
-                        <a href="announces/<%= announces[i].id %>">View details</a>
+                        <a class="inner-button" href="announces/<%= announces[i].id %>">View details</a>
                     <% } %>
-                    <!-- Bouton de l'annonce -->
-                    <!-- <form method="GET" action="announces/<%= announces[i].id %>" style="background-color: rgb(48 17 60);">
-                        <button class="contact-annonce-button" type="submit">Voir l'annonce </button>
-                    </form> -->
-                        
                 </div>
             </div>
         </div>

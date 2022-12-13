@@ -216,6 +216,14 @@ h4{
     background-color: transparent;
 }
 
+.inner-button {
+    background-color: transparent;
+}
+
+.inner-price {
+    background-color: transparent;
+}
+
 .contact-annonce-button {
     font-family: 'Codec Pro';
     width: 80%;
