@@ -131,23 +131,25 @@
                     <p class="selle_info"><%= ad.price %> <span style="font-weight:bold;"><%= ad.rate %></span></p> 
                 </div>
 
-                <div class="rent_article_button">
-                    Bouton pour louer
-                    <button onclick="showPopUp()" type="button" value="show" id="see_profile_button"></button>
-                    <div id="main_popup" class="main_popup">
-                        <% if (user.sharing) { %>
-                            <p>Email: <%= user.email %></p>
-                            <% if (user.phone != null) { %>
-                                <p>Phone: <%= user.phone %></p>
+                <div class="rent_article_button" style="display: flex;">
+                    <button onclick="document.getElementById('modal_profile').style.display='block'" type="button" value="show" class="see_profile_button">See this seller's contact information</button>
+                    <div id="modal_profile">
+                        <div class="modal-content">
+                            <% if (user.sharing) { %>
+                                <p>Email: <%= user.email %></p>
+                                <% if (user.phone != null) { %>
+                                    <p>Phone: <%= user.phone %></p>
+                                <% } %>
+                                <p>You can also use comments bellow</p>
+                            <% } else { %>
+                                <p>This user doesn't allow sharing contact information. 
+                                    Please use bellow comments 
+                                </p>
                             <% } %>
-                            <p>You can also use comments bellow</p>
-                        <% } else { %>
-                            <p>This user doesn't allow sharing contact information. 
-                                Please use bellow comments 
-                            </p>
-                        <% } %>
-                        <button type="button" onclick="closePopUp()"></button>
+                            <button class="close_modal_button" type="button" onclick="document.getElementById('modal_profile').style.display='none'">Close Modal</button>
+                        </div>
                     </div>
+                        
                     <!-- Bouton pour louer le bien -->
                 </div>
             </div>
@@ -316,10 +318,6 @@
         </div>
     </div>
 
-    <div id="modal_profile">
-
-    </div>
-
     <%- include('template/footer.ejs') %>
 
     <%- include('template/customs.ejs') %>
@@ -403,13 +401,5 @@
             document.getElementById("p"+id).style.display = "flex";
             document.getElementById(id+"s").style.display = "None";
         }
-    }
-
-    function showPopUp() {
-        document.getElementById("main_popup").style.display = ""
-    }
-
-    function closePopUp() {
-        document.getElementById("main_popup").style.display = "None"
     }
 </script>

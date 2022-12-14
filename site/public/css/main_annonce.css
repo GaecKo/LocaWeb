@@ -482,10 +482,70 @@ i {
 }
 
 #modal_profile {
-    display: inline-block;
-    position: relative;
-    top: auto;
-    bottom: auto;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 100;
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 9999; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: #00000070;
+    padding-top: 20px;
+}
+
+.modal-content {
+    background-color: #0A2156;
+    margin-top: 10%;
+    margin-bottom: auto;
+    margin-right: auto;
+    margin-left: auto;
+    border: 1px solid #103283;
+    width: 50%; /* Could be more or less, depending on screen size */
+    border-radius: 10px;
+    justify-content: center;
+}
+
+.modal-content > p {
+    background-color: #0A2156;
+    color: white;
+    font-size: 1.2em;
+    font-family: 'Codec Pro';
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.close_modal_button, .see_profile_button {
+    text-align: center;
+    padding: 10px;
+    background-color: #103283;
+    color: antiquewhite;
+    font-size: 1.2em;
+    font-family: 'Codec Pro';
+    border-style: none;
+    border: 2px solid #1544b1;
+    align-self: center;
+    width: 100%;
+    margin-bottom: 0px;
+    transition: all 0.2s ease-in-out;
+}
+
+.close_modal_button {
+    border-radius: 0px 0px 10px 10px;
+}
+
+.close_modal_button:hover, .see_profile_button:hover {
+    background-color: #1544b1;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.see_profile_button {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border-radius: 10px;
+    width: 80%;
+    border-radius: 10px;
 }
