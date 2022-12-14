@@ -13,7 +13,7 @@
     <link rel="icon" type="image/svg+xml" href="../image/logo.svg">
 </head>
 
-<body class="<%= (typeof customs !== 'undefined' && typeof customs.light_mode !== 'undefined') ? (customs.light_mode ? 'light-mode' : 'dark-mode') : 'dark-mode' %>">
+<body class="<%= (typeof customs !== 'undefined' && typeof customs.light_mode !== 'undefined') ? (customs.light_mode ? 'light-mode' : 'dark-mode') : 'dark-mode' %>" id="body_main_announce">
     <div class="main">
 
         <%- include('template/header.ejs') %>
@@ -132,7 +132,7 @@
                 </div>
 
                 <div class="rent_article_button" style="display: flex;">
-                    <button onclick="document.getElementById('modal_profile').style.display='block'" type="button" value="show" class="see_profile_button">See this seller's contact information</button>
+                    <button onclick="document.getElementById('modal_profile').style.display='block', document.getElementById('body_main_announce').style.overflow='hidden'" type="button" value="show" class="see_profile_button">See this seller's contact information</button>
                     <div id="modal_profile">
                         <div class="modal-content">
                             <% if (user.sharing) { %>
@@ -146,7 +146,7 @@
                                     Please use bellow comments 
                                 </p>
                             <% } %>
-                            <button class="close_modal_button" type="button" onclick="document.getElementById('modal_profile').style.display='none'">Close Modal</button>
+                            <button class="close_modal_button" type="button" onclick="document.getElementById('modal_profile').style.display='none', document.getElementById('body_main_announce').style.overflow='auto'">Close Modal</button>
                         </div>
                     </div>
                         
