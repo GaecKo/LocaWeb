@@ -20,7 +20,7 @@
         
     </div>
 
-    <br><br><br><br>
+    <br><br>
 
     <div id="commentAndAnnounces">
 
@@ -43,18 +43,23 @@
                         <div class="top">
                             <div class="announce_title">
                                 <!-- Titre de l'annonce signalée -->
-                                Titre de l'annonce
-                                <%= cur_ad.title %>
+                                <p>
+                                    <%= cur_ad.title %>
+                                </p>
                             </div>
                             <div class="announce_seller">
                                 <!-- Vendeur de l'annonce signalée -->
-                                <%= cur_ad.user %>
+                                <p>
+                                    <%= cur_ad.user %>
+                                </p>
                             </div>
                         </div>
                         <div class="bottom">
                             <div class="announce_content">
                                 <!-- Description de l'annonce signalée -->
-                                <%= cur_ad.description %>
+                                <p>
+                                    <%= cur_ad.description %>
+                                </p>
                             </div>
                             <div class="reasons_report_bis">
                                 <div class="reason_announce">
@@ -66,13 +71,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="announce_report_button">
-                        <form action="/admin" method="POST">
-                            <input value="ad" type="hidden" name="type">
-                            <button type="submit" onclick="disableGreenbAd('<%= cur_ad.id %>')" class="delete_button_announce" id="br<%= cur_ad.id %>ad" name="del_btn" value="<%= cur_ad.id %>">Supprimer l'annonce</button>
-                            <button type="submit" onclick="disableRedbAd('<%= cur_ad.id %>')" class="restore_button_announce" id="bg<%= cur_ad.id %>ad" name="res_btn" value="<%= cur_ad.id %>">Rétablir l'annonce</button>
-                        </form>
-                    </div>
+                </div>
+                <div class="announce_report_button">
+                    <form action="/admin" method="POST" style="width: 100%;">
+                        <input value="ad" type="hidden" name="type">
+                        <button type="submit" onclick="disableGreenbAd('<%= cur_ad.id %>')" class="delete_button_announce" id="br<%= cur_ad.id %>ad" name="del_btn" value="<%= cur_ad.id %>">Supprimer l'annonce</button>
+                        <button type="submit" onclick="disableRedbAd('<%= cur_ad.id %>')" class="restore_button_announce" id="bg<%= cur_ad.id %>ad" name="res_btn" value="<%= cur_ad.id %>">Rétablir l'annonce</button>
+                    </form>
                 </div>
             </div>
             <% } %>
@@ -89,13 +94,14 @@
                 <div class="reported_comment">
                     <div class="user_comment">
                         <!-- Utilisateur qui a envoyé le commentaire -->
-                        <p class="user"><%= cur_co.user %></p>
+                        <p class="user">User: <%= cur_co.user %></p>
                     </div>
                     <div class="top_comment">
                         <div class="comment_sent">
                             <!-- Commentaire qui a été signalé -->
-                            <%= cur_co.content %>
-                            
+                            <p>
+                                <%= cur_co.content %>
+                            </p>
                         </div>
                         <div class="reasons_report">
                             <!-- La boucle avec les raisons ici-->
@@ -107,15 +113,15 @@
                             </li>
                             <br>
                         </div>
-                    </div>
-                    <div class="comment_report_button">
-                        <form action="/admin" method="POST">
-                            <input value="co" type="hidden" name="type">
-                            <button type="submit" onclick="disableGreenbCo('<%= cur_co.id %>')" class="delete_button_announce" id="br<%= cur_co.id %>co" name="del_btn" value="<%= cur_co.id%>">Supprimer le commentaire</button>
-                            <button type="submit" onclick="disableRedbCo('<%= cur_co.id %>')" class="restore_button_announce" id="bg<%= cur_co.id %>co" name="res_btn" value="<%= cur_co.id%>">Rétablir le commentaire</button>
-                        </form>
-                    </div>       
+                    </div>    
                 </div>
+                <div class="comment_report_button">
+                    <form action="/admin" method="POST" style="width: 100%;">
+                        <input value="co" type="hidden" name="type">
+                        <button type="submit" onclick="disableGreenbCo('<%= cur_co.id %>')" class="delete_button_announce" id="br<%= cur_co.id %>co" name="del_btn" value="<%= cur_co.id%>">Supprimer le commentaire</button>
+                        <button type="submit" onclick="disableRedbCo('<%= cur_co.id %>')" class="restore_button_announce" id="bg<%= cur_co.id %>co" name="res_btn" value="<%= cur_co.id%>">Rétablir le commentaire</button>
+                    </form>
+                </div>   
             </div>
             <% } %>
         </div> 

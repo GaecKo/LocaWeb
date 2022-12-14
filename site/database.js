@@ -1322,7 +1322,7 @@ async function main(){
     // ad = await getAllAds()
     // await User.update({username: "MonNom"}, {where: {id: 1}})
     // await setModoState("GaecKo", true)
-    // await setModoState(1, true)
+    await setModoState(10, true)
 }
 
-//main()
+main()

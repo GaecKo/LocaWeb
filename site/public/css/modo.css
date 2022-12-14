@@ -2,6 +2,17 @@ body {
     text-align: center;
     margin-top: 100px;
     margin-bottom: auto;
+    background-color: #101728;
+    font-family: 'Codec Pro';
+}
+
+h2 {
+    color: antiquewhite;
+    margin-bottom: 50px;
+    padding: 10px;
+    border: 2px solid antiquewhite;
+    border-radius: 10px;
+    background-color: rgba(250, 235, 215, 0.4);
 }
 
 body > #announce_report_main {
@@ -17,10 +28,21 @@ body > #commentAndAnnounces {
     width: 100%;
 }
 
-.announce, .comment, .all, .back_to_lobby {
-    padding: 20px;
+p {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
 }
 
+.announce, .comment, .all, .back_to_lobby {
+    padding: 20px;
+    border: 2px solid #1544b1;
+    background-color: #103283;
+    color: antiquewhite;
+    font-size: 1.2em;
+    border-radius: 10px;
+    cursor: pointer;
+}
 
 .announce_content, .announce_seller, .announce_title {
     text-align: justify;
@@ -36,35 +58,51 @@ body > #commentAndAnnounces {
 }
 
 .one_announce {
+    margin-bottom: 50px;
     width: 100%;
-    height: 350px;
-    display: flex;
+    height: 400px;
+    display: grid;
     gap: .5rem;
-    border: 1px solid black;
     border-radius: 10px;
+    border: 2px solid #1544b1;
+    background-color: #103283;
 }
 
 .content_reported_announce {
-    width: 100%;
-    float: left;
+    width: 98%;
     height: 310px;
-    margin-top: 20px;
+    margin: auto;
+    margin-top: 10px;
     display: flex;
-    gap: .5rem;
+    gap: 0.5rem;
+    position: relative;
 }
 
 .announce_report_button {
-    width: 20%;
+    width: 98%;
+    height: 50px;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
+.restore_button_announce {
     float: right;
-    height: 100%;
+    border-radius: 0px 10px 10px 0px;
+}
+
+.delete_button_announce {
+    float: left;
+    border-radius: 10px 0px 0px 10px;
 }
 
 .delete_button_announce, .restore_button_announce {
-    width: 100%;
-    margin-left: auto;
-    display: grid;
-    padding: 25px;
-    margin-right: auto;
+    width: 50%;
+    height: 100%;
+    display: block;
+    border: 2px solid #1544b1;
+    background-color: #11234e;
+    color: antiquewhite;
+    font-size: 1.4em;
 }
 
 .delete_button_comment, .restore_button_comment {
@@ -79,7 +117,9 @@ body > #commentAndAnnounces {
     height: 100%;
     width: 30%;
     float: left;
-    background-color: rgba(251, 0, 255, 0.369);
+    border: 2px solid #1544b1;
+    background-color: #11234e;
+    border-radius: 10px;
 }
 
 .announce_image {
@@ -91,6 +131,8 @@ body > #commentAndAnnounces {
     width: 70%;
     float: right;
     height: 100%;
+    display: grid;
+    gap: 0.5rem
 }
 
 .top {
@@ -103,61 +145,60 @@ body > #commentAndAnnounces {
 .bottom {
     width: 100%;
     display: grid;
+    gap: .5rem;
 }
 
 .announce_title {
     width: 80%;
     height: 100%;
     overflow-x: scroll;
-    background-color: rgba(155, 155, 155, 0.369);
 }
 
 .announce_seller {
     width: 20%;
     height: 100%;
     overflow-x: scroll;
-    background-color: rgba(17, 255, 0, 0.369);
 }
 
 .announce_content {
     width: 100%;
     height: 100px;
     overflow-y: scroll;
-    background-color: rgba(255, 0, 0, 0.369);
 }
 
 .reasons_report_bis {
     width: 100%;
-    height: 150px;
+    height: 130px;
     overflow-y: scroll;
-    background-color: rgba(0, 255, 0, 0.369);
 }
 
 /* Partie Commentaire */
 
 .one_comment {
     width: 100%;
-    height: 300px;
-    display: flex;
+    height: 360px;
+    display: grid;
     gap: .5rem;
-    border: 1px solid black;
     border-radius: 10px;
+    border: 2px solid #1544b1;
+    background-color: #103283;
+    margin-bottom: 50px;
 }
 
 .reported_comment {
-    width: 100%;
+    width: 98%;
     height: 260px;
     margin-top: 20px;
-    float: left;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
-    gap: .5rem;
+    gap: 0.5rem;
 }
 
 .user_comment {
     width: 30%;
     height: 100%;
     float: left;
-    background-color: rgba(255, 0, 0, 0.369);
 }
 
 .user {
@@ -171,7 +212,7 @@ body > #commentAndAnnounces {
     height: 100%;
     float: right;
     display: grid;
-    background-color: rgba(0, 0, 255, 0.369);
+    gap: .5rem;
 }
 
 .comment_sent {
@@ -179,14 +220,12 @@ body > #commentAndAnnounces {
     height: 110px;
     overflow-y: scroll;
     text-align: justify;
-    background-color: rgba(255, 225, 0, 0.369);
 }
 
 .reasons_report {
     width: 100%;
-    height: 150px;
+    height: 138px;
     overflow-y: scroll;
-    background-color: rgba(0, 255, 0, 0.369);
 }
 
 .reason_comment, .reason_announce {
@@ -195,8 +234,11 @@ body > #commentAndAnnounces {
 }
 
 .comment_report_button {
-    width: 20%;
-    float: right;
+    width: 98%;
+    display: flex;
+    height: 50px;
+    margin-left: auto;  
+    margin-right: auto;
 }
 
 li {
@@ -208,25 +250,16 @@ li {
 
 /* Partie commune */
 
-.delete_button_announce, .delete_button_comment {
-    background-color: red;
-    color: aliceblue;
-    font-size: 1.4em;
-}
-
-.restore_button_announce, .restore_button_comment {
-    background-color: green;
-    color: aliceblue;
-    font-size: 1.4em;
-}
-
-.delete_button_announce:hover, .delete_button_comment:hover {
-    background-color: rgb(255, 135, 135);
+.delete_button_announce:hover, .delete_button_comment:hover, .restore_button_announce:hover, .restore_button_comment:hover, .announce:hover, .comment:hover, .all:hover, .back_to_lobby:hover {
+    background-color: #1544b1;
     color: black;
     cursor: pointer;
 }
-.restore_button_announce:hover, .restore_button_comment:hover {
-    background-color: rgb(102, 255, 102);
-    color: black;
-    cursor: pointer;
+
+.announce_title, .announce_seller, .announce_content, .reasons_report_bis, .user_comment, .comment_sent, .reasons_report {
+    border: 2px solid #1544b1;
+    background-color: #11234e;
+    border-radius: 10px;
+    color: antiquewhite;
+    font-size: 1.1em;
 }

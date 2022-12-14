@@ -490,7 +490,7 @@ i {
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: #00000070;
+    background-color: #000000c9;
     padding-top: 20px;
 }
 
@@ -548,4 +548,10 @@ i {
     border-radius: 10px;
     width: 80%;
     border-radius: 10px;
+}
+
+.fa-solid.fa-pen-to-square {
+    font-size: 1.2em;
+    color: var(--white);
+    margin: 20px 0 0 100px;
 }
