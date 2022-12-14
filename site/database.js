@@ -1,5 +1,6 @@
 const {User, Ad, Comment, Report, Custom} = require("./tables")
 
+const {Op} = require("sequelize")
 
 // USERS SECTIONS
 
@@ -824,7 +825,7 @@ async function getReportsAd(adId) {
  */
 async function getFullReports() {
     all_reports = {}
-    reportedAds = await Ad.findAll({where: {visibility: false}}).then(async ads => {
+    reportedAds = await Ad.findAll({where: {reports: {[Op.gte]: 1}}}).then(async ads => {
         if (Object.keys(ads).length > 0) {
             console.log("Ads that were reported have been retrieved")
             for (ad in ads) {
@@ -862,7 +863,7 @@ async function getFullReports() {
         all_reports["ads"] = reportedAds
     }
 
-    reportedComments = await Comment.findAll({where: {visibility: false}}).then(async cos => {
+    reportedComments = await Comment.findAll({where: {reports: {[Op.gte]: 1}}}).then(async cos => {
         if (Object.keys(cos).length > 0) {
             for (co in cos) {
                 cos[co] = cos[co].dataValues
@@ -1321,7 +1322,7 @@ async function main(){
     // ad = await getAllAds()
     // await User.update({username: "MonNom"}, {where: {id: 1}})
     // await setModoState("GaecKo", true)
-    // await setModoState(4, true)
+    // await setModoState(1, true)
 }
 
-// main()
+//main()
