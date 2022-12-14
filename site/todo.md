@@ -27,7 +27,7 @@ aussi)
 * [ ] Schéma ORM, ...
 * [ ] Co / déco button
 * [ ] check user experience
-* [ ] remplir le bouton contact de sellor, adaptation tables.js
+* [X] remplir le bouton contact de sellor, adaptation tables.js
 * [ ] message particulier si aucune annonce
 * [X] repair double click moderator clear ad
 * [X] visibility of comments 
