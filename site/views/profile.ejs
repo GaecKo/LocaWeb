@@ -71,8 +71,17 @@
     <h5>Change your personnal information</h5>
 
     <form method="POST"  action="/profile">
-        <input name="new_username" class="textinput" type="text" id="title" name="title" value="<%= user.username %>">
-        <input name="new_email"  class="textinput" type="email" id="title" name="title" value="<%= user.email %>">
+        <input name="new_username" class="textinput" type="text" id="title" value="<%= user.username %>">
+        <input name="new_email"  class="textinput" type="email" id="title" value="<%= user.email %>">
+        <input name="new_phone" class="textinput" type="text" id="title" value="<%= user.phone %>" placeholder="Update phone number. Format: +32 400 40 40 40" pattern="+[0-9]{2} [0-9]{3} [0-9]{2} [0-9]{2} [0-9]{2}">
+        <select class="textinput" style="width:200px;" name="sharing">
+            <option disabled>Select sharing option:</option>
+            <option value="">Keep current</option>
+            <option value="enable">Enable</option>
+            <option value="unable">Unable</option>
+        </select>
+
+
         <br>
         <input type="submit" name="change_info" class="btn-login comfirm-btn" value="Save"></a>
     </form>

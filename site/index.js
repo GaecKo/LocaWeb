@@ -102,13 +102,14 @@ app.get('/announces', async function (req, res) {
 app.get('/announces/:productId', async function (req, res) {
   const productId = req.params;
   const ad = await db.getAd(productId.productId);
+  const author_username = await db.getUsername(ad.user)
+  const user = await db.getUser(author_username)
   if (!ad.visibility) {
     req.session.screen_message = "This announce is currently being checked due to reports."
     res.redirect("/announces")
   }
   var imgArray = ad.images //get the images array
   const comments = await db.getFullComments(ad.comments)
-  const user = await db.getUsername(ad.user)
   res.render("./annonce_main", {username : req.session.username, ad: ad, comments: comments, userId: req.session.userId, user: user, imgArray: imgArray, customs: req.session.customs});
 });
 
@@ -266,6 +267,8 @@ app.post('/login', async function (req, res) {
       req.session.username = req.body.username
       req.session.email = user.email
       req.session.moderator = user.moderator
+      req.session.phone = user.phone
+      req.session.sharing = user.sharing
       req.session.userId = await db.getUserId(req.session.username)
       req.session.customs = await db.getCustoms(req.session.userId)
       res.redirect('/announces')
@@ -280,7 +283,16 @@ app.post('/login', async function (req, res) {
 });
 
 app.post('/signup', async function (req, res) {
-  let added_user = await db.addUser(req.body.username, req.body.email, bcrypt.hashSync(req.body.password, salt))
+  phone = null
+  sharing = true
+  if (req.body.sharing == undefined) {
+    sharing = false
+  }
+  if (req.body.phone != "") {
+    phone = req.body.phone
+  }
+
+  let added_user = await db.addUser(req.body.username, req.body.email, bcrypt.hashSync(req.body.password, salt), phone, sharing)
   
   if (added_user) {
     req.session.username = req.body.username
@@ -387,24 +399,45 @@ app.post("/profile", async function (req, res) {
     }
 
   } else if (req.body.change_info != undefined) {
-    const new_username = req.body.new_username;
-    const email = req.body.new_email;
-
-    // update the username
-    const changeusername = await db.updateUsername(req.session.userId, new_username)
-    if (changeusername) {
-      req.session.username = new_username
+    req.session.screen_message = ""
+    if (req.body.new_username != req.session.username) {
+      changed_username = await db.updateUsername(req.session.userId, req.body.username)
+      if (changed_username) {
+        req.session.username = req.body.new_username
+        req.session.screen_message += "\nUsername updated!"
+      } else {
+        req.session.screen_message += "\nThis username is already taken, please try another one"
+      }
+    }
+    
+    if (req.body.new_email != req.session.email) {
+      changed_email = await db.updateEmail(req.session.userId, req.body.new_email)
+      if (changed_email) {
+        req.session.email = req.body.new_email
+        req.session.screen_message += "\nEmail updated!"
+      } else {
+        req.session.screen_message += "\nThis email is already taken, please try another one"
+      }
     }
 
-    // update the new_email
-    const changeemail = await db.updateEmail(req.session.userId, email)
-    if (changeemail) {
-      req.session.email = email
+    if (req.body.new_phone != req.session.phone) {
+      changed_phone = await db.updatePhone(req.session.userId, req.body.new_phone)
+      if (changed_phone) {
+        req.session.phone = req.body.new_phone
+      } else {
+        req.session.screen_message += "\nThe new phone number couldn't be added. Please retry"
+      }
+    }
+    if (req.body.sharing != "") {
+      sharing = req.body.sharing == "enable"
+      changed_sharing = await db.updateSharing(req.session.userId, sharing)
+      if (changed_sharing) {
+        req.session.sharing = req.body.sharing
+      } else {
+        req.session.screen_message += "\nThe new sharing state couldn't be updated. Please retry"
+      }
     }
 
-    if (changeusername && changeemail) {
-      req.session.screen_message = "Information changed succesfully!"
-    }
   } else if (req.body.change_customs != undefined) {
     tag_color = null
     bg_color = null

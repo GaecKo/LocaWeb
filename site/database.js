@@ -91,12 +91,14 @@ async function getUsername(id) {
  * @param {hashed_str} password (hashed) of the new User to add
  * @returns true if added, false if not
  */
-async function addUser(username, email, password) {
+async function addUser(username, email, password, phone=null, sharing=false) {
 
     return User.create({
         username: username,
         email: email,
-        password: password
+        password: password,
+        phone: phone,
+        sharing: sharing
     }).then(user => {
         console.log("User added: " + user.dataValues.username);
         return true; // displays if user added or not
@@ -240,6 +242,47 @@ async function updateEmail(userId, email) {
     })
 }
 
+/**
+ * 
+ * @param {int} userId the id of the User to change the phone number to 
+ * @param {str} phone the phone number to set on the User
+ * @returns 
+ */
+async function updatePhone(userId, phone) {
+    return User.update({phone: phone }, {where: {id: userId}}).then(state => {
+        if (state == 1) {
+            console.log("Phone for user " + userId + " has been updated")
+            return true
+        } else {
+            console.log("Phone for user " + userId + " couldn't be updated, user exists?")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while updating phone for user " + userId + ": " + err)
+        return false
+    })
+}
+
+/**
+ * 
+ * @param {int} userId the id of the User to change the phone number to 
+ * @param {boolean} sharing the sharing status to set on the User
+ * @returns 
+ */
+async function updateSharing(userId, sharing) {
+    return User.update({sharing: sharing }, {where: {id: userId}}).then(state => {
+        if (state == 1) {
+            console.log("Sharing for user " + userId + " has been updated")
+            return true
+        } else {
+            console.log("Sharing for user " + userId + " couldn't be updated, user exists?")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while updating sharing for user " + userId + ": " + err)
+        return false
+    })
+}
 
 // ADS SECTION
 
@@ -1203,6 +1246,8 @@ module.exports = {
     updateUsername,
     updateEmail,
     isModo,
+    updatePhone,
+    updateSharing,
 
     // REPORT SECTION
     getFullReports,

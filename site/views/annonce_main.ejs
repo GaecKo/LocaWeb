@@ -123,7 +123,7 @@
             <div class="announce_container_right">
                 <div class="announce_seller">
                     <!-- Le vendeur -->
-                    <p class="selle_info">👤 <%= user %> - 🏙️ <em><%= ad.city %></em></p>
+                    <p class="selle_info">👤 <%= user.username %> - 🏙️ <em><%= ad.city %></em></p>
                 </div>
 
                 <div class="announce_price">
@@ -133,7 +133,21 @@
 
                 <div class="rent_article_button">
                     Bouton pour louer
-                    <input type="button" value="show" id="see_profile_button">
+                    <button onclick="showPopUp()" type="button" value="show" id="see_profile_button"></button>
+                    <div id="main_popup" class="main_popup">
+                        <% if (user.sharing) { %>
+                            <p>Email: <%= user.email %></p>
+                            <% if (user.phone != null) { %>
+                                <p>Phone: <%= user.phone %></p>
+                            <% } %>
+                            <p>You can also use comments bellow</p>
+                        <% } else { %>
+                            <p>This user doesn't allow sharing contact information. 
+                                Please use bellow comments 
+                            </p>
+                        <% } %>
+                        <button type="button" onclick="closePopUp()"></button>
+                    </div>
                     <!-- Bouton pour louer le bien -->
                 </div>
             </div>
@@ -389,5 +403,13 @@
             document.getElementById("p"+id).style.display = "flex";
             document.getElementById(id+"s").style.display = "None";
         }
+    }
+
+    function showPopUp() {
+        document.getElementById("main_popup").style.display = ""
+    }
+
+    function closePopUp() {
+        document.getElementById("main_popup").style.display = "None"
     }
 </script>

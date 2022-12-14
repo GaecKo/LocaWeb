@@ -42,7 +42,11 @@
             <input class="textinput" type="text" placeholder="Username" name="username" id="username_sign_up" minlength="3" required>
             <hr style="width: 80%; border: 3px dashed transparent;">
 
-            <input class="textinput" type="email" placeholder="Email" name="email" id="email_sign_up" pattern=".+@.+\..+" required>
+            <input class="textinput" type="email" placeholder="Email" name="email" id="email_sign_up" pattern=".+@.+\..+" required> *
+            <hr style="width: 80%; border: 3px dashed transparent;"> 
+
+            <input class="textinput" type="phone" placeholder="Phone: +32 400 40 40 40" pattern="+[0-9]{2} [0-9]{3} [0-9]{2} [0-9]{2} [0-9]{2}" name="phone" id="phone_sign_up"> *
+            
             <hr style="width: 80%; border: 3px dashed transparent;">
 
             <input class="textinput" type="password" placeholder="Password (at least 8 characters)" name="password" id="id_password" minlength="8" required>
@@ -51,6 +55,9 @@
             <hr style="width: 80%; border: 3px dashed transparent;">
             <input class="textinput" type="password" placeholder="Comfirm Password" name="comfpassword" id="confirmmdp" minlength="8" required>
 
+            <input class="boxinput" type="checkbox" name="sharing" checked> * 
+            <p>Share email/phone on your ads</p>
+                <br>
             <input class="boxinput" type="checkbox" name="keeplog" id="cookies">
             <p>Stay signed in</p>
                 <br>
@@ -60,6 +67,7 @@
             <br>
             <br>
             <button type="submit" class="btn-grad" style="margin: auto; border:0;">Create account</button> 
+            <p style="color: red;">*Theses will be shown if you allow sharing contact informations</p>
 
             </form>
 

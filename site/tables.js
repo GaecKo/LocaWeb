@@ -34,6 +34,14 @@ User.init({
         type: DataTypes.TEXT,
         allowNull: false
     },
+    phone: {
+        type:DataTypes.TEXT,
+        allowNull: true
+    },
+    sharing: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+    },
     password: {
         type: DataTypes.TEXT,
         allowNull: false
