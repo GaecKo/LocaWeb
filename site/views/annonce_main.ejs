@@ -137,17 +137,17 @@
                     <div id="modal_profile">
                         <div class="modal-content">
                             <% if (user.sharing) { %>
-                                <p>Email: <%= user.email %></p>
+                                <p>Email: <%= user.email %>, <a href="mailto:<%= user.email %>">→</a></p>
                                 <% if (user.phone != null) { %>
                                     <p>Phone: <%= user.phone %></p>
                                 <% } %>
-                                <p>You can also use comments bellow</p>
+                                <p>You can also use comments bellow ↧</p>
                             <% } else { %>
                                 <p>This user doesn't allow sharing contact information. 
-                                    Please use bellow comments 
+                                    Please use bellow comments ↧
                                 </p>
                             <% } %>
-                            <button class="close_modal_button" type="button" onclick="document.getElementById('modal_profile').style.display='none', document.getElementById('body_main_announce').style.overflow='auto'">Close Modal</button>
+                            <button class="close_modal_button" type="button" onclick="document.getElementById('modal_profile').style.display='none', document.getElementById('body_main_announce').style.overflow='auto'">Close</button>
                         </div>
                     </div>
                         

@@ -11,7 +11,9 @@
     <div class="btn-grad profile-container"><%= username %>
       <ul class="dropdown">
         <li><a id="username" class="btn-grad" href="/profile"> Profile </a></li>
-        <li><a id="username" class="btn-grad" href="/"> Disconnect </a></li>
+        <form action="/logout" method="GET">
+          <li><input id="username" class="btn-grad" type="submit" value="Disconnect"> </a></li>
+        </form>
       </ul>
      
     </div>

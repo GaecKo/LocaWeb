@@ -99,6 +99,8 @@ app.get('/announces', async function (req, res) {
 });
 
 app.get('/announces/:productId', async function (req, res) {
+  req.session.screen_message = undefined;
+  req.session.error = undefined;
   const productId = req.params;
   const ad = await db.getAd(productId.productId);
   const author_username = await db.getUsername(ad.user)
@@ -130,6 +132,11 @@ app.get('/announces_updater', async function (req, res) {
   } else {
     res.redirect('/login')
   }
+});
+
+app.get('/logout', function (req, res) {
+  req.session.destroy();
+  res.redirect('/');
 });
 
 app.get('/admin', async function (req, res) {
@@ -372,7 +379,20 @@ app.post("/admin", async function (req, res) {
     if (req.body.del_btn == undefined) {
       await db.clearAdReports(parseInt(req.body.res_btn))
     } else {
-      await db.deleteAd(parseInt(req.body.del_btn))
+      let adId = parseInt(req.body.del_btn)
+      let ad = await db.getAd(adId)
+      let to_delete = ad.images
+      for (let i = 0; i < to_delete.length; i++) {
+        try {
+          fs.unlinkSync(path.join(__dirname, "./data/uploads/"+to_delete[i]))
+          console.log("successfully deleted :" + to_delete[i])
+        }
+        catch(err) {
+          console.log("Error while trying to delete the file: " + to_delete[i])
+          console.error(err)
+        }
+      }
+      await db.deleteAd(parseInt(adId))
     }
   } else if (req.body.type == "co") {
     if (req.body.del_btn == undefined) {

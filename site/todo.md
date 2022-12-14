@@ -20,7 +20,6 @@
 * [X] faire fonctionner les flèches 
 * [ ] quand une ad est delete (voir database.js: deleteAd(adId), faire en sorte que l'image dans upload soit delete 
 aussi)
-* [ ] Prendre en compte le cas où quand le user veut modif son compte, qu'il puisse pas le faire si le username ou email qu'il choisit est déjà attribué à un autre user
 
 @GaecKo 
 * [ ] Je vais commencer le rapport 
@@ -39,3 +38,4 @@ aussi)
 * [X] report impossible sur son commentaire / annonce
 * [X] faire en sorte qu'on puisse ajouter un report sur un truc qu'on a déjà report
 * [X] faire en sorte qu'on puisse ajouter un report sur un truc qu'on a nous même mis
+* [X] Prendre en compte le cas où quand le user veut modif son compte, qu'il puisse pas le faire si le username ou email qu'il choisit est déjà attribué à un autre user

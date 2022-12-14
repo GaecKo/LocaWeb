@@ -684,7 +684,7 @@ async function deleteComments(comments) {
     */
    for (co in comments) {
        co = comments[co]
-       await deleteReports(getReportsComment(co))
+       await deleteReports(await getReportsComment(co))
    }
     return Comment.destroy({where: {id: comments}}).then(state => {
         if (state == comments.length) {
@@ -704,7 +704,7 @@ async function deleteComments(comments) {
  * 
  * @param {int} adId the id of the ad
  * @returns array of the ids of the comments of the ad
- *          false if not
+ *          false if error
  */
 async function getCommentsAd(adId) {
     return Comment.findAll({where: {ad: adId}}).then(coms => {
