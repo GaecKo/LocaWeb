@@ -36,9 +36,10 @@
         <% } %>
         
         <% if (ad.user == userId) { %>
-            <form method="POST"  action="/getAd-for-Update">
+            <form method="POST"  action="/getAd-for-Update" class="form_update_announce">
                 <input type="hidden"  name="adId" value="<%= ad.id %>">
                 <button type="submit" class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
+                <p class="hover_update"> &nbsp; Click on this icon to modify your announce</p>
             </form>
         <% } %>
         

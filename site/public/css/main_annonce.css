@@ -551,7 +551,27 @@ i {
 }
 
 .fa-solid.fa-pen-to-square {
-    font-size: 1.2em;
     color: var(--white);
     margin: 20px 0 0 100px;
+}
+
+.form_update_announce {
+    display: flex;
+    height: 50px;
+}
+
+.hover_update {
+    left: 250px;
+    color: antiquewhite;
+    height: 100%;
+    font-family: 'Codec Pro';
+    display: none;
+    border-radius: 10px;
+    transition: all 1s ease-in-out;
+}
+
+.form_update_announce:hover > .hover_update {
+    display: block;
+    right: 300px;
+    transition: all 1s ease-in-out;
 }
