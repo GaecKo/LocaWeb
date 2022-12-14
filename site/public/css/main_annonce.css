@@ -445,7 +445,7 @@ i {
     margin-left: 10px;
     background-color: transparent;
     border-style: none;
-    color: white;
+    color: var(--white);
 }
 
 .fas.fa-reply:hover, .fas.fa-flag:hover {
