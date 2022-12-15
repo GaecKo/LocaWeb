@@ -863,27 +863,30 @@ async function getFullReports() {
         all_reports["ads"] = reportedAds
     }
 
-    reportedComments = await Comment.findAll({where: {reports: {[Op.gte]: 1}}}).then(async cos => {
+    reportedComments = await Comment.findAll({where: { reports: {[Op.gte]: 1} }}).then(async cos => {
         if (Object.keys(cos).length > 0) {
             for (co in cos) {
                 cos[co] = cos[co].dataValues
-                cos[co].user = await getUsername(cos[co].user)
-                reports = JSON.parse(cos[co].reports_list)
-                cos[co].reports_list = await Report.findAll({where: {id: reports}}).then(reps => {
-                    if (Object.keys(reps).length > 0) {
-                        console.log("Reports were retrieved")
-                        for (rep in reps) {
-                            reps[rep] = reps[rep].dataValues
+                if (cos[co].disabled == false) {
+                    cos[co].user = await getUsername(cos[co].user)
+                    reports = JSON.parse(cos[co].reports_list)
+                    cos[co].reports_list = await Report.findAll({where: {id: reports}}).then(reps => {
+                        if (Object.keys(reps).length > 0) {
+                            console.log("Reports were retrieved")
+                            for (rep in reps) {
+                                reps[rep] = reps[rep].dataValues
+                            }
+                            return reps
+                        } else {
+                            console.log("No reports found...")
+                            return false
                         }
-                        return reps
-                    } else {
-                        console.log("No reports found...")
+                    }).catch(err => {
+                        console.log("Error while retrieving reports: " + err)
                         return false
-                    }
-                }).catch(err => {
-                    console.log("Error while retrieving reports: " + err)
-                    return false
-                })
+                    })
+                }
+                
             }
             return cos
         } else {
