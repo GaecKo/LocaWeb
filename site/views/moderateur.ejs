@@ -43,12 +43,22 @@
                         <div class="top">
                             <div class="announce_title">
                                 <!-- Titre de l'annonce signalée -->
+                                <div class="top_section">
+                                    <div class="title_section">
+                                        Titre de l'annonce signalée
+                                    </div>
+                                </div>
                                 <p>
                                     <%= cur_ad.title %>
                                 </p>
                             </div>
                             <div class="announce_seller">
                                 <!-- Vendeur de l'annonce signalée -->
+                                <div class="top_section">
+                                    <div class="title_section" style="text-align: center; padding-left: 0px;">
+                                        Vendeur
+                                    </div>
+                                </div>
                                 <p>
                                     <%= cur_ad.user %>
                                 </p>
@@ -57,6 +67,11 @@
                         <div class="bottom">
                             <div class="announce_content">
                                 <!-- Description de l'annonce signalée -->
+                                <div class="top_section">
+                                    <div class="title_section">
+                                        Description de l'annonce signalée
+                                    </div>
+                                </div>
                                 <p>
                                     <%= cur_ad.description %>
                                 </p>
@@ -64,6 +79,11 @@
                             <div class="reasons_report_bis">
                                 <div class="reason_announce">
                                     <!-- La/les raison(s) ici -->
+                                    <div class="top_section">
+                                        <div class="title_section">
+                                            Raisons du signalement de l'annonce
+                                        </div>
+                                    </div>
                                     <% for (rep in cur_ad.reports_list) { %>
                                         <li><%= cur_ad.reports_list[rep].content %></li>
                                     <% } %>
@@ -94,24 +114,40 @@
                 <div class="reported_comment">
                     <div class="user_comment">
                         <!-- Utilisateur qui a envoyé le commentaire -->
-                        <p class="user">User: <%= cur_co.user %></p>
+                        <div class="top_section">
+                            <div class="title_section" style="text-align: center; padding-left: 0px;">
+                                Utilisateur qui a envoyé le commentaire
+                            </div>
+                        </div>
+                        <p class="user"><%= cur_co.user %></p>
                     </div>
                     <div class="top_comment">
                         <div class="comment_sent">
                             <!-- Commentaire qui a été signalé -->
+                            <div class="top_section">
+                                <div class="title_section">
+                                    Commentaire signalé
+                                </div>
+                            </div>
                             <p>
                                 <%= cur_co.content %>
                             </p>
                         </div>
                         <div class="reasons_report">
                             <!-- La boucle avec les raisons ici-->
-                            <li class="reason_comment">
-                                <!-- La raison ici -->
+                            <div class="top_section">
+                                <div class="title_section">
+                                    Raisons du signalement du commentaire
+                                </div>
+                            </div>
+                            <ul>
                                 <% for (rep in cur_co.reports_list ) { %>
-                                    <li><%= cur_co.reports_list[rep].content %></li>
+                                    <li style="text-align: left;">
+                                        <!-- La raison ici -->
+                                        <%= cur_co.reports_list[rep].content %>
+                                    </li>
                                 <% } %>
-                            </li>
-                            <br>
+                            </ul>  
                         </div>
                     </div>    
                 </div>

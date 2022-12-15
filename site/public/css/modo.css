@@ -32,13 +32,34 @@ p {
     padding-left: 20px;
     padding-right: 20px;
     padding-bottom: 10px;
+    color: antiquewhite;
+    margin-top: 5px;
+}
+
+li {
+    list-style-type: none;
+    list-style-type: none;
+    padding-left: 20px;
+    margin-top: 10px;
+    color: antiquewhite;
+}
+
+ul {
+    padding-left: 0px;
+    margin-top: 0px;
+    height: 110px;
+    margin-bottom: 0px;
+}
+
+p, ul {
+    overflow-y: scroll;
+    overflow-x: scroll;
 }
 
 .announce, .comment, .all, .back_to_lobby {
     padding: 20px;
     border: 2px solid #1544b1;
     background-color: #103283;
-    color: antiquewhite;
     font-size: 1.2em;
     border-radius: 10px;
     cursor: pointer;
@@ -151,25 +172,21 @@ p {
 .announce_title {
     width: 80%;
     height: 100%;
-    overflow-x: scroll;
 }
 
 .announce_seller {
     width: 20%;
     height: 100%;
-    overflow-x: scroll;
 }
 
 .announce_content {
     width: 100%;
     height: 100px;
-    overflow-y: scroll;
 }
 
 .reasons_report_bis {
     width: 100%;
     height: 130px;
-    overflow-y: scroll;
 }
 
 /* Partie Commentaire */
@@ -202,7 +219,6 @@ p {
 }
 
 .user {
-    padding-top: 100px;
     font-size: 1.3em;
     font-weight: bolder;
 }
@@ -218,19 +234,16 @@ p {
 .comment_sent {
     width: 100%;
     height: 110px;
-    overflow-y: scroll;
     text-align: justify;
 }
 
 .reasons_report {
     width: 100%;
     height: 138px;
-    overflow-y: scroll;
 }
 
-.reason_comment, .reason_announce {
+.reason_announce {
     text-align: justify;
-    padding-left: 20px;
 }
 
 .comment_report_button {
@@ -240,11 +253,6 @@ p {
     margin-left: auto;  
     margin-right: auto;
 }
-
-li {
-    list-style-type: none;
-}
-
 
 
 
@@ -260,6 +268,20 @@ li {
     border: 2px solid #1544b1;
     background-color: #11234e;
     border-radius: 10px;
-    color: antiquewhite;
     font-size: 1.1em;
+    display: grid;
+}
+
+.top_section {
+    width: 100%;
+    height: 20px;
+    margin-top: 0px;
+    margin-bottom: auto;
+    background-color: #1544b1;
+}
+
+.title_section {
+    color: antiquewhite;
+    padding-left: 20px;
+    text-align: left;
 }
