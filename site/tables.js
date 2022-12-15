@@ -24,39 +24,39 @@ User.init({
         autoIncrement: true,
         allowNull: false
     },
-    username: {
+    username: { // username of the User: changeable
         unique: true,
         type: DataTypes.TEXT,
         allowNull: false
     },
-    email: {
+    email: { // email of the User: changeable
         unique: true,
         type: DataTypes.TEXT,
         allowNull: false
     },
-    phone: {
+    phone: { // phone of the User: changeable
         type:DataTypes.TEXT,
         allowNull: true
     },
-    sharing: {
+    sharing: { // User allows his informations to be shared on his ads
         type: DataTypes.BOOLEAN,
         allowNull: true,
     },
-    password: {
-        type: DataTypes.TEXT,
+    password: { // Password of the User: changeable
+        type: DataTypes.TEXT, 
         allowNull: false
     },
-    moderator: {
+    moderator: { // Modo or not, for site moderation purpose
         type: DataTypes.BOOLEAN,
         allowNull: true,
         defaultValue: false
     },
-    total_report: {
+    total_report: { // Number of reports (Comment + Ad) to set ban status
         type: DataTypes.INTEGER,
         allowNull: true,
         defaultValue: 0
     },
-    banned: {
+    banned: { // banned if total_report > 6
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
@@ -71,63 +71,58 @@ Ad.init({
         autoIncrement: true,
         unique: true,
     },
-    description: {
+    description: { // Description of the Ad: changeable
         type: DataTypes.TEXT,
         allowNull: false
     },
-    title: {
+    title: { // Title of the Ad: changeable
         type: DataTypes.TEXT,
         allowNull: false
     },
-    city: {
+    city: { // City of the Ad: changeable
         type: DataTypes.TEXT,
         allowNull: false
     },
-    price: {
+    price: { // Price of the Ad: changeable
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0
     },
-    rate: {
+    rate: { // Rate of the Ad: changeable
         type: DataTypes.TEXT,
         allowNull: false
     },
-    reports_list: {
+    reports_list: { // List of all the ad's reports 
         type: DataTypes.TEXT,
         allowNull: false,
         defaultValue: "[]"
     },
-    reports: {
+    reports: { // number of reports
         type: DataTypes.INTEGER,
         allowNull: true,
         defaultValue: 0
     },
-    comments: {
+    comments: { // object representing ad's comments hierarchy 
         type: DataTypes.TEXT,
         allowNull: true
     },
-    visibility: {
+    visibility: { // if reports > 3, ad becomes blurred 
         type: DataTypes.BOOLEAN,
         allowNull: true,
         defaultValue: true
     },
-    user: {
+    user: { // User that created the ad
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
             model: User,
             key: "id"
         }
-    },
+    }, // list of the path to images
     images: {
         type: DataTypes.TEXT,
         allowNull: false,
     }
-    
-    // address: pas obligatoire | images: pas obligatoire 
-      // prix: type (échange-€/h-...) + text correspondant | 
-      // signalement: à lier avec l'utilisateur
-      // ... à implémenter au fur et à mesure
 
 }, {sequelize, modelName: 'Ad'})
 
@@ -139,21 +134,21 @@ Comment.init({
         autoIncrement: true,
         unique: true,
     },
-    content : {
+    content : { // content of the Comment
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    reports_list : {
+    reports_list : { // List of all the comment's reports 
         type: DataTypes.TEXT,
         allowNull: false,
         defaultValue: "[]"
     },
-    reports: {
+    reports: { // number of reports
         type: DataTypes.INTEGER,
         allowNull: true,
         defaultValue: 0
     },
-    user : {
+    user : { // User that created the comment
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -161,17 +156,17 @@ Comment.init({
             key: "id"
         }
     },
-    visibility: {
+    visibility: { // if reports > 3, comment blurred
         type: DataTypes.BOOLEAN,
         allowNull: true,
         defaultValue: true
     },
-    disabled: {
+    disabled: { // if modo has disabled the comment, comment still exists but content is deleted
         type: DataTypes.BOOLEAN,
         allowNull: true,
         defaultValue: false
     },
-    ad : {
+    ad : { // Ad on which the comment was posted
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -179,7 +174,7 @@ Comment.init({
             key: "id"
         }
     },
-    repAuthorId: {
+    repAuthorId: { // The perso to who the comment is destinated
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
@@ -197,7 +192,7 @@ Report.init({
         autoIncrement: true,
         primaryKey: true
     },
-    userId: {
+    userId: { // Id of the User who created the report
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -205,7 +200,7 @@ Report.init({
             key: "id"
         }
     },
-    commentId: {
+    commentId: { // If the report is on a comment, this is the comment id
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
@@ -213,7 +208,7 @@ Report.init({
             key: "id"
         }
     },
-    adId: {
+    adId: { // If the report is on an ad, this is the ad id
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
@@ -221,8 +216,7 @@ Report.init({
             key: "id"
         }
     },
-
-    content: {
+    content: { // Content of the report
         type: DataTypes.TEXT,
         allowNull: false
     }
@@ -230,7 +224,7 @@ Report.init({
 
 
 Custom.init({
-    user: {
+    user: { // Reference to the User
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
@@ -239,11 +233,11 @@ Custom.init({
             key: "id"
         }
     },
-    tag_color: {
+    tag_color: { // Color of the the tag when a comment in tagging this User
         type: DataTypes.TEXT,
         allowNull: true
     },
-    light_mode: {
+    light_mode: { // Light or Dark mode for this User
         type: DataTypes.BOOLEAN,
         allowNull: true,
         defaultValue: false

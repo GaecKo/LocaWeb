@@ -18,12 +18,13 @@
 @Thomas_devl 
 * [X] ajouter plusieurs images 
 * [X] faire fonctionner les flèches 
-* [ ] quand une ad est delete (voir database.js: deleteAd(adId), faire en sorte que l'image dans upload soit delete 
-aussi)
+
 
 @GaecKo 
 * [ ] Je vais commencer le rapport 
 * [ ] Schéma ORM, ...
+* [X] quand une ad est delete (voir database.js: deleteAd(adId), faire en sorte que l'image dans upload soit delete 
+aussi)
 * [X] Banned user
 * [X] search bar
 * [X] Co / déco button
