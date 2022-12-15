@@ -1293,6 +1293,7 @@ module.exports = {
     isModo,
     updatePhone,
     updateSharing,
+    searchUser,
 
     // REPORT SECTION
     getFullReports,
@@ -1304,6 +1305,12 @@ module.exports = {
     decreaseTotalReportsUser,
     isBanned,
     addReport,
+    getReportsComment,
+    getReportsAd,
+    deleteReports,
+    getReportedUserIdofComment,
+    getReportedUserIdofAd,
+    decreaseTotalReportsUser,
 
     // AD SECTION
     deleteAd,
@@ -1320,6 +1327,8 @@ module.exports = {
     getComment,
     addComment,
     getFullComments,
+    deleteComments,
+    getUserComment,
 
     // CUSTOMS SECTION
     getCustoms,
