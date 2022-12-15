@@ -230,7 +230,7 @@ h4 {
 
 .annonce-price {
     font-family: 'Codec Pro';
-    width: 70%;
+    width: 65%;
     /* float: left; */
     font-size: 1.4em;
     font-weight: bold;
@@ -248,7 +248,7 @@ h4 {
 }
 
 .annonce-button {
-    width: 60%;
+    width: 35%;
     float: right;
     text-align: right;
     /* margin-top: -30px; */

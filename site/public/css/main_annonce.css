@@ -555,6 +555,11 @@ i {
     margin: 20px 0 0 100px;
 }
 
+.fa-solid.fa-pen-to-square:hover {
+    color: var(--purple);
+    cursor: pointer;
+}
+
 .form_update_announce {
     display: flex;
     height: 50px;

@@ -101,10 +101,11 @@ body{
 .right-header {
     display: flex;
     width: auto;
-    align-items: center;
+    align-items: flex-start;
     margin-left: auto;
     gap: 20px;
     flex-direction: row-reverse;
+    background-color: transparent;
 }
 
 .btn-grad {
@@ -129,41 +130,49 @@ body{
     background-position: right center; /* change the direction of the change here */
     color: #fff;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .dropdown {
     display: none;
-    width: 50px;
-    height: 50px;
+    width: 0px;
+    height: 0px;
+    margin: 0px;
     background-color: transparent;
 }
 
 .dropdown > li {
     display: block;
-    display: block;
-    padding: 5px 10px;
     cursor: pointer;
     background-color: transparent;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.dropdown > li:before {
-    content: '';
-    display: inline-block;
-    width: 32px;
-    height: 32px;
-    margin-right: 10px;
-    vertical-align: middle;
+.btn-grad.profile-btn, .btn-grad.disconnect-btn {
+    background-image: none;
+    background-color: #5b3094;
+    border: 2px solid #9340FF;
+}
+
+.btn-grad.profile-btn:hover, .btn-grad.disconnect-btn:hover {
+    background-color: #9340FF;
 }
 
 .btn-grad.profile-container {
     position: relative;
-    display: block;
+    display: flex;
+    flex-direction: column;
 }
 
 .btn-grad.profile-container:hover > .dropdown {
     display: flex;
     list-style: none;
-    justify-content: space-between;
+    flex-direction: column;
+    height: auto;
+    width: auto;
+    padding: 0px;
+    gap: 10px;
 }
 .btn-login{
     float: right;
@@ -193,7 +202,7 @@ body{
 }
 
 .flex1{
-    margin-top: 12%;
+    margin-top: 150px;
     display: flex;
     flex-direction: row;
     /* border: 3px dashed #1cc9c0; */
@@ -475,12 +484,11 @@ footer {
 
 #header {
     display: flex;
-    align-items: center;
     flex-wrap: nowrap;
     z-index: 100;
     background-color: var(--header-trans);
     width: 100%;
-    padding-bottom: 60px;
+    padding-bottom: 30px;
     padding-top: 30px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(7px);

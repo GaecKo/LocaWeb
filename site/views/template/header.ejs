@@ -11,10 +11,14 @@
     <% if (username !== undefined) { %>
       <div class="btn-grad profile-container"><%= username %>
         <ul class="dropdown">
-          <li><a id="username" class="btn-grad" href="/profile"> Profile </a></li>
-          <form action="/logout" method="GET">
-            <li><input id="username" class="btn-grad" type="submit" value="Disconnect"> </a></li>
-          </form>
+          <li>
+            <a id="username" class="btn-grad profile-btn" href="/profile" style="margin-top: 10px;"> Profile </a>
+          </li>
+          <li>
+            <form action="/logout" method="GET">
+              <input id="username" class="btn-grad disconnect-btn" type="submit" value="Disconnect"></a>
+            </form>
+          </li>
         </ul>
       
       </div>
