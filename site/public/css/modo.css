@@ -63,6 +63,7 @@ p, ul {
     font-size: 1.2em;
     border-radius: 10px;
     cursor: pointer;
+    color: antiquewhite;
 }
 
 .announce_content, .announce_seller, .announce_title {
