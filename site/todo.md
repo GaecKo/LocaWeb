@@ -24,13 +24,15 @@ aussi)
 @GaecKo 
 * [ ] Je vais commencer le rapport 
 * [ ] Schéma ORM, ...
-* [ ] Co / déco button
+* [X] Banned user
+* [X] search bar
+* [X] Co / déco button
 * [ ] check user experience
 * [X] remplir le bouton contact de sellor, adaptation tables.js
-* [ ] message particulier si aucune annonce
+* [X] message particulier si aucune annonce
 * [X] repair double click moderator clear ad
 * [X] visibility of comments 
-    * [ ] faut juste que @dru finisse le css des blur / ...
+    * [X] faut juste que @dru finisse le css des blur / ...
     * [X] On peut pas reply si il est visibility true mais disable true
 * [X] page non accessible si ad blur
 * [X] admin page non accessible

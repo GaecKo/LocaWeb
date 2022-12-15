@@ -503,7 +503,7 @@ async function disableComment(coId) {
 
 /**
  * 
- * @param {int} coId the if of the comment to retrieve
+ * @param {int} coId the id of the comment to retrieve
  * @returns the comment as an object {id: ...., user: ..., ...} or 
  *          false if the comment doesnt exist
  */
@@ -567,10 +567,11 @@ async function getFullComments(comments) {
       }
     for (main_id in comments) {
         main_Content = await getComment(main_id) // retrieve the main content in a for loop
+
         date = main_Content.createdAt
         repAuthorId = main_Content.repAuthorId 
         
-        main_Content.createdAt = date.toLocaleDateString() + " " + date.getHours() + "h" + goodDate(date.getMinutes()) 
+        // main_Content.createdAt = date.toLocaleDateString() + " " + date.getHours() + "h" + goodDate(date.getMinutes()) 
         // create a nice looking date
         main_Content.username = await getUsername(main_Content.user) // gets the username of the userId, id known in the data 
         main_Content.reporters =   await getReportedUserIdofComment(main_Content.id)
@@ -614,7 +615,7 @@ async function getFullComments(comments) {
  *                       if a sub comment(= a reponse))
  * @param {int} repId the id of the comment of which this comment is a 
  *                    response of, used for tagging purpose
- * @returns true if correctly added, false if not
+ * @returns id of comment if correctly added, false if not
  */
 async function addComment(adId, text, authorId, parentId=null, repId=null) {
     /* parentId: main comment, in which this comment is a subcomment
@@ -658,7 +659,7 @@ async function addComment(adId, text, authorId, parentId=null, repId=null) {
         comments[parentId].push(cId) // if its a sub comment
     } 
         
-    return Ad.update({comments: JSON.stringify(comments)}, {where: {id: adId}}).then(state => {
+    Ad.update({comments: JSON.stringify(comments)}, {where: {id: adId}}).then(state => {
         if (state == 1) {
             console.log("Ad: " + adId + " has been updated.")
             return true
@@ -669,7 +670,8 @@ async function addComment(adId, text, authorId, parentId=null, repId=null) {
     }).catch(err => {
         console.log("unable to add comment: " + err)
         return false
-    }) // update the comment with the new comments structure 
+    }) // update the comment with the new comments structure
+    return cId 
 
     
 }

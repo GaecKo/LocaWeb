@@ -1,6 +1,56 @@
 const db = require('../database');
 const randomString = require('../utils/randomString.js');
 
+// to do functions: {
+    // getUser (done)
+    // getUserAds (done)
+    // getUserId (done)
+    // getUsername (done)
+    // addUser (done)
+    // setModoState (done)
+    // isModo (done)
+    // isBanned (done)
+    // updatePassword (done)
+    // updateUsername (done)
+    // updateEmail (done)
+    // updatePhone (done)
+    // updateSharing (done)
+    // getUserAd (done)
+    // searchUser
+    // searchAds
+    // getAd
+    // addAd (done)
+    // updateAdd 
+    // getAllAds
+    // disableComment
+    // getComment
+    // getUserComment
+    // getFullComments (done)
+    // odDate
+    // addComment (done)
+    // addReport
+    // deleteComments
+    // getCommentsAd
+    // deleteAd
+    // addUserReport
+    // getReportsComment
+    // getReportsAd
+    // getFullReports
+    // deleteReports
+    // getReportedUserIdofComment
+    // getReportedUserIdofAd
+    // decreaseTotalReportsUser
+    // clearCommentReports
+    // clearAdReports
+    // addAdReport
+    // addCommentReport
+    // getCustoms
+    // updateTagCustom
+    // updateLightModeCustom
+    // addCustoms
+    // deleteCustoms
+    // main
+// }
   
 describe("User test", () => {
 
@@ -227,9 +277,11 @@ describe('ads tests', () => {
         const price = randomString(10);
         const city = randomString(10);
         const rate = randomString(10);
-        const images = randomString(10);
+        const images = '["ok.PNG1671103170403.png","okok.PNG1671103170403.png","gzko.png1671103170403.png"]'
         await db.addAd(user.id, title, description, city, price, rate, images);
-        //const ad = await db.getAd(ad.id);
+        const adv = Array.from(await db.searchAds(title))[0]
+
+        const ad = await db.getAd(adv.id);
         
 
         // j'arrive pas a recuperer l'id de l'ad
@@ -355,4 +407,29 @@ describe('report test', () => {
     
 })
 
+describe('comments test', () => {
+    test('addComment + getFullComments', async () => {
+        const name = randomString(10);
+        const email = randomString(10) + "@gmail.com";
+        const password = randomString(10);
 
+        await db.addUser(name, email, password, "0648372432", true)
+        const id = await db.getUserId(name)
+        await db.addAd(id, "titire", "descccc", "city", 400, "€/h", '["ok.PNG1671103170403.png","okok.PNG1671103170403.png","gzko.png1671103170403.png"]')
+        const ad = Array.from(await db.searchAds("city"))[0]
+        const par = await db.addComment(ad.id, "Salut à tous", id)
+        console.log(par)
+        const sub = await db.addComment(ad.id, "rpo", id, par, par)
+        const subsub = await db.addComment(ad.id, "rpo", id, par)
+
+        
+
+        // error
+        await db.addComment(undefined, "rpo", id, par)
+
+
+
+        const nad = await db.getAd(ad.id)
+        await db.getFullComments(nad.comments)
+    })
+})
