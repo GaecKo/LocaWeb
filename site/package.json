@@ -4,7 +4,7 @@
   "description": "Website aiming on creating location ad. ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -27,5 +27,8 @@
     "promise": "^8.3.0",
     "sequelize": "^5.22.3",
     "sqlite3": "^5.1.2"
+  },
+  "devDependencies": {
+    "jest": "^29.3.1"
   }
 }
