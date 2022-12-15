@@ -308,6 +308,48 @@ async function getUserAd(adId) {
     })
 }
 
+async function searchUser(username) {
+    return User.findAll({where: {username: {[Op.like]: '%' + username + '%'}}}).then(usr => {
+        if (usr) {
+            for (user in usr) {
+                usr[user] = usr[user].dataValues.id
+            }
+            return Array.from(usr)
+        } else {
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while searching user " + username + ": " + err)
+        return false
+    })
+}
+
+async function searchAds(search) {
+    pos_users = await searchUser(search)
+    return Ad.findAll({where: {[Op.or]: [
+        {title: {[Op.like]: '%' + search + '%'}},
+        {city: {[Op.like]: '%' + search + '%'}},
+        {user: {[Op.in]: pos_users}}
+    ]}}).then(async ads => {
+        if (ads) {
+            console.log("Ads were found")
+            for (ad in ads) {
+                ads[ad] = ads[ad].dataValues
+                ads[ad].username = await getUsername(ads[ad].user)
+                ads[ad].images = JSON.parse(ads[ad].images)
+            }
+            return ads
+        } else {
+            console.log("No ads with search " + search + " were found")
+            return false
+        }
+    }).catch(err => {
+        console.log("Error while searching ads: " + err)
+        return false
+    })
+}
+
+
 /**
  * 
  * @param {int} adId the id of the ad
@@ -407,13 +449,10 @@ async function updateAdd(adId, title, description, city, price, rate, images) {
 
 /**
  * 
- * @returns {object} all the ads in the database: { {ad1...}, {ad2 ...}, ...}
+ * @returns {array} all the ads in the database: [{ad1...}, {ad2 ...}, ...], false if no ads
  */
 async function getAllAds() {
-    /*
-    *  Return a list with all the ads in it with simple attributes
-    *  return false if no ads
-    */
+
     const lst = []
 
     return Ad.findAll().then(async ads => {
@@ -1272,6 +1311,7 @@ module.exports = {
     updateAdd,
     getAllAds,
     getUserAd,
+    searchAds,
 
     // COMMENT SECTION
     disableComment,
@@ -1291,6 +1331,9 @@ async function main(){
     // await addUser("Max", "gagxxx", "password")
     // await addUser("GaecKo", "mohem", "password")
     // await addAd(1, "titredelad", "descript", "city", "3000", "$", "path")
+    // await addAd(2, "salut", "descript", "LLN", "3000", "$", "path")
+    // await addAd(3, "hello", "descript", "Charleroi", "3000", "$", "path")
+    // await addAd(4, "papy", "descript", "marche", "3000", "$", "path")
 
     // await addComment(1, "Bonjour puis-je venir", 1)
     // await addComment(1, "Oui pas de soucis", 2, 1, 1)
@@ -1326,7 +1369,8 @@ async function main(){
     // ad = await getAllAds()
     // await User.update({username: "MonNom"}, {where: {id: 1}})
     // await setModoState("GaecKo", true)
-    //await setModoState(10, true)
+    // await setModoState(10, true)
+    // console.log(await searchAd("Bae"))
 }
 
-//main()
+// main()

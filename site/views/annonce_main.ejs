@@ -18,10 +18,10 @@
 
         <%- include('template/header.ejs') %>
 
-        <% has_reported = ad.reporters.includes(userId) || userId == ad.reporters || (ad.user == userId)%>
-        <!-- has_Reported is used to define whether or not the user should see the buttons to report and ad / comments -->
+        <% can_not_report = ad.reporters.includes(main_user.id) || main_user.id == ad.reporters || (ad.user == main_user.id) || (main_user.banned) %>
+        <!-- can_not_report is used to define whether or not the user should see the buttons to report and ad / comments -->
         <!-- This represents the case where someone has already reported an ad / comments or that he is the creator of the ad / comment -->
-        <% if (!has_reported ){ %>
+        <% if (!can_not_report ){ %>
             <div class="report_announce_container_bis">
                 <button onclick="toggleReport('0')" class="fas fa-flag" title="Report the announce" style="font-size: 1.3em; float: left;" value="0" id="r0"></button>
                 <input class="text_replacing_form_report" disabled id="p0" placeholder="Click the Flag on the left to report the announce">
@@ -35,12 +35,19 @@
                 
         <% } %>
         
-        <% if (ad.user == userId) { %>
+        <% if (ad.user == main_user.id) { %>
             <form method="POST"  action="/getAd-for-Update" class="form_update_announce">
                 <input type="hidden"  name="adId" value="<%= ad.id %>">
                 <button type="submit" class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
                 <p class="hover_update"> &nbsp; Click on this icon to modify your announce</p>
             </form>
+        <% } %>
+
+        <% if (main_user.banned) { %>
+            <div class="banned_message">
+                <!-- @dru message si banned -->
+                <p>You are banned from the website. You can't create, comment, report an announce - comments.</p>
+            </div>
         <% } %>
         
 
@@ -199,8 +206,8 @@
                         <div class="comment_date">
                             <%= date %>
                         </div>
-                        <!-- see line 20 for has_reported explaination -->
-                        <% has_reported = (cur_m.reporters.includes(userId)) || (userId == cur_m.reporters) || (cur_m.user == userId) %>
+                        <!-- see line 20 for can_not_report explaination -->
+                        <% can_not_report = (cur_m.reporters.includes(main_user.id)) || (main_user.id == cur_m.reporters) || (cur_m.user == main_user.id) || (main_user.banned) %>
                     </div>
                     
                     <div class="comment_text">
@@ -227,7 +234,7 @@
                             </div>
                         </form>
 
-                        <% if (!cur_m.disabled && cur_m.visibility && !(userId in cur_m.reporters) && !has_reported) {%>
+                        <% if (!cur_m.disabled && cur_m.visibility && !(main_user.id in cur_m.reporters) && !can_not_report) {%>
                             <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
                                 <div class="type_and_send_content_report" id="<%= id_m %>p">
                                     <input type="hidden" name="type" value="coreport">
@@ -250,12 +257,12 @@
                             </div>
                             <div class="comment_reply_date">
                                 <%= date %>
-                                <% has_reported = (cur_sub.reporters.includes(userId)) || (userId == cur_sub.reporters) || (cur_sub.user == userId) %>
+                                <% can_not_report = (cur_sub.reporters.includes(main_user.id)) || (main_user.id == cur_sub.reporters) || (cur_sub.user == main_user.id) || (main_user.banned) %>
                             </div>
                             
                         </div>
                         <div class="reply_text">
-                            <% if (cur_sub.repAuthorId == userId && cur_sub.visibility && !cur_sub.disabled) { %> 
+                            <% if (cur_sub.repAuthorId == main_user.id && cur_sub.visibility && !cur_sub.disabled) { %> 
                                 <!-- Affiche le content @ en rouge si c'est une réponse au user conntecté -->
                                 <!-- text to highlight                                | text not to highlight -->
                                 <% if (customs.tag_color != null) { %>
@@ -294,7 +301,7 @@
                                 </div>
                             </form>
 
-                            <% if (!cur_sub.disabled && cur_sub.visibility && (!(userId in cur_sub.reporters) && !has_reported)) { %>
+                            <% if (!cur_sub.disabled && cur_sub.visibility && (!(main_user.id in cur_sub.reporters) && !can_not_report)) { %>
                                 <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
                                     <div class="type_and_send_content_report" id="<%= id_sub %>p">
                                         <input type="hidden" name="type" value="coreport">

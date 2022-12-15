@@ -91,11 +91,25 @@ app.get('/profile', async function (req, res) {
 });
 
 app.get('/announces', async function (req, res) {
-  let announces = await db.getAllAds();
+  searching = false
+  if (req.session.search != undefined) {
+    announces = await db.searchAds(req.session.search);
+    searching = true; // get the search results, indicates if the user is searching or not
+    req.session.search = undefined;
+  } else {
+    announces = await db.getAllAds(); // if not searching
+  }
+
   //for each ad get log the image array
   for (let i = 0; i < announces.length; i++) {let images = announces[i].images}
-  let moderator = await db.isModo(req.session.userId)
-  res.render('./annonces', {username : req.session.username, error: req.session.screen_message, announces: announces, moderator: moderator, customs: req.session.customs});
+  
+  moderator = undefined;
+  user = undefined;
+  if (req.session.username != undefined) {
+    user = await db.getUser(req.session.username); //get the user object (logged in user)
+    moderator = req.session.moderator // modo or not
+  }
+  res.render('./annonces', {searching: searching, user : user, error: req.session.screen_message, announces: announces, customs: req.session.customs});
 });
 
 app.get('/announces/:productId', async function (req, res) {
@@ -104,14 +118,15 @@ app.get('/announces/:productId', async function (req, res) {
   const productId = req.params;
   const ad = await db.getAd(productId.productId);
   const author_username = await db.getUsername(ad.user)
-  const user = await db.getUser(author_username)
+  const user = await db.getUser(author_username) //get the user object (creator of the ad)
+  const main_user = await db.getUser(req.session.username) // get the user object (logged in user)
   if (!ad.visibility) {
     req.session.screen_message = "This announce is currently being checked due to reports."
     res.redirect("/announces")
   }
   var imgArray = ad.images //get the images array
   const comments = await db.getFullComments(ad.comments)
-  res.render("./annonce_main", {username : req.session.username, ad: ad, comments: comments, userId: req.session.userId, user: user, imgArray: imgArray, customs: req.session.customs});
+  res.render("./annonce_main", {username : req.session.username, ad: ad, comments: comments, main_user: main_user, user: user, imgArray: imgArray, customs: req.session.customs});
 });
 
 app.get('/announces_builder', function (req, res) {
@@ -148,6 +163,16 @@ app.get('/admin', async function (req, res) {
   } else {
     res.redirect('/')
   }
+});
+
+
+// POST REQUESTS
+
+app.post('/announces', async function (req, res) {
+  if (req.body.search != undefined) {
+    req.session.search = req.body.search;
+  }
+  res.redirect('/announces')
 });
 
 app.post('/announces/:productId', async function (req, res) {
@@ -275,6 +300,7 @@ app.post('/login', async function (req, res) {
       req.session.moderator = user.moderator
       req.session.phone = user.phone
       req.session.sharing = user.sharing
+      req.session.banned = user.banned
       req.session.userId = await db.getUserId(req.session.username)
       req.session.customs = await db.getCustoms(req.session.userId)
       res.redirect('/announces')
@@ -369,7 +395,6 @@ app.post("/announces_builder",  upload.array("images" /* "images" is the name of
     }
   }
 });
-
 
 app.post("/admin", async function (req, res) {
   console.log("Type: " + req.body.type)

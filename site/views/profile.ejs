@@ -24,6 +24,13 @@
 
     <h3 class="screen_message"><%= screen_message %></h3>
 
+    <% if (user.banned) { %>
+        <div class="banned_message">
+            <!-- @dru message si banned-->
+            <h2>You are banned from the website. You can't create, comment, report an announce - comments.</h2>
+        </div>
+    <% } %>
+
     <h3> All your active offers :</h3>
 
     <div class="annonce-container">
