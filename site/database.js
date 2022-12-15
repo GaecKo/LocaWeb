@@ -1238,8 +1238,8 @@ async function deleteCustoms(userId) {
 
 module.exports = {
     // USER SECTION
-    getUser,
     addUser,
+    getUser,
     getUsername,
     getUserId,
     setModoState,
@@ -1259,6 +1259,7 @@ module.exports = {
     clearAdReports, 
     decreaseTotalReportsUser,
     isBanned,
+    addReport,
 
     // AD SECTION
     deleteAd,
@@ -1322,7 +1323,7 @@ async function main(){
     // ad = await getAllAds()
     // await User.update({username: "MonNom"}, {where: {id: 1}})
     // await setModoState("GaecKo", true)
-    await setModoState(10, true)
+    //await setModoState(10, true)
 }
 
-main()
+//main()
