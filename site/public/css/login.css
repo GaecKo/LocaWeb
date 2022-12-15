@@ -25,6 +25,14 @@
     font-family: 'Codec Pro ExtraBold';
 }
 
+.star_required {
+    color: red;
+    float: right;
+    margin-top: 12px;
+    font-size: 2em;
+    background-color: transparent;
+}
+
 .btn-grad {
     background-image: linear-gradient(to right, #5b3094 0%, #f00530 51%, #273d70 100%);
     text-align: center;
@@ -115,14 +123,15 @@ h2{
 .textinput {
     width: 90%;
     margin-top: 5px; 
-    border-color:#cccccc; 
-    text-align:left; 
-    border-style:hidden; 
-    border-radius:10px; 
-    border-width:0px; 
-    color:#949393; 
-    background-color:#0A2156; 
-    padding:8px; font-size:22px; 
+    border-color: #cccccc; 
+    text-align: left; 
+    border-style: hidden; 
+    border-radius: 10px; 
+    border-width: 0px; 
+    color: #949393; 
+    background-color: #0A2156; 
+    padding: 8px; 
+    font-size: 22px; 
     transition: all .5s ease-in-out;
 }
 
