@@ -259,5 +259,6 @@ module.exports = {
     Ad,
     Comment,
     Report,
-    Custom
+    Custom,
+    sequelize
 }

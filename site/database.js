@@ -1326,7 +1326,8 @@ module.exports = {
     updateLightModeCustom,
     updateTagCustom,
     addCustoms,
-    deleteCustoms 
+    deleteCustoms,
+    getCommentsAd
 }
 
 async function main(){

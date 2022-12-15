@@ -1,4 +1,6 @@
+const sequelize = require('sequelize');
 const db = require('../database');
+const sq = require('../tables')
 const randomString = require('../utils/randomString.js');
 
 // to do functions: {
@@ -52,6 +54,20 @@ const randomString = require('../utils/randomString.js');
     // main
 // }
   
+
+
+
+
+
+describe("Pre Ad test", () => {
+    test("getAllAds, empty db", async () => {
+        // first clean db:
+        await sq.sequelize.sync({force: true})
+        const ad = await db.getAllAds()
+        expect(ad).toBe(false)
+    })
+    
+})
 describe("User test", () => {
 
     test('Add,get and delete user in the database', async () => {
@@ -261,51 +277,6 @@ describe("User test", () => {
         
 })
 
-describe('ads tests', () => {
-
-    test('getUserAds', async () => {
-        //make user
-        const name = randomString(10);
-        const email = randomString(10) + "@gmail.com";
-        const password = randomString(10);
-        await db.addUser(name, email, password);
-        const user = await db.getUser(name);
-
-        //make ad
-        const title = randomString(10);
-        const description = randomString(10);
-        const price = randomString(10);
-        const city = randomString(10);
-        const rate = randomString(10);
-        const images = '["ok.PNG1671103170403.png","okok.PNG1671103170403.png","gzko.png1671103170403.png"]'
-        await db.addAd(user.id, title, description, city, price, rate, images);
-        const adv = Array.from(await db.searchAds(title))[0]
-
-        const ad = await db.getAd(adv.id);
-        
-
-        // j'arrive pas a recuperer l'id de l'ad
-
-        //error test
-        const ads = await db.getUserAd(Math.random());
-        expect(ads).toBe(false);
-
-        const ads2 = await db.getUserAd(undefined);
-        expect(ads2).toBe(false);
-
-        const state = await db.addAd(null);
-        expect(state).toBe(undefined);
-
-        const state2 = await db.updateAdd(null);
-        expect(state2).toBe(false);
-
-        const state3 = await db.updateAdd(undefined);
-        expect(state3).toBe(false);
-
-    });
-
-})
-
 describe('customs tests', () => {
 
     test('add and update customs', async () => {
@@ -404,6 +375,53 @@ describe('report test', () => {
         // il reste une erreur que j'arrive pas a avoir  --------------- To fix
 
     });
+    test('addCommentReport', async () => {
+        // User part
+        const pseudo = randomString(10)
+        const email = randomString(10)
+        await db.addUser(pseudo, email, "fjez", "fe", true)
+        const id = await db.getUserId(pseudo)
+
+        // Ad part
+        const addedAd = await db.addAd(id, email, "t", "t", 33, 'f', '["ok.PNG1671103170403.png","okok.PNG1671103170403.png","gzko.png1671103170403.png"]')
+        expect(addedAd).toBe(true)
+        const adId = Array.from(await db.searchAds(email))[0].id
+        console.log(adId)
+
+        // Comment part
+        const cId = await db.addComment(adId, "textofcmme", id)
+        
+
+        // Report Part
+        await db.getFullReports()
+
+        await db.addCommentReport(cId, "report", id)
+        await db.getFullReports()
+
+        await db.addAdReport(adId, "okkkk", id)
+        await db.getFullReports()
+
+        await db.disableComment(cId)
+        await db.getFullReports()
+
+        const cId1 = await db.addComment(adId, "textofcmme", id)
+        await db.clearCommentReports(cId1)
+        await db.getFullReports()
+
+        await db.clearAdReports(adId)
+        await db.getFullReports()
+
+        const cId2 = await db.addComment(adId, "textofcmme", id)
+        const cId3 = await db.addComment(adId, "textofcmme", id)
+
+        await db.deleteAd(adId)
+
+        await db.getCommentsAd(adId)
+        
+
+        const rep = await db.getFullReports()
+    })
+    
     
 })
 
@@ -432,4 +450,61 @@ describe('comments test', () => {
         const nad = await db.getAd(ad.id)
         await db.getFullComments(nad.comments)
     })
+})
+
+describe('ads tests', () => {
+
+    test('getUserAds', async () => {
+        //make user
+        const name = randomString(10);
+        const email = randomString(10) + "@gmail.com";
+        const password = randomString(10);
+        await db.addUser(name, email, password);
+        const user = await db.getUser(name);
+
+        //make ad
+        const title = randomString(10);
+        const description = randomString(10);
+        const price = randomString(10);
+        const city = randomString(10);
+        const rate = randomString(10);
+        const images = '["ok.PNG1671103170403.png","okok.PNG1671103170403.png","gzko.png1671103170403.png"]'
+        await db.addAd(user.id, title, description, city, price, rate, images);
+        const adv = Array.from(await db.searchAds(title))[0]
+
+        const ad = await db.getAd(adv.id);
+        
+
+        // j'arrive pas a recuperer l'id de l'ad
+
+        //error test
+        const ads = await db.getUserAd(Math.random());
+        expect(ads).toBe(false);
+
+        const ads2 = await db.getUserAd(undefined);
+        expect(ads2).toBe(false);
+
+        const state = await db.addAd(null);
+        expect(state).toBe(undefined);
+
+        const state2 = await db.updateAdd(null);
+        expect(state2).toBe(false);
+
+        const state3 = await db.updateAdd(undefined);
+        expect(state3).toBe(false);
+
+        const state4 = await db.addAd(1, "titre", "desc", "LLN", 300, "€/m", [1, 2, 3])
+        expect(state4).toBe(undefined)
+
+    });
+
+    test('getAllAds', async() => {
+        const ads = await db.getAllAds()
+        expect(ads).not.toBeNull
+        sq.sequelize.sync({force: true})
+        
+        
+
+    })
+
 })
