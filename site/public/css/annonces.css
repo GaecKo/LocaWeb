@@ -3,8 +3,41 @@
     src: url('../fonts/codec-pro/CodecPro-Light.ttf');
 }
 
+#header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
 body {
     background-color: var(--blue-bg);
+}
+
+.btn-offers {
+    display: flex;
+    margin-right: 0px;
+}
+
+#search {
+    display: none;
+    background-color: transparent;
+    border: none;
+    font-size: 1.2em;
+    width: 200px;
+    color: antiquewhite;
+    transition: all 0.5s;
+}
+
+#search:focus {
+    outline: none;
+}
+
+.fas.fa-search {
+    color: antiquewhite;
+    background-color: transparent;
+    font-size: 1.5em;
+    cursor: pointer;
 }
 
 .error{

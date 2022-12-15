@@ -23,10 +23,10 @@
             <a id="login" href="/login" class="btn-login">Login</a>
             <a id="sign_up" href="/signup" class="btn-grad">Sign-up</a>
 
-            <form action="/announces" method="POST"> 
+            <form action="/announces" method="POST" class="btn-offers btn-grad" onclick="document.getElementById('search').style.display='inline-block'"> 
                 <!-- @dru this has to be cleaned up... Sorry bro I hate FE -->
-                <input type="text" id="search" name="search" class="btn-offers btn-grad" href="/admin" minlength="3"> 
-                <button type="submit" class="btn-search"><i class="fas fa-search"></i></button>
+                <input type="text" id="search" name="search" href="/admin" minlength="3" placeholder="Search"> 
+                <i class="fas fa-search"></i>
             </form>
 
             <% if (searching) { %>
