@@ -4,21 +4,23 @@
       <span class="title" style="background-color: transparent;" ><a href=".." class="head-title">&nbsp; LocaWeb </a> </span>  
     </div>
       
-    <a id="login" href="/login" class="btn-login">Login</a>
-    <a id="sign_up" href="/signup" class="btn-grad">Sign-up</a>
+   <div class="right-header">
+      <a id="login" href="/login" class="btn-grad">Login</a>
+      <a id="sign_up" href="/signup" class="btn-grad">Sign-up</a>
 
-  <% if (username !== undefined) { %>
-    <div class="btn-grad profile-container"><%= username %>
-      <ul class="dropdown">
-        <li><a id="username" class="btn-grad" href="/profile"> Profile </a></li>
-        <form action="/logout" method="GET">
-          <li><input id="username" class="btn-grad" type="submit" value="Disconnect"> </a></li>
-        </form>
-      </ul>
-     
-    </div>
-    
-    <a id="username" class="btn-offers btn-grad" href="/announces"> View offers </a>
+    <% if (username !== undefined) { %>
+      <div class="btn-grad profile-container"><%= username %>
+        <ul class="dropdown">
+          <li><a id="username" class="btn-grad" href="/profile"> Profile </a></li>
+          <form action="/logout" method="GET">
+            <li><input id="username" class="btn-grad" type="submit" value="Disconnect"> </a></li>
+          </form>
+        </ul>
+      
+      </div>
+      
+      <a id="username" class="btn-offers btn-grad" href="/announces"> View offers </a>
+   </div>
     <script>
         document.getElementById('sign_up').style.display='none';
         document.getElementById('login').style.display='none';

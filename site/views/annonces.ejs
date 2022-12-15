@@ -20,48 +20,47 @@
             <span class="title" ><a href=".." class="head-title">&nbsp; LocaWeb </a> </span>  
             </div>
             
-            <a id="login" href="/login" class="btn-login">Login</a>
-            <a id="sign_up" href="/signup" class="btn-grad">Sign-up</a>
+            <div class="right-header">
+                <a id="login" href="/login" class="btn-login">Login</a>
+                <a id="sign_up" href="/signup" class="btn-grad">Sign-up</a>
 
-            <form action="/announces" method="POST" class="btn-offers btn-grad" onclick="document.getElementById('search').style.display='inline-block'"> 
-                <!-- @dru this has to be cleaned up... Sorry bro I hate FE -->
-                <input type="text" id="search" name="search" href="/admin" minlength="3" placeholder="Search"> 
-                <i class="fas fa-search"></i>
-            </form>
+                <form action="/announces" method="POST" id="search-field" onclick="document.getElementById('search').style.display='inline-block'"> 
+                    <!-- @dru this has to be cleaned up... Sorry bro I hate FE -->
+                    <input type="text" id="search" name="search" href="/admin" minlength="3" placeholder="Search"> 
+                    <i class="fas fa-search"></i>
+                </form>
 
-            <% if (searching) { %>
-                <!-- @dru Button to clear search, do as you wish -->
-                <a class="btn-offers btn-grad" href="/announces"> Clear search </a>
-            <% } %>
-
-            <% if (searching && Object.keys(announces).length == 0) { %>
-                <!-- @dru message si pas d'annonces-->
-                <a class="error"> No announces found </a>
-            <% } %>
-            
-
-
-
-            <% if (user.username !== undefined) { %>
-                <a id="username" class="btn-grad" href="/profile"> <%= user.username %> </a>
-                <% if (!user.banned) { %>
-                    <a id="username" class="btn-offers btn-grad" href="/announces_builder"> Create offer </a>
-                <% } else { %>
-                    <div class="banned_message">
-                        <!-- @dru message si banned -->
-                        <p>You are banned from the website. You can't create, comment, report an announce - comments.</p>
-                    </div>
+                <% if (searching) { %>
+                    <!-- @dru Button to clear search, do as you wish -->
+                    <a class="btn-offers btn-grad" href="/announces"> Clear search </a>
                 <% } %>
+                
+                <% if (user.username !== undefined) { %>
+                    <a id="username" class="btn-grad" href="/profile"> <%= user.username %> </a>
+                    <% if (!user.banned) { %>
+                        <a id="username" class="btn-offers btn-grad" href="/announces_builder"> Create offer </a>
+                    <% } else { %>
+                        <div class="banned_message">
+                            <!-- @dru message si banned -->
+                            <p>You are banned from the website. You can't create, comment, report an announce - comments.</p>
+                        </div>
+                    <% } %>
 
-                <% if (user.moderator) { %>
-                    <a id="username" class="btn-offers btn-grad" href="/admin"> Moderation </a>
+                    <% if (user.moderator) { %>
+                        <a id="username" class="btn-offers btn-grad" href="/admin"> Moderation </a>
+                    <% } %>
+                    <script>
+                        document.getElementById('sign_up').style.display='none';
+                        document.getElementById('login').style.display='none';
+                    </script>
                 <% } %>
-                <script>
-                    document.getElementById('sign_up').style.display='none';
-                    document.getElementById('login').style.display='none';
-                </script>
-            <% } %>
+            </div>
         </header>
+
+        <% if (searching && Object.keys(announces).length == 0) { %>
+            <!-- @dru message si pas d'annonces-->
+            <a class="error"> No announces found </a>
+        <% } %>
 
         <script src="../js/stickyheader.js"></script>
 
@@ -71,9 +70,12 @@
             </div>
         <% } %>
 
-        <div class="annonce-container">
+        <div id="annonce-container">
             <% if (Object.keys(announces).length == 0) { %>
                 <!-- @dru message si pas d'annonces-->
+                <script>
+                    document.getElementById('annonce-container').style.display='block';
+                </script>
                 <a class="error"> Il n'y a pas d'annonces pour le moment...</a>
             <% } %>
             <!-- La boucle qui parcourt les annonces commencera ici -->
@@ -128,4 +130,15 @@
     <%- include('template/customs.ejs') %>
     
 </body>
+<script>
+    // For the search field, it hides it when clicking outside of the box
+    document.addEventListener('click', function handleClickOutsideBox(event) {
+    const search = document.getElementById('search-field');
+    const input = document.getElementById('search');
+
+    if (!search.contains(event.target)) {
+        input.style.display = 'none';
+    }
+    });
+</script>
 </html>
