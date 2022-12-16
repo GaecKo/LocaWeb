@@ -6,6 +6,7 @@ Scénario: Le client veut modifier son annonce
     Alors il clique sur sa page de profile
     Et est redirigé vers son profile là où sont postées ses annonces
     Et peut cliquer sur son annonce pour la modifier
+    Et il clique sur l'icône permettant de modifier l'annonce
     Et la modifie
     Et enregistre ses changements
     Et son annonce a été modifiée
