@@ -7,5 +7,5 @@ Scénario: Le client veut ajouter une annonce
     Étant donné qu'il est sur la page d'ajout d'annonce
     Alors il remplit les informations
     Et clique sur "Upload the Ad"
-    Et est redirigé vers la page principale
+    Et est redirigé vers la page annonces
     Et son annonce a été ajoutée
