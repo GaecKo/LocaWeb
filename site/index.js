@@ -92,24 +92,32 @@ app.get('/profile', async function (req, res) {
 
 app.get('/announces', async function (req, res) {
   searching = false
-  if (req.session.search != undefined) {
-    announces = await db.searchAds(req.session.search);
-    searching = true; // get the search results, indicates if the user is searching or not
-    req.session.search = undefined;
-  } else {
-    announces = await db.getAllAds(); // if not searching
-  }
 
-  //for each ad get log the image array
-  for (let i = 0; i < announces.length; i++) {let images = announces[i].images}
-  
-  moderator = undefined;
-  user = undefined;
-  if (req.session.username != undefined) {
-    user = await db.getUser(req.session.username); //get the user object (logged in user)
-    moderator = req.session.moderator // modo or not
+  //check if the user is logged in
+  if (req.session.username) {
+
+    if (req.session.search != undefined) {
+      announces = await db.searchAds(req.session.search);
+      searching = true; // get the search results, indicates if the user is searching or not
+      req.session.search = undefined;
+    } else {
+      announces = await db.getAllAds(); // if not searching
+    }
+
+    //for each ad get log the image array
+    for (let i = 0; i < announces.length; i++) {let images = announces[i].images}
+    
+    moderator = undefined;
+    user = undefined;
+    if (req.session.username != undefined) {
+      user = await db.getUser(req.session.username); //get the user object (logged in user)
+      moderator = req.session.moderator // modo or not
+    }
+    res.render('./annonces', {searching: searching, user : user, error: req.session.screen_message, announces: announces, customs: req.session.customs});
+
+  } else {
+    res.redirect('/login')
   }
-  res.render('./annonces', {searching: searching, user : user, error: req.session.screen_message, announces: announces, customs: req.session.customs});
 });
 
 app.get('/announces/:productId', async function (req, res) {

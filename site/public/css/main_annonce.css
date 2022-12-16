@@ -30,11 +30,15 @@ a {
 }
 
 .main_announce_container > .announce_container_right {
-    border: 1px solid var(--purple);
-    border-radius: 10px;
+    /* border: 1px solid var(--purple);
+    border-radius: 10px; */
     float: right;
     width: 35%;
     height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .main_announce_container > .announce_container_left > .announce_images_container {
@@ -567,7 +571,7 @@ i {
 
 .hover_update {
     left: 250px;
-    color: antiquewhite;
+    color: var(--white);
     height: 100%;
     font-family: 'Codec Pro';
     display: none;

@@ -112,7 +112,7 @@ body{
     float: right;
     background-image: linear-gradient(to right, #5b3094 0%, #f00530  51%, #273d70  100%);
     text-align: center;
-    text-transform: uppercase;
+    /* text-transform: uppercase; */
     transition: 0.5s;
     background-size: 200% auto;
     color: white;            
@@ -187,9 +187,9 @@ body{
     
     background: none;
     text-decoration: inherit;
-    font-family: system-ui;
+    /* font-family: system-ui; */
     /* padding: 1rem 2rem; */
-    padding:10px 31px;
+    padding: 14px 31px;
 
     border: 10px solid;
     border-image-slice: 1;
@@ -347,6 +347,9 @@ footer {
     background-color: transparent;
     margin: 15px;
 }
+.github-logo i {
+    background-color: transparent;
+}
 
 .container3{
     z-index: 10;
@@ -371,6 +374,17 @@ footer {
     font-size:25px;
     background-color: transparent;
 }
+
+
+.container a {
+    background-color: transparent;
+}
+
+.container4 i {
+    font-weight: 400;
+    font-size: 2em;
+}
+
 
 .textinput {
     width: 90%;
@@ -397,16 +411,34 @@ footer {
     }
 
     #header {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 0px;
-        padding-bottom: 0px;
+        display: flex;
+        z-index: 100;
+        background-color: var(--header-trans);
+        width: 100%;
+        padding-bottom: 30px;
+        padding-top: 30px;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(7px);
+        flex-direction: column;
     }
 
     #website-logo {
         margin-left: auto;
         margin-right: auto;
         gap: 10px;
+    }
+
+    .right-header{
+        /* flex: 1; */
+        display: flex;
+        /* width: auto; */
+        /* margin-left: auto; */
+        flex-direction: row-reverse;
+        background-color: transparent;
+        justify-content: center;
+        align-items: flex-start;
+        align-content: stretch;
+        margin-left: 0;
     }
 
     .logo{
@@ -420,25 +452,29 @@ footer {
     .btn-grad {
         margin-top: 5%;
         display: inline-block;
-        margin-left: auto;
-        margin-right: auto;
+        /* margin-left: auto; */
+        /* margin-right: auto; */
         font-size: 15px;
     }
 
     .btn-login{
         margin-top: 5%;
-        display: inline-block;
-        margin-left: auto;
-        margin-right: auto;
+        /* display: inline-block; */
+        /* margin-left: auto; */
+        /* margin-right: auto; */
         font-size: 15px;
     }
 
     .btn-offers{
         margin-top: 5%;
-        display: inline-block;
+        /* display: inline-block;
         margin-left: auto;
-        margin-right: auto;
+        margin-right: auto; */
         font-size: 15px;
+    }
+
+    .flex1{
+        margin-top: 0%;
     }
 
     .imgphone{
@@ -478,6 +514,19 @@ footer {
 
     .container4 pre{
         font-size:initial;
+    }
+
+    .container4 h1{
+        color: var(--purple);
+        font-family: 'Codec Pro ExtraBold';
+        font-size: 40px;
+        background-color: transparent;
+        text-align: center;
+    }
+
+    .github-logo{
+        display: flex;
+        justify-content: center;
     }
 
 }
