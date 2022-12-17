@@ -141,7 +141,7 @@
                     <div id="modal_profile">
                         <div class="modal-content">
                             <% if (user.sharing) { %>
-                                <p>Email: <%= user.email %>, <a href="mailto:<%= user.email %>">→</a></p>
+                                <p>Email: <%= user.email %>  &nbsp; <a href="mailto:<%= user.email %>"> ✉️ </a></p>
                                 <% if (user.phone != null) { %>
                                     <p>Phone: <%= user.phone %></p>
                                 <% } %>
@@ -223,7 +223,7 @@
                             <% } %>
                         </div>
 
-                        <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
+                        <form method="POST" class="form_comments" action="./<%= ad.id %>">
                             <div class="type_and_send_content_reply" id="<%= id_m %>">
                                 <input type="hidden" name="type" value="comment">
                                 <input type="text" id="<%= id_m %>c" style="display: None;" class="comment_type_reply" name="res_content" placeholder="Type your text here" required>
@@ -232,7 +232,7 @@
                         </form>
 
                         <% if (!cur_m.disabled && cur_m.visibility && !(main_user.id in cur_m.reporters) && !can_not_report) {%>
-                            <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
+                            <form method="POST" class="form_comments" action="./<%= ad.id %>">
                                 <div class="type_and_send_content_report" id="<%= id_m %>p">
                                     <input type="hidden" name="type" value="coreport">
                                     <input type="text" placeholder="Reason of the report" class="comment_type_report" name="rep_content" id="<%= id_m %>re" required>
@@ -289,7 +289,7 @@
                             </div>
 
                             
-                            <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
+                            <form method="POST" class="form_comments_reply" action="./<%= ad.id %>">
                                 
                                 <div class="type_and_send_content_reply" id="<%= id_sub %>">
                                     <input type="hidden" name="type" value="comment">
@@ -299,7 +299,7 @@
                             </form>
 
                             <% if (!cur_sub.disabled && cur_sub.visibility && (!(main_user.id in cur_sub.reporters) && !can_not_report)) { %>
-                                <form method="POST" style="background-color: transparent;" action="./<%= ad.id %>">
+                                <form method="POST" class="form_comments_reply" action="./<%= ad.id %>">
                                     <div class="type_and_send_content_report" id="<%= id_sub %>p">
                                         <input type="hidden" name="type" value="coreport">
                                         <input type="text" placeholder="Reason of the report" class="comment_type_report" name="rep_content" id="<%= id_sub %>re" required>
