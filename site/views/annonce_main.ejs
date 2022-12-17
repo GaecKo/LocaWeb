@@ -217,7 +217,7 @@
                         <% } %> 
                         <!-- <br> -->
                         <div class="icons">
-                            <% if (!cur_m.disabled && cur_m.visibility) {%>
+                            <% if (!cur_m.disabled && cur_m.visibility && !main_user.banned) {%>
                                 <button type="button" class="fas fa-reply" onclick="toggleComment('<%= id_m %>')" value="0" id="b<%= id_m %>" title="Reply"></button>
                                 <button onclick="toggleReport('<%= id_m %>')" class="fas fa-flag" title="Report" value="0" id="r<%= id_m %>"></button>
                             <% } %>
@@ -282,7 +282,7 @@
                             <% } %>
                             <!-- <br> -->
                             <div class="icons">
-                            <% if (!cur_sub.disabled && cur_sub.visibility) {%>
+                            <% if (!cur_sub.disabled && cur_sub.visibility && !main_user.banned) {%>
                                 <button type="button" class="fas fa-reply" onclick="toggleComment('<%= id_sub %>')" value="0" id="b<%= id_sub %>" title="Reply"></button>
                                 <button onclick="toggleReport('<%= id_sub %>')" class="fas fa-flag" title="Report" value="0" id="r<%= id_sub %>"></button>
                             <% } %>
@@ -314,11 +314,15 @@
                 <% } %>
             </div>
             <div class="announce_type_and_send">
+                <% if (!main_user.banned) { %>
                 <form class="type_and_send_content" method="POST" action="./<%= ad.id %>">
                     <input type="hidden" name="type" value="comment">
                     <input type="text" name="res_content" class="comment_type_text" placeholder="Type your text here" required>
                     <button type="submit" name="res_btn" value="" class="comment_send_button" >SEND</button>
                 </form>
+                <% } else { %>
+                    <p style="color: red">You are banned from this website. You can't post comment.</p> <!-- @dru please style this :) -->
+                <% } %>    
             </div>
         </div>
     </div>

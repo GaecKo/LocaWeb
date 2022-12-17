@@ -571,7 +571,7 @@ async function getFullComments(comments) {
         date = main_Content.createdAt
         repAuthorId = main_Content.repAuthorId 
         
-        // main_Content.createdAt = date.toLocaleDateString() + " " + date.getHours() + "h" + goodDate(date.getMinutes()) 
+        main_Content.createdAt = date.toLocaleDateString() + " " + date.getHours() + "h" + goodDate(date.getMinutes()) 
         // create a nice looking date
         main_Content.username = await getUsername(main_Content.user) // gets the username of the userId, id known in the data 
         main_Content.reporters =   await getReportedUserIdofComment(main_Content.id)
@@ -1381,8 +1381,8 @@ async function main(){
     // ad = await getAllAds()
     // await User.update({username: "MonNom"}, {where: {id: 1}})
     // await setModoState("GaecKo", true)
-    // await setModoState(10, true)
+    // await setModoState(4, true)
     // console.log(await searchAd("Bae"))
 }
 
-// main()
+ // main()

@@ -57,6 +57,8 @@ app.engine('html', require('ejs').renderFile);
 
 // render the accueil.html page 
 app.get('/', function (req, res) {
+  req.session.screen_message = undefined;
+  req.session.error = undefined;
   res.render('./accueil', {username : req.session.username, customs: req.session.customs});
 });
 
@@ -140,6 +142,10 @@ app.get('/announces/:productId', async function (req, res) {
 app.get('/announces_builder', function (req, res) {
   //check if user is logged in
   if (req.session.username) {
+    if (req.session.banned) {
+      res.redirect("/announces")
+      return 
+    }
     req.session.error = undefined;
     res.render('./announces_builder', {username : req.session.username, error: req.session.error, customs: req.session.customs});
   } else {
@@ -150,6 +156,9 @@ app.get('/announces_builder', function (req, res) {
 app.get('/announces_updater', async function (req, res) {
   //check if user is logged in
   if (req.session.username) {
+    if (req.session.banned) {
+      res.redirect("/announces")
+    }
     let ad = await db.getAd(req.session.adIdToUpdate)
     res.render('./announces_updater', {username : req.session.username, error: req.session.error, customs: req.session.customs, ad : ad});
   } else {
@@ -309,6 +318,7 @@ app.post('/login', async function (req, res) {
       req.session.phone = user.phone
       req.session.sharing = user.sharing
       req.session.banned = user.banned
+      
       req.session.userId = await db.getUserId(req.session.username)
       req.session.customs = await db.getCustoms(req.session.userId)
       res.redirect('/announces')
