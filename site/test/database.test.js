@@ -591,7 +591,6 @@ describe('ads tests', () => {
     test('getAllAds', async() => {
         const ads = await db.getAllAds()
         expect(ads).not.toBeNull
-        sq.sequelize.sync({force: true})
     });
 
     test("update ad", async () => {
@@ -611,6 +610,8 @@ describe('ads tests', () => {
         const images = '["ok.PNG1671103170403.png","okok.PNG1671103170403.png","gzko.png1671103170403.png"]'
         await db.addAd(user.id, title, description, city, price, rate, images);
         const adv = Array.from(await db.searchAds(title))[0]
+
+        sq.sequelize.sync({force: true})
     });
 })
 
