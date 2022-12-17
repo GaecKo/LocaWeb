@@ -584,3 +584,11 @@ i {
     right: 300px;
     transition: all 1s ease-in-out;
 }
+
+.form_comments {
+    background-color: var(--input-color);
+}
+
+.form_comments_reply {
+    background-color: var(--comment-reply-background);
+}
