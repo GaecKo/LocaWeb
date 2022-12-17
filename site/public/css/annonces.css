@@ -86,7 +86,7 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
 }
 
@@ -279,9 +279,9 @@ h4 {
 @media only screen and (max-width: 768px) {
 
     #annonce-container {
-        width: 100%;
-        margin-left: 0px;
-        margin-right: 0px;
+        width: 95%;
+        margin-left: auto;
+        margin-right: auto;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
 
@@ -303,5 +303,9 @@ h4 {
 
     #search-field {
         margin-top: 5%;
+    }
+
+    #header {
+        position: initial;
     }
 }

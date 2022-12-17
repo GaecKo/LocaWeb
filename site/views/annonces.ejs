@@ -36,7 +36,7 @@
                 <% } %>
                 
                 <% if (user.username !== undefined) { %>
-                    <a id="username" class="btn-grad" href="/profile"> <%= user.username %> </a>
+                    <a id="username" class="btn-grad user-btn" href="/profile"> <%= user.username %> </a>
                     <% if (!user.banned) { %>
                         <a id="username" class="btn-offers btn-grad" href="/announces_builder"> Create offer </a>
                     <% } else { %>
