@@ -603,7 +603,10 @@ i {
 
 @media only screen and (max-width: 400px) {
     .text_replacing_form_report::-webkit-input-placeholder, .text_replacing_form_report::-moz-placeholder, .text_replacing_form_report:-ms-input-placeholder, .text_replacing_form_report:-moz-placeholder {
-        color: transparent;
+        display : none;
+    }
+    .text_replacing_form_report {
+        display : none;
     }
 }
 

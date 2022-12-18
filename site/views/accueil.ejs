@@ -8,7 +8,6 @@
       <title>LocaWeb</title>
       <link rel="icon" type="image/svg+xml" href="../image/logo.svg">
       <script src="https://kit.fontawesome.com/d3562eec23.js" crossorigin="anonymous"></script>
-      <script src="../js/changebg.js"></script>
   </head>
 
   <body class="<%= (typeof customs !== 'undefined' && typeof customs.light_mode !== 'undefined') ? (customs.light_mode ? 'light-mode' : 'dark-mode') : 'dark-mode' %>">
@@ -37,6 +36,13 @@
       <img class="imghand"src="../image/hands.webp"> </img>
       </div>
     </div>
+
+    <div id="cookie-banner">
+      This website uses cookies to improve your experience. By continuing to browse the site, you are agreeing to our use of cookies.
+      <button id="accept-cookies">Accept</button>
+    </div>
+
+    <script src="../js/cookies.js"></script>
 
     <%- include('template/footer.ejs') %>
     
