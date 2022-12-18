@@ -32,6 +32,11 @@
 
     /* annonce builder */
     --input-color : #0A2156;
+
+    /* profile */
+
+    --profile-tag-color : #ff00007c;
+    --profile-tag-color-border : rgb(255, 0, 0);
 }
 
 
@@ -537,6 +542,7 @@ footer {
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(7px);
         flex-direction: column;
+        position: sticky;
     }
 
     #website-logo {

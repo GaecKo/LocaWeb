@@ -14,127 +14,129 @@
 
     <div class="main">
 
-    <%- include('template/header.ejs') %>
+        <%- include('template/header.ejs') %>
 
-    <div class="form-title">
-        <h1>Your profile</h1>
-    </div>
-
-    <hr style="width: 80%; border: 3px dashed var(--white)">
-
-    <h3 class="screen_message"><%= screen_message %></h3>
-
-    <% if (user.banned) { %>
-        <div class="banned_message">
-            <!-- @dru message si banned-->
-            <h2>You are banned from the website. You can't create, comment, report an announce - comments.</h2>
+        <div class="form-title">
+            <h1>Your profile</h1>
         </div>
-    <% } %>
 
-    <h3> All your active offers :</h3>
+        <hr style="width: 80%; border: 3px dashed var(--white)">
 
-    <div class="annonce-container">
+        <h3 class="screen_message"><%= screen_message %></h3>
 
-    <% for (var i = 0; i < announces.length; i++) { %>
-        <div class="annonce-element">
+        <% if (user.banned) { %>
+            <div class="banned_message">
+                <!-- @dru message si banned-->
+                <h2>You are banned from the website. You can't create, comment, report an announce - comments.</h2>
+            </div>
+        <% } %>
+
+        <h3> All your active offers :</h3>
+
+        <div class="annonce-container-profile">
+
+        <% for (var i = 0; i < announces.length; i++) { %>
+            <div class="annonce-element-profile">
             <% if (announces[i].visibility == false) { %>
                 <div class="hide-content">
             <% } %>
-            <div class="annonce-top">
-                <div class="annonce-title">
-                    <!-- Titre de l'annonce -->
-                    <h4><%= announces[i].title %> </h4>
-                    <p class="user_text">From : You</p>
+                    <div class="annonce-top-profile">
+                        <div class="annonce-title-profile">
+                            <!-- Titre de l'annonce -->
+                            <h4><%= announces[i].title %> </h4>
+                        </div>
+                        <div class="annonce-user-profile">
+                            <p class="user_text-profile">From : You </p>
+                        </div>
+                    </div>
+                    <div class="annonce-middle">
+                        <div class="annonce-image">
+                            <!-- Image de l'annonce -->
+                            <img  class="image" src="/uploads/<%= announces[i].images[0] %>" alt="<%= announces[i].images[0] %>">
+                        </div>
+                    </div>
+                    <div class="annonce-bottom-profile">
+                        <div class="annonce-price-profile">
+                            <!-- Prix de l'annonce -->
+                            <%= announces[i].price %> <span class="inner-price" style="font-weight:bold;"><%= announces[i].rate %></span>
+                        </div>
+                        <div class="annonce-button">
+                            <% if (announces[i].visibility) { %>    
+                                <a class="contact-annonce-button-profile" href="announces/<%= announces[i].id %>">View details</a>
+                            <% } %>
+                        </div>
+                    </div>
                 </div>
+            <% if (announces[i].visibility == false) { %>
             </div>
-            <div class="annonce-middle">
-                <div class="annonce-image">
-                    <!-- Image de l'annonce -->
-                    <img  class="image" src="/uploads/<%= announces[i].images[0] %>" alt="<%= announces[i].images[0] %>">
-                </div>
-            </div>
-            <div class="annonce-bottom">
-                <div class="annonce-price">
-                    <!-- Prix de l'annonce -->
-                    <%= announces[i].price %> <span class="inner-price" style="font-weight:bold;"><%= announces[i].rate %></span>
-                </div>
-                <div class="annonce-button">
-                    <% if (announces[i].visibility) { %>    
-                        <a class="inner-button" href="announces/<%= announces[i].id %>">View details</a>
-                    <% } %>
-                </div>
-            </div>
-        </div>
-        <% if (announces[i].visibility == false) { %>
-        </div class="hide-content">
+            <% } %>
         <% } %>
-    <% } %>
-    </div>
+        </div>
 
-    <hr style="width: 80%; border: 3px dashed var(--white); margin-top: 35px;">
+        <hr style="width: 80%; border: 3px dashed var(--white); margin-top: 35px;">
 
-    <h3 class="info"> All your information :</h3>
+        <h3 class="info"> All your information :</h3>
 
-    <h5>Change your personnal information</h5>
+        <h5>Change your personnal information</h5>
 
-    <form method="POST"  action="/profile">
-        <input name="new_username" class="textinput" type="text" id="title" value="<%= user.username %>">
-        <input name="new_email"  class="textinput" type="email" id="title" value="<%= user.email %>">
-        <input name="new_phone" class="textinput" type="tel" id="title" value="<%= user.phone %>" placeholder="Update phone number. Format: +32 400 40 40 40" pattern="+[0-9]{2} [0-9]{3} [0-9]{2} [0-9]{2} [0-9]{2}">
-        Allow contact's informations sharing: <select class="textinput" style="width:200px;" name="sharing">
-            <option disabled>Select sharing option:</option>
-            <option value="">Keep current</option>
-            <option value="enable">Enable</option>
-            <option value="unable">Unable</option>
-        </select>
+        <form method="POST"  action="/profile">
+            <input name="new_username" class="textinput" type="text" id="title" value="<%= user.username %>">
+            <input name="new_email"  class="textinput" type="email" id="title" value="<%= user.email %>">
+            <input name="new_phone" class="textinput" type="tel" id="title" value="<%= user.phone %>" placeholder="Update phone number. Format: +32 400 40 40 40" pattern="+[0-9]{2} [0-9]{3} [0-9]{2} [0-9]{2} [0-9]{2}">
+            Allow contact's informations sharing: <select class="textinput" style="width:200px;" name="sharing">
+                <option disabled>Select sharing option:</option>
+                <option value="">Keep current</option>
+                <option value="enable">Enable</option>
+                <option value="unable">Unable</option>
+            </select>
 
 
-        <br>
-        <input type="submit" name="change_info" class="btn-login comfirm-btn" value="Save">
-    </form>
-
-    <br>
-    <br>
-
-    <h5>Reset your password</h5>
-
-    <form method="POST" action="/profile">
-        <input id="new_password" class="textinput" name="new_password" type="text" id="title" name="title" placeholder="New password">
-        <input id="comf_new_password" class="textinput" name="comf_new_password" type="text" id="title" name="title" placeholder="Comfirm">
-        <br>
-        <input id="change_password" type="submit" name="change_password" class="btn-login comfirm-btn" value="Change password"></input>
-    </form>
-
-    <h5>Customize your experience</h5>
-    <form method="POST" action="/profile">
-        <h6>Change the color of your tag color (<span style="padding: 3px; border-radius: 5px; border: 1px solid rgb(255, 0, 0); background-color: #ff00007c;">@<%= username %></span>)</h6>
-        <select class="textinput" style="width:200px;" name="tag_color" required>
-            <option value="0" disabled>Select tag color:</option>
-            <option value="">Keep current</option>
-            <option value="red">Red (default)</option>
-            <option value="blue">Blue</option>
-            <option value="green">Green</option>
-            <option value="cyan">Cyan</option>
-            <option value="orange">Orange</option>
-        </select>
-        
-        <h6>Light mode </h6>
-        <select class="textinput" style="width:200px;" name="light_mode" required>
-            <option value="0" disabled>Select light color:</option>
-            <option value="">Keep current</option>
-            <option value="light">Light Mode</option>
-            <option value="dark">Dark Mode</option>
-        </select>
+            <br>
+            <input type="submit" name="change_info" class="btn-login comfirm-btn" value="Save">
+        </form>
 
         <br>
-        <input id="change_customs" type="submit" name="change_customs" class="btn-login comfirm-btn" value="Change customs"></input>
-    </form>
+        <br>
 
-    <br>
-    <br>
+        <h5>Reset your password</h5>
 
-    <h5>User Stats</h5>
-    <h6>total reports : <%= user.total_report %></h6>
+        <form method="POST" action="/profile">
+            <input id="new_password" class="textinput" name="new_password" type="text" id="title" name="title" placeholder="New password">
+            <input id="comf_new_password" class="textinput" name="comf_new_password" type="text" id="title" name="title" placeholder="Comfirm">
+            <br>
+            <input id="change_password" type="submit" name="change_password" class="btn-login comfirm-btn" value="Change password"></input>
+        </form>
+
+        <h5>Customize your experience</h5>
+        <form method="POST" action="/profile">
+            <h6>Change the color of your tag color (<span class="profile_tag_color">@<%= username %></span>)</h6>
+            <select class="textinput" style="width:200px;" name="tag_color" required>
+                <option value="0" disabled>Select tag color:</option>
+                <option value="">Keep current</option>
+                <option value="red">Red (default)</option>
+                <option value="blue">Blue</option>
+                <option value="green">Green</option>
+                <option value="cyan">Cyan</option>
+                <option value="orange">Orange</option>
+            </select>
+            
+            <h6>Light mode </h6>
+            <select class="textinput" style="width:200px;" name="light_mode" required>
+                <option value="0" disabled>Select light color:</option>
+                <option value="">Keep current</option>
+                <option value="light">Light Mode</option>
+                <option value="dark">Dark Mode</option>
+            </select>
+
+            <br>
+            <input id="change_customs" type="submit" name="change_customs" class="btn-login comfirm-btn" value="Change customs"></input>
+        </form>
+
+        <br>
+        <br>
+
+        <h5>User Stats</h5>
+        <h6>total reports : <%= user.total_report %></h6>
 
     </div>
 
