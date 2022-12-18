@@ -263,9 +263,17 @@
                                 <!-- Affiche le content @ en rouge si c'est une réponse au user conntecté -->
                                 <!-- text to highlight                                | text not to highlight -->
                                 <% if (customs.tag_color != null) { %>
-                                <a style="padding: 3px;  border-radius: 5px; border: 1px solid rgb(255, 0, 0); background-color: <%= customs.tag_color %>; "><%= cur_sub.toAuthor %></a> <%= cur_sub.content %>
+                                <a  class="tag-color" style="padding: 3px;  border-radius: 5px; border: 1px solid  <%= customs.tag_color %>;"><%= cur_sub.toAuthor %></a> <%= cur_sub.content %>
+                                <script>
+                                    document.documentElement.style.setProperty('--tag-color', '<%= customs.tag_color %>');
+
+                                    let primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--tag-color');
+
+                                    document.documentElement.style.setProperty('--tag-color-transparent', `rgba(${primaryColor}, 0.5)`);
+                                </script>
+
                                 <% } else { %>
-                                    <a style="padding: 3px; border-radius: 5px; border: 1px solid rgb(255, 0, 0); background-color: #ff00007c;"><%= cur_sub.toAuthor %></a> <%= cur_sub.content %>
+                                    <a class="tag-color" style="padding: 3px; border-radius: 5px; border: 1px solid  <%= customs.tag_color %>;"><%= cur_sub.toAuthor %></a> <%= cur_sub.content %>
                                 <% } %>
                             <% } else if (cur_sub.visibility && cur_sub.disabled) { %>
                                 <em style="color:orangered"><%= cur_sub.content %></em> 

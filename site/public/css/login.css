@@ -16,6 +16,8 @@
 
 :root{
     --purple: #9340FF;
+    --footer-bg: #060730;
+    --white : #ffffff;
 }
 
 
@@ -169,12 +171,12 @@ p{
 footer {
     position: relative;
     height: 0;
-    padding-top: 30%;
-    background-color:  #060730;
+    padding-top: 300px;
+    background-color: var(--footer-bg);
 }
 
 .footer-inside {
-    background-color:  #060730;
+    background-color:  transparent;
     position: absolute;
     top: 0;
     bottom: 0;
@@ -184,7 +186,7 @@ footer {
 }
 
 .flex3{
-    background-color:  #060730;
+    background-color: transparent;
     width: 80%;
     margin-left: auto;
     margin-right: auto;
@@ -197,49 +199,53 @@ footer {
     margin-bottom: 10%;
 }
 
+.footer_logo{
+   border-radius:1px; 
+   width:50px; 
+   background-color: transparent;
+}
+
+.github-logo {
+    text-decoration: none; 
+    background-color: transparent;
+    margin: 15px;
+}
+.github-logo i {
+    background-color: transparent;
+}
+
 .container3{
     z-index: 10;
-    background-color: #060730;
+    background-color: transparent;
 }
 
 .container4{
     z-index: 10;
-    background-color: #060730;
+    background-color: transparent;
 }
 
 .container4 h1{
     color:var(--purple);
     font-family:'Codec Pro ExtraBold';
     font-size:50px;
+    background-color: transparent;
 }
 
 .container4 pre{
-    color:white;
+    color:var(--white);
     font-family:'Codec Pro';
     font-size:25px;
-}
-
-.footer_logo{
-    border-radius:1px; 
-    width:50px; 
     background-color: transparent;
- }
-
- footer {
-    position: relative;
-    height: 0;
-    padding-top: 300px;
-    background-color: #060730;
 }
 
-.footer-inside {
-    background-color:  transparent;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
+
+.container a {
+    background-color: transparent;
+}
+
+.container4 i {
+    font-weight: 400;
+    font-size: 2em;
 }
 
 input[id="username_sign_up"]:invalid:focus, input[id="email_sign_up"]:invalid:focus, input[id="id_password"]:invalid:focus, input[id="confirmmdp"]:invalid:focus, #login_username:invalid:focus, #login_password:invalid:focus {
@@ -260,5 +266,22 @@ input[id="username_sign_up"]:focus, input[id="email_sign_up"]:focus, input[id="i
 @media only screen and (max-width: 768px) {
     .flex3{
         width: 100%;
+    }
+
+    .container4 pre{
+        font-size:initial;
+    }
+
+    .container4 h1{
+        color: var(--purple);
+        font-family: 'Codec Pro ExtraBold';
+        font-size: 40px;
+        background-color: transparent;
+        text-align: center;
+    }
+
+    .github-logo{
+        display: flex;
+        justify-content: center;
     }
 }

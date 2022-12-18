@@ -77,7 +77,7 @@
                     <li><a id="sign_up_ham" href="/signup">Sign-Up</a></li>
                     <% if (user.username !== undefined) { %>
                         <% if (!user.banned) { %>
-                            <li><a href="/announces_builder"> Create offer </a></li>
+                            <li><a href="/announces_builder"> Create offer <i class="fa-solid fa-plus"></i> </a></li>
                         <% } else { %>
                             <div class="banned_message">
                                 <!-- @dru message si banned -->
@@ -89,11 +89,11 @@
                             <li><a href="/admin"> Moderation </a></li>
                         <% } %>
                     <li>
-                        <a href="/profile" > Profile: <%= user.username %> </a>
+                        <a href="/profile" > Profile: <%= user.username %>  &nbsp;&nbsp; <i style="color:var(--purple);" class="fa-solid fa-user fa-lg"></i></a> 
                     </li>
                     <li>
                         <form action="/logout" method="GET">
-                        <input type="submit" value="Disconnect" class="input-disconnect">
+                            <input type="submit" value="Disconnect" class="input-disconnect"> &nbsp;&nbsp; <i style="color:var(--purple);"class="fa-solid fa-right-from-bracket fa-lg"></i>
                         </form>
                     </li>
                     <br><br>

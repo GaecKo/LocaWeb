@@ -1,3 +1,8 @@
+:root {
+    --tag-color:red;
+    --tag-color-transparent:rgba(255, 0, 0, 0.5);
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -586,4 +591,46 @@ i {
 
 .form_comments_reply {
     background-color: var(--comment-reply-background);
+}
+
+.tag-color {
+    color: var(--tag-color);
+    background-color: var(--tag-color-transparent);
+}
+
+
+@media only screen and (max-width: 768px) {
+    .announce_container_left{
+        float:none;
+        width:100%;
+    }
+
+    .announce_container_right{
+        width: 100%;
+        height: 60%;
+        display: block;
+    }
+
+    #announce_description{
+        margin-top: 0;
+    }
+
+    .announce_seller, .announce_price, .rent_article_button {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+    }
+
+    .announce_comment_container{
+        margin-top: 30px;
+    }
+
+    #announce_comment_text{
+        margin: 10px;
+    }
+
+    .modal-content {
+        width: 90%;
+        margin-top: 50%;
+    }
 }
