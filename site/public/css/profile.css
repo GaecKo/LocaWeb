@@ -31,10 +31,6 @@ h5{
     margin-bottom:20px;
 }
 
-.info{
-    margin-bottom: -52px
-}
-
 h6{
     color: var(--purple);
     font-family: 'Codec Pro';
@@ -157,4 +153,40 @@ h6{
 .contact-annonce-button-profile:hover {
     background-color: #8200b6;
     transition: all 0.3s ease;
+}
+
+.flex-info {
+    display: flex;
+}
+
+.personnal-info, .password-reset {
+    width: 50%;
+}
+
+.allow-share {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: var(--purple);
+}
+
+.custom-exp {
+    display: grid;
+}
+
+.flex-custom-exp {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.tag-color-custom > h6, .light-dark > h6 {
+    margin-bottom: 20px;
+    margin-top: 0px;
+}
+
+.info {
+    display: contents;
+    margin-bottom: -40px;
+    margin-top: 50px;
 }

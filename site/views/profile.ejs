@@ -73,70 +73,81 @@
         <% } %>
         </div>
 
-        <hr style="width: 80%; border: 3px dashed var(--white); margin-top: 35px;">
+        <hr style="width: 80%; border: 3px dashed var(--white); margin-top: 35px; margin-bottom: 50px;">
 
-        <h3 class="info"> All your information :</h3>
+        <div class="all-info"> <!-- ça en grid -->
+            <h3 class="info"> All your information :</h3>
 
-        <h5>Change your personnal information</h5>
+            <div class="flex-info">
+                <div class="personnal-info">
+                    <h5>Change your personnal information</h5>
 
-        <form method="POST"  action="/profile">
-            <input name="new_username" class="textinput" type="text" id="title" value="<%= user.username %>">
-            <input name="new_email"  class="textinput" type="email" id="title" value="<%= user.email %>">
-            <input name="new_phone" class="textinput" type="tel" id="title" value="<%= user.phone %>" placeholder="Update phone number. Format: +32 400 40 40 40" pattern="+[0-9]{2} [0-9]{3} [0-9]{2} [0-9]{2} [0-9]{2}">
-            Allow contact's informations sharing: <select class="textinput" style="width:200px;" name="sharing">
-                <option disabled>Select sharing option:</option>
-                <option value="">Keep current</option>
-                <option value="enable">Enable</option>
-                <option value="unable">Unable</option>
-            </select>
+                    <form method="POST"  action="/profile">
+                        <input name="new_username" class="textinput" type="text" id="title" value="<%= user.username %>">
+                        <input name="new_email"  class="textinput" type="email" id="title" value="<%= user.email %>">
+                        <input name="new_phone" class="textinput" type="tel" id="title" value="<%= user.phone %>" placeholder="Update phone number. Format: +32 400 40 40 40" pattern="+[0-9]{2} [0-9]{3} [0-9]{2} [0-9]{2} [0-9]{2}">
+                        <br>
+                        <div class="allow-share">Allow contact's informations sharing: </div>
+                        <select class="textinput" style="width:200px;" name="sharing">
+                            <option disabled>Select sharing option:</option>
+                            <option value="">Keep current</option>
+                            <option value="enable">Enable</option>
+                            <option value="unable">Unable</option>
+                        </select>
+                        <br>
+                        <input type="submit" name="change_info" class="btn-login comfirm-btn" value="Save">
+                    </form>
+                </div>
 
+                <div class="password-reset">
+                    <h5>Reset your password</h5>
 
-            <br>
-            <input type="submit" name="change_info" class="btn-login comfirm-btn" value="Save">
-        </form>
+                    <form method="POST" action="/profile">
+                        <input id="new_password" class="textinput" name="new_password" type="text" id="title" name="title" placeholder="New password">
+                        <input id="comf_new_password" class="textinput" name="comf_new_password" type="text" id="title" name="title" placeholder="Comfirm">
+                        <br>
+                        <input id="change_password" type="submit" name="change_password" class="btn-login comfirm-btn" value="Change password"></input>
+                    </form>
+                </div>
+            </div>
+        </div>
 
         <br>
         <br>
 
-        <h5>Reset your password</h5>
+        <div class="custom-exp">
+            <h5>Customize your experience</h5>
+            <form method="POST" action="/profile" class="flex-custom-exp">
+                <div class="tag-color-custom">
+                    <h6>Change the color of your tag color (<span class="profile_tag_color">@<%= username %></span>)</h6>
+                    <select class="textinput" style="width:200px;" name="tag_color" required>
+                        <option value="0" disabled>Select tag color:</option>
+                        <option value="">Keep current</option>
+                        <option value="red">Red (default)</option>
+                        <option value="blue">Blue</option>
+                        <option value="green">Green</option>
+                        <option value="cyan">Cyan</option>
+                        <option value="orange">Orange</option>
+                    </select>
+                </div>
 
-        <form method="POST" action="/profile">
-            <input id="new_password" class="textinput" name="new_password" type="text" id="title" name="title" placeholder="New password">
-            <input id="comf_new_password" class="textinput" name="comf_new_password" type="text" id="title" name="title" placeholder="Comfirm">
-            <br>
-            <input id="change_password" type="submit" name="change_password" class="btn-login comfirm-btn" value="Change password"></input>
-        </form>
-
-        <h5>Customize your experience</h5>
-        <form method="POST" action="/profile">
-            <h6>Change the color of your tag color (<span class="profile_tag_color">@<%= username %></span>)</h6>
-            <select class="textinput" style="width:200px;" name="tag_color" required>
-                <option value="0" disabled>Select tag color:</option>
-                <option value="">Keep current</option>
-                <option value="red">Red (default)</option>
-                <option value="blue">Blue</option>
-                <option value="green">Green</option>
-                <option value="cyan">Cyan</option>
-                <option value="orange">Orange</option>
-            </select>
-            
-            <h6>Light mode </h6>
-            <select class="textinput" style="width:200px;" name="light_mode" required>
-                <option value="0" disabled>Select light color:</option>
-                <option value="">Keep current</option>
-                <option value="light">Light Mode</option>
-                <option value="dark">Dark Mode</option>
-            </select>
-
-            <br>
-            <input id="change_customs" type="submit" name="change_customs" class="btn-login comfirm-btn" value="Change customs"></input>
-        </form>
-
+                <div class="light-dark">
+                    <h6>Light mode </h6>
+                    <select class="textinput" style="width:200px;" name="light_mode" required>
+                        <option value="0" disabled>Select light color:</option>
+                        <option value="">Keep current</option>
+                        <option value="light">Light Mode</option>
+                        <option value="dark">Dark Mode</option>
+                    </select>
+                </div>
+                <input id="change_customs" type="submit" name="change_customs" class="btn-login comfirm-btn" value="Change customs"></input>
+            </form>
+        </div>
         <br>
         <br>
 
         <h5>User Stats</h5>
-        <h6>total reports : <%= user.total_report %></h6>
+        <h6>Total reports : <%= user.total_report %></h6>
 
     </div>
 
