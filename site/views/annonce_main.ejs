@@ -24,8 +24,8 @@
         <% if (!can_not_report ){ %>
             <div class="report_announce_container_bis">
                 <button onclick="toggleReport('0')" class="fas fa-flag" title="Report the announce" style="font-size: 1.3em; float: left;" value="0" id="r0"></button>
-                <input class="text_replacing_form_report" disabled id="p0" placeholder="Click the Flag on the left to report the announce">
-                <form method="POST" style="background-color: transparent; width: 100%; float:right; border-radius: 20px;;" action="./<%= ad.id %>">
+                <input class="text_replacing_form_report" disabled id="p0" placeholder="Report the offer">
+                <form method="POST" style="background-color: transparent; width: 100%; float:right; border-radius: 20px;" action="./<%= ad.id %>">
                     <div class="report_announce_container" id="0p">
                         <input type="text" class="announce_report_text" placeholder="Reason of the report" name="rep_content" required>
                         <button type="submit" class="announce_report_button" name="type" value="adreport">Report</button>

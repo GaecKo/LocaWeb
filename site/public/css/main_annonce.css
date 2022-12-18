@@ -360,7 +360,8 @@ i {
     width: 100%;
     border-style: none;
     font-size: 1.3em;
-    text-align: center;
+    text-align: left;
+    padding-left: 20px;
 }
 
 .comment_type_text {
@@ -598,6 +599,15 @@ i {
     background-color: var(--tag-color-transparent);
 }
 
+/* Hide placeholder on small screens */
+
+@media only screen and (max-width: 400px) {
+    .text_replacing_form_report::-webkit-input-placeholder, .text_replacing_form_report::-moz-placeholder, .text_replacing_form_report:-ms-input-placeholder, .text_replacing_form_report:-moz-placeholder {
+        color: transparent;
+    }
+}
+
+/*       */
 
 @media only screen and (max-width: 768px) {
     .announce_container_left{
