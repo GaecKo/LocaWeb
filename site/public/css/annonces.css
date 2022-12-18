@@ -276,6 +276,17 @@ h4 {
     transition: all 0.3s ease;
 }
 
+.form_ham {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid var(--purple);
+    background-color: transparent;
+    display: flex;
+    padding: 10px;
+    border-radius: 20px;
+}
+
 @media only screen and (max-width: 768px) {
 
     #annonce-container {
@@ -299,10 +310,6 @@ h4 {
     .contact-annonce-button {
         font-size: 15px;
         background-color: #8200b6;
-    }
-
-    #search-field {
-        margin-top: 5%;
     }
 
     #header {

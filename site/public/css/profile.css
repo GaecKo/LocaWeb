@@ -9,7 +9,7 @@ h3{
     color: var(--purple);
     font-family: 'Codec Pro ExtraBold';
     text-align: left;
-    margin-left: 40px;
+    /* margin-left: 40px;*/ 
     font-size: 2em;
     margin-top: 50px;
     margin-bottom: 30px;
