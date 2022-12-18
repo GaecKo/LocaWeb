@@ -4,7 +4,7 @@
       <span class="title" style="background-color: transparent;" ><a href=".." class="head-title">&nbsp; LocaWeb </a> </span>  
     </div>
       
-    <div class="right-header">
+    <nav class="right-header">
       <a id="login" href="/login" class="btn-login">Login</a>
       <a id="sign_up" href="/signup" class="btn-grad">Sign-Up</a>
 
@@ -23,52 +23,41 @@
       </div>
       
       <a id="username" class="btn-offers btn-grad" href="/announces"> View offers </a>
-   </div>
-    <script>
+      <script>
         document.getElementById('sign_up').style.display='none';
         document.getElementById('login').style.display='none';
-    </script>
+      </script>
       <% } %>
-
-  <input type="checkbox" id="hamburger-input" class="burger-shower" />
-
-  <label id="hamburger-menu" for="hamburger-input">
-    <nav id="sidebar-menu">
-      <h3>Menu</h3>
-      <ul>
-        <li><a id="login" href="/login">Login</a></li>
-        <li><a id="sign_up" href="/signup">Sign-Up</a></li>
-      <% if (username !== undefined) { %>
-        <li><a href="/announces"> View offers </a></li>
-        <li>
-          <a href="/profile" > <%= username %> </a>
-        </li>
-        <li>
-          <form action="/logout" method="GET">
-            <input type="submit" value="Disconnect" class="input-disconnect">
-          </form>
-        </li>
-      </ul>
     </nav>
-  </label>
 
-  <script>
-      document.getElementById('sign_up').style.display='none';
-      document.getElementById('login').style.display='none';
-  </script>
-      <% } %>
+    <input type="checkbox" id="hamburger-input" class="burger-shower" />
+
+    <label id="hamburger-menu" for="hamburger-input">
+      <nav id="sidebar-menu">
+        <h3>Menu</h3>
+        <ul>
+          <li><a id="login_ham" href="/login">Login</a></li>
+          <li><a id="sign_up_ham" href="/signup">Sign-Up</a></li>
+        <% if (username !== undefined) { %>
+          <li><a href="/announces"> View offers </a></li>
+          <li>
+            <a href="/profile" > Profile: <%= username %> </a>
+          </li>
+          <li>
+            <form action="/logout" method="GET">
+              <input type="submit" value="Disconnect" class="input-disconnect">
+            </form>
+          </li>
+        </ul>
+      </nav>
+      <script>
+        document.getElementById('sign_up_ham').style.display='none';
+        document.getElementById('login_ham').style.display='none';
+      </script>
+        <% } %>
+    </label>
 </header>
 
-<div class="overlay"></div>
-
-<!-- <nav id="main-menu">
-  <ul>
-    <li><a href="#">Home</a></li>
-    <li><a href="#">Store</a></li>
-    <li><a href="#">Blog</a></li>
-    <li><a href="#">About</a></li>
-    <li><a href="#">Contact</a></li>
-  </ul>
-</nav> -->
+<!-- <div class="overlay"></div> -->
 
 <script src="../js/stickyheader.js"></script>

@@ -101,7 +101,7 @@ body{
     background-color: #ffffff00;
 }
 
-.right-header, #main-menu {
+.right-header {
     display: flex;
     width: auto;
     align-items: flex-start;
@@ -410,7 +410,7 @@ footer {
     display: none;
     position: fixed;
     top: 0;
-    right: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     opacity: 0;
@@ -427,10 +427,10 @@ footer {
   
 #hamburger-menu {
     position: fixed;
-    top: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
+    top: 30px;
+    left: 20px;
+    width: 40px;
+    height: 40px;
     display: none;
     border: none;
     padding: 0px;
@@ -450,7 +450,7 @@ footer {
     visibility: hidden;
     position: fixed;
     top: 0;
-    right: -500px;
+    left: -500px;
     width: 100%;
     height: 100%;
     background-color: var(--blue-bg);
@@ -460,34 +460,35 @@ footer {
 }
 
 #hamburger-menu h3 {
-color: var(--purple);
-font-size: 2.2rem;
-margin-bottom: 20px;
+    color: var(--purple);
+    font-size: 2.2rem;
+    margin-bottom: 20px;
 }
 
 #hamburger-menu ul {
-padding-left: 0px;
-margin-top: 0px;
+    padding-left: 0px;
+    margin-top: 0px;
 }
 
 #hamburger-menu li {
-list-style-type: none;
-line-height: 3rem;
+    list-style-type: none;
+    line-height: 3rem;
 }
 
 #hamburger-menu a{
-color: var(--purple);
-font-size: 1.3rem;
-text-decoration: none;
+    color: var(--purple);
+    font-size: 1.3rem;
+    text-decoration: none;
 }
 
-#hamburger-menu a:hover {
-text-decoration: underline;
+#hamburger-menu a:hover, .input-disconnect:hover {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 #hamburger-input:checked + #hamburger-menu #sidebar-menu {
     visibility: visible;
-    right: 0;
+    left: 0;
 }
 #hamburger-input:checked ~ .overlay{
     visibility: visible;
@@ -641,7 +642,7 @@ text-decoration: underline;
     }
 
     #hamburger-menu {
-    display: inline;
+        display: inline;
     }
 
 }
