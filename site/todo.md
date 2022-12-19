@@ -1,6 +1,6 @@
 @DRU 
 * [X] si un commentaire est diabled, ajouter une icone d'oeuil barré avant le content ( ou comme tu veux, juste faut que ce soit claire que le commentaire a été disabled) la condition ejs a déjà été faite
-* [ ] Button disconnect (+ form), je ferai le index.js
+* [X] Button disconnect (+ form), je ferai le index.js
 * [ ] Restylisé / rendre les pages d'annonces plus remplies (titres de sections, style, ...)
 * [X] Light / Dark mode 
 * [X] Faire un truc clean pour les reports (commentaires et ads)
@@ -18,11 +18,12 @@
 @Thomas_devl 
 * [X] ajouter plusieurs images 
 * [X] faire fonctionner les flèches 
-
+* [X] Cookies bar
+* [X] rendre le site responsive
 
 @GaecKo 
-* [ ] Je vais commencer le rapport 
-* [ ] Schéma ORM, ...
+* [X] Je vais commencer le rapport 
+* [X] Schéma ORM, ...
 * [X] quand une ad est delete (voir database.js: deleteAd(adId), faire en sorte que l'image dans upload soit delete 
 aussi)
 * [X] Banned user
