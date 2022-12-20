@@ -22,6 +22,18 @@ body {
     border: 2px solid rgb(140, 0, 200);
 }
 
+.search_hamburger {
+    display: block; 
+    width: 90%;
+    background-color: transparent;
+    border: none;
+    font-size: 1.2em;
+    color: antiquewhite;
+    padding-left: 10px;
+    padding-right: 10px;
+    transition: all 0.5s;
+}
+
 .search {
     display: none;
     background-color: transparent;
@@ -32,7 +44,7 @@ body {
     transition: all 0.5s;
 }
 
-.search:focus {
+.search:focus, .search_hamburger:focus {
     outline: none;
 }
 

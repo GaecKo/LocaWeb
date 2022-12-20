@@ -24,7 +24,7 @@
                 <a id="login" href="/login" class="btn-login">Login</a>
                 <a id="sign_up" href="/signup" class="btn-grad">Sign-up</a>
 
-                <form action="/announces" method="POST" id="search-field" onclick="document.getElementById('search').style.display='inline-block'"> 
+                <form action="/announces" method="POST" id="search-field" onclick="displaySearchField()"> 
                     <input type="text" class="search" name="search" minlength="3" placeholder="Search">  <!-- href="/admin" -->
                     <i class="fas fa-search"></i>
                 </form>
@@ -102,7 +102,7 @@
                     <li>
                         <form action="/announces" class="form_ham" method="POST"> 
                             <!-- @dru this has to be cleaned up... Sorry bro I hate FE -->
-                            <input type="text" class="search" style="display: block; width: 90%;" name="search" href="/admin" minlength="3" placeholder="Search"> 
+                            <input type="text" class="search_hamburger" name="search" href="/admin" minlength="3" placeholder="Search"> 
                             <i class="fas fa-search"></i>
                         </form>
                     </li>
@@ -198,9 +198,20 @@
         const input = document.getElementsByClassName('search');
     
         if (!search.contains(event.target)) {
-            input[0].style.display = 'none';
+            for (let index = 0; index < input.length; index++) {
+                input[index].style.display = 'none';
+            }
         }
         });
+
+        // For the search field, it displays it when clicking on the search icon
+
+        function displaySearchField() {
+            const input = document.getElementsByClassName('search');
+            for (let index = 0; index < input.length; index++) {
+                input[index].style.display = 'block';
+            }
+        }
     </script>
     
 </body>
