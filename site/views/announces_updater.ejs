@@ -25,7 +25,16 @@
             <div class="error-container">
                 <a class="error"> <%= error %></a>
             </div>
-            <style>
+            <script>
+                const er_con = document.getElementsByClassName('error-container');
+                er_con[0].style.marginTop = '0px';
+                const er = document.getElementsByClassName('error');
+                er[0].style.color = 'green';
+                er[0].style.fontSize = '25px';
+                const flex1 = document.getElementsByClassName('flex1');
+                flex1[0].style.marginTop = '0px';
+            </script>
+            <!-- <style>
                 .error{
                     color:green;
                     font-size: 25px;
@@ -36,7 +45,7 @@
                 .error-container {
                     margin-bottom: 20px;
                 }
-            </style>
+            </style> -->
         <% } %>
 
         <div class="form-container">

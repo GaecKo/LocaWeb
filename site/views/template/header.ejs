@@ -12,11 +12,11 @@
       <div class="btn-grad profile-container"><%= username %>
         <ul class="dropdown">
           <li>
-            <a id="username" class="btn-grad profile-btn" href="/profile" style="margin-top: 10px;"> Profile </a>
+            <a class="btn-grad profile-btn" href="/profile" style="margin-top: 10px;"> Profile </a> <!-- id="username"-->
           </li>
           <li>
             <form action="/logout" method="GET">
-              <input id="username" class="btn-grad disconnect-btn" type="submit" value="Disconnect"></a>
+              <input class="btn-grad disconnect-btn" type="submit" value="Disconnect"> <!-- id="username"-->
             </form>
           </li>
         </ul>
@@ -30,7 +30,7 @@
       <% } %>
     </nav>
 
-    <input type="checkbox" id="hamburger-input" class="burger-shower" />
+    <input type="checkbox" id="hamburger-input" class="burger-shower">
 
     <label id="hamburger-menu" for="hamburger-input">
       <nav id="sidebar-menu">
@@ -45,7 +45,7 @@
           </li>
           <li>
             <form action="/logout" method="GET">
-              <input type="submit" value="Disconnect" class="input-disconnect"> &nbsp;&nbsp; <i style="color:var(--purple);"class="fa-solid fa-right-from-bracket fa-lg"></i>
+              <input type="submit" value="Disconnect" class="input-disconnect"> &nbsp;&nbsp; <i style="color:var(--purple);" class="fa-solid fa-right-from-bracket fa-lg"></i>
             </form>
           </li>
         </ul>

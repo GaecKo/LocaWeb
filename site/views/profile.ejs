@@ -83,9 +83,9 @@
                     <h5>Change your personnal information</h5>
 
                     <form method="POST"  action="/profile">
-                        <input name="new_username" class="textinput" type="text" id="title" value="<%= user.username %>">
-                        <input name="new_email"  class="textinput" type="email" id="title" value="<%= user.email %>">
-                        <input name="new_phone" class="textinput" type="tel" id="title" value="<%= user.phone %>" placeholder="Update phone number. Format: +32 400 40 40 40" pattern="+[0-9]{2} [0-9]{3} [0-9]{2} [0-9]{2} [0-9]{2}">
+                        <input name="new_username" class="textinput" type="text" value="<%= user.username %>">
+                        <input name="new_email"  class="textinput" type="email" value="<%= user.email %>">
+                        <input name="new_phone" class="textinput" type="tel" value="<%= user.phone %>" placeholder="Update phone number. Format: +32 400 40 40 40" pattern="+[0-9]{2} [0-9]{3} [0-9]{2} [0-9]{2} [0-9]{2}">
                         <br>
                         <div class="allow-share">Allow contact's informations sharing: </div>
                         <select class="textinput" style="width:200px;" name="sharing">
@@ -103,10 +103,10 @@
                     <h5>Reset your password</h5>
 
                     <form method="POST" action="/profile">
-                        <input id="new_password" class="textinput" name="new_password" type="text" id="title" name="title" placeholder="New password">
-                        <input id="comf_new_password" class="textinput" name="comf_new_password" type="text" id="title" name="title" placeholder="Comfirm">
+                        <input id="new_password" class="textinput" name="new_password" type="text" placeholder="New password">
+                        <input id="comf_new_password" class="textinput" name="comf_new_password" type="text" placeholder="Comfirm">
                         <br>
-                        <input id="change_password" type="submit" name="change_password" class="btn-login comfirm-btn" value="Change password"></input>
+                        <input id="change_password" type="submit" name="change_password" class="btn-login comfirm-btn" value="Change password">
                     </form>
                 </div>
             </div>
@@ -140,7 +140,7 @@
                         <option value="dark">Dark Mode</option>
                     </select>
                 </div>
-                <input id="change_customs" type="submit" name="change_customs" class="btn-login comfirm-btn" value="Change customs"></input>
+                <input id="change_customs" type="submit" name="change_customs" class="btn-login comfirm-btn" value="Change customs">
             </form>
         </div>
         <br>

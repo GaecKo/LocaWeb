@@ -64,6 +64,7 @@ p, ul {
     border-radius: 10px;
     cursor: pointer;
     color: antiquewhite;
+    text-decoration: none;
 }
 
 .announce_content, .announce_seller, .announce_title {

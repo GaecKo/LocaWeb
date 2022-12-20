@@ -1,0 +1,78 @@
+@font-face {
+    font-family: 'Codec Pro ExtraBold';
+    src: url('../fonts/codec-pro/CodecPro-ExtraBold.ttf');
+    font-weight: 800;
+    font-style: normal;
+}
+
+*{
+    background-color: #4d96be;
+}
+
+.center {
+    display: flex;
+    margin-top: auto;
+    width: 100%;
+    /* padding: 10px; */
+    flex-direction: column;
+    align-content: stretch;
+    justify-content: space-around;
+    align-items: stretch;
+}
+
+.elements{
+    display: contents;
+    margin: auto;
+    width: 50%;
+    /* padding: 10px; */
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+
+h1 {
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'Codec Pro ExtraBold';
+    font-size: 50px;
+    /* border: 3px dashed #1c87c9; */
+    text-align: center;
+    width: 300px;
+    background-image: url(../image/rainbow.gif);
+    background-size: cover;
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+img{
+    margin-right: 50px;
+    margin-left: 50px;
+}
+
+a{
+    text-decoration: none;
+    color: #c9a11c;
+    font-size: 3em;
+    font-family: 'Codec Pro ExtraBold';
+    background-color: azure;
+    border-radius: 10px;
+    padding: 10px;
+    width: max-content;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+
+
+@media only screen and (max-width: 600px) {
+
+    img{
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+    
+}

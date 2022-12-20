@@ -21,11 +21,10 @@
         <div class="error-container">
             <a class="error"> <%= error %></a>
         </div>
-        <style>
-            .flex1 {
-                margin-top: 0px;
-            }
-        </style>
+        <script>
+            const flex1 = document.getElementsByClassName('flex1');
+            flex1[0].style.marginTop = "0px";
+        </script>
     <% } %>
 
     <div class="flex1">
@@ -33,11 +32,10 @@
         <div class="container1">
 
             <h2 style="color:#ffffff;">Nice to see you again!</h2>
-            <h1 id="hellotext"class="welcome">Welcome back !</h1>
+            <h1 id="hellotext" class="welcome">Welcome back !</h1>
             <hr style="width: 80%; border: 3px dashed rgb(254, 254, 254);">
 
             <script>
-
                 function randomtext(){
 
                     const texts = ['Welcome back !','Nice to see you again !','Looking for new product ?', 'Stop coming back','👋👋👋']
@@ -45,7 +43,6 @@
                     document.getElementById("hellotext").innerHTML = rando();
 
                 }
-
             </script>
 
         </div>
@@ -55,13 +52,13 @@
             <form action="/login" method="POST">
 
             <h1>User Login</h1>
-            <input class="textinput" id="login_username" type="username" placeholder="Username" name="username" required>
+            <input class="textinput" id="login_username" type="text" placeholder="Username" name="username" required>
             <hr style="width: 80%; border: 3px dashed transparent;">
-            <input class="textinput" id="login_password" type="password" placeholder="Password" name="password" id="id_password" required>
+            <input class="textinput" id="login_password" type="password" placeholder="Password" name="password" required>
             <i class="far fa-eye" id="togglePassword" style="margin-left: -40px; cursor: pointer; font-size: 25px; background-color: transparent; color: rgb(61, 61, 207);"></i>
             <br >
 
-            <input class="boxinput" type="checkbox" name="keeplog" id="">
+            <input class="boxinput" type="checkbox" name="keeplog">
             <p>Stay signed in</p>
             <br>
             <p>Don't have an account yet?</p>

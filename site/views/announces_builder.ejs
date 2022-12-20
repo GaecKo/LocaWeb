@@ -25,7 +25,16 @@
             <div class="error-container">
                 <a class="error"> <%= error %></a>
             </div>
-            <style>
+            <script>
+                const er_con = document.getElementsByClassName('error-container');
+                er_con[0].style.marginTop = '0px';
+                const er = document.getElementsByClassName('error');
+                er[0].style.color = 'green';
+                er[0].style.fontSize = '25px';
+                const flex1 = document.getElementsByClassName('flex1');
+                flex1[0].style.marginTop = '0px';
+            </script>
+            <!-- <style>
                 .error{
                     color:green;
                     font-size: 25px;
@@ -36,7 +45,7 @@
                 .error-container {
                     margin-bottom: 20px;
                 }
-            </style>
+            </style> -->
         <% } %>
 
         <div class="form-container">
@@ -47,14 +56,14 @@
                 <br>
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 <!-- Description -->
-                <textarea class = "textinput" id="description" name="description" placeholder="Description of the offer" maxlength="500" style="height:200px;resize: none;"></textarea>
+                <textarea class="textinput" id="description" name="description" placeholder="Description of the offer" maxlength="500" style="height:200px;resize: none;"></textarea>
                 <br>
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 
                 <!-- Price -->
                 <div class="price">
                     <!-- City -->
-                    <input  class="textinput smallinput"type="text" id="city" name="city" placeholder="City">
+                    <input  class="textinput smallinput" type="text" id="city" name="city" placeholder="City">
                     <input  class="textinput smallinput" type="number" id="price" name="price" placeholder="Price" min="1">
 
                     <select class="textinput" style="width:200px;" name="rate" required>

@@ -587,7 +587,7 @@ i {
 }
 
 .form_comments {
-    background-color: var(--input-color);
+    background-color: var(--comment-reply-background2);
 }
 
 .form_comments_reply {

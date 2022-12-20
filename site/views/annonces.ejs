@@ -25,13 +25,11 @@
                 <a id="sign_up" href="/signup" class="btn-grad">Sign-up</a>
 
                 <form action="/announces" method="POST" id="search-field" onclick="document.getElementById('search').style.display='inline-block'"> 
-                    <!-- @dru this has to be cleaned up... Sorry bro I hate FE -->
-                    <input type="text" id="search" name="search" href="/admin" minlength="3" placeholder="Search"> 
+                    <input type="text" class="search" name="search" minlength="3" placeholder="Search">  <!-- href="/admin" -->
                     <i class="fas fa-search"></i>
                 </form>
 
                 <% if (searching) { %>
-                    <!-- @dru Button to clear search, do as you wish -->
                     <a class="btn-offers btn-grad" href="/announces"> Clear search </a>
                 <% } %>
                 
@@ -39,17 +37,17 @@
                     <div class="btn-grad profile-container"><%= user.username %>
                         <ul class="dropdown">
                           <li>
-                            <a id="username" class="btn-grad profile-btn" href="/profile" style="margin-top: 10px;"> Profile </a>
+                            <a class="btn-grad profile-btn" href="/profile" style="margin-top: 10px;"> Profile </a>  <!-- id="username" -->
                           </li>
                           <li>
                             <form action="/logout" method="GET">
-                              <input id="username" class="btn-grad disconnect-btn" type="submit" value="Disconnect"></a>
+                              <input class="btn-grad disconnect-btn" type="submit" value="Disconnect">  <!-- id="username" -->
                             </form>
                           </li>
                         </ul>
                       </div>
                     <% if (!user.banned) { %>
-                        <a id="username" class="btn-offers btn-grad" href="/announces_builder"> Create offer </a>
+                        <a class="btn-offers btn-grad" href="/announces_builder"> Create offer </a>  <!-- id="username" -->
                     <% } else { %>
                         <div class="banned_message">
                             <!-- @dru message si banned -->
@@ -58,7 +56,7 @@
                     <% } %>
 
                     <% if (user.moderator) { %>
-                        <a id="username" class="btn-offers btn-grad" href="/admin"> Moderation </a>
+                        <a class="btn-offers btn-grad" href="/admin"> Moderation </a>  <!-- id="username" -->
                     <% } %>
                     <script>
                         document.getElementById('sign_up').style.display='none';
@@ -67,7 +65,7 @@
                 <% } %>
             </nav>
 
-            <input type="checkbox" id="hamburger-input" class="burger-shower" />
+            <input type="checkbox" id="hamburger-input" class="burger-shower">
 
             <label id="hamburger-menu" for="hamburger-input">
             <nav id="sidebar-menu">
@@ -104,7 +102,7 @@
                     <li>
                         <form action="/announces" class="form_ham" method="POST"> 
                             <!-- @dru this has to be cleaned up... Sorry bro I hate FE -->
-                            <input type="text" id="search" style="display: block; width: 90%;" name="search" href="/admin" minlength="3" placeholder="Search"> 
+                            <input type="text" class="search" style="display: block; width: 90%;" name="search" href="/admin" minlength="3" placeholder="Search"> 
                             <i class="fas fa-search"></i>
                         </form>
                     </li>
@@ -192,17 +190,18 @@
     <%- include('template/footer.ejs') %>
 
     <%- include('template/customs.ejs') %>
+
+    <script>
+        // For the search field, it hides it when clicking outside of the box
+        document.addEventListener('click', function handleClickOutsideBox(event) {
+        const search = document.getElementById('search-field');
+        const input = document.getElementsByClassName('search');
+    
+        if (!search.contains(event.target)) {
+            input[0].style.display = 'none';
+        }
+        });
+    </script>
     
 </body>
-<script>
-    // For the search field, it hides it when clicking outside of the box
-    document.addEventListener('click', function handleClickOutsideBox(event) {
-    const search = document.getElementById('search-field');
-    const input = document.getElementById('search');
-
-    if (!search.contains(event.target)) {
-        input.style.display = 'none';
-    }
-    });
-</script>
 </html>

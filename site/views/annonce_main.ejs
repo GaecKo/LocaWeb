@@ -341,64 +341,67 @@
 
     
 
+    <script>
+
+        //the following code comes from W3schools.com
+        // When the user scrolls the page, execute stickHeader 
+        window.onscroll = function() {stickHeader()};
+    
+        // Get the header
+        var header = document.getElementById("header");
+    
+        // Get the offset position of the navbar
+        var sticky = header.offsetTop;
+    
+        // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+        function stickHeader() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+    
+        const objDiv = document.getElementById('announce_comment_text')
+        objDiv.scrollTop = objDiv.scrollHeight;
+    
+    
+        function toggleComment(id) {
+            if (document.getElementById("b" + id).value == 0) {
+                document.getElementById("b" + id).value = 1;
+                document.getElementById(id + "c").style.display = "";
+                document.getElementById(id+"b").style.display = "";
+                document.getElementById(id).style.display="flex";
+            } else {
+                document.getElementById("b" + id).value = 0;
+                document.getElementById(id + "c").style.display = "None";
+                document.getElementById(id).style.display="None";
+                document.getElementById(id+"b").style.display = "None";
+            }
+        }
+        function toggleReport(id) {
+            if (document.getElementById("r" + id).value == 0) {
+                document.getElementById("r" + id).value = 1;
+                //document.getElementById(id+"r").style.display = "block";
+                document.getElementById(id+"p").style.display = "flex";
+                document.getElementById("p"+id).style.display = "none";
+                document.getElementById(id+"s").style.display = "flex";
+                //document.getElementById(id+"re").style.display="block";
+            } else {
+                document.getElementById("r" + id).value = 0;
+                //document.getElementById(id+"re").style.display="None";
+                //document.getElementById(id+"r").style.display = "None";
+                document.getElementById(id+"p").style.display = "None";
+                document.getElementById("p"+id).style.display = "flex";
+                document.getElementById(id+"s").style.display = "None";
+            }
+        }
+    </script>
+
 </body>
+
+
 </html>
 
 
 
-<script>
-
-    //the following code comes from W3schools.com
-    // When the user scrolls the page, execute stickHeader 
-    window.onscroll = function() {stickHeader()};
-
-    // Get the header
-    var header = document.getElementById("header");
-
-    // Get the offset position of the navbar
-    var sticky = header.offsetTop;
-
-    // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
-    function stickHeader() {
-        if (window.pageYOffset > sticky) {
-            header.classList.add("sticky");
-        } else {
-            header.classList.remove("sticky");
-        }
-    }
-
-    const objDiv = document.getElementById('announce_comment_text')
-    objDiv.scrollTop = objDiv.scrollHeight;
-
-
-    function toggleComment(id) {
-        if (document.getElementById("b" + id).value == 0) {
-            document.getElementById("b" + id).value = 1;
-            document.getElementById(id + "c").style.display = "";
-            document.getElementById(id+"b").style.display = "";
-            document.getElementById(id).style.display="flex";
-        } else {
-            document.getElementById("b" + id).value = 0;
-            document.getElementById(id + "c").style.display = "None";
-            document.getElementById(id).style.display="None";
-            document.getElementById(id+"b").style.display = "None";
-        }
-    }
-    function toggleReport(id) {
-        if (document.getElementById("r" + id).value == 0) {
-            document.getElementById("r" + id).value = 1;
-            //document.getElementById(id+"r").style.display = "block";
-            document.getElementById(id+"p").style.display = "flex";
-            document.getElementById("p"+id).style.display = "none";
-            document.getElementById(id+"s").style.display = "flex";
-            //document.getElementById(id+"re").style.display="block";
-        } else {
-            document.getElementById("r" + id).value = 0;
-            //document.getElementById(id+"re").style.display="None";
-            //document.getElementById(id+"r").style.display = "None";
-            document.getElementById(id+"p").style.display = "None";
-            document.getElementById("p"+id).style.display = "flex";
-            document.getElementById(id+"s").style.display = "None";
-        }
-    }
-</script>
