@@ -33,18 +33,21 @@
             <!-- La boucle avec les annonces signalées -->
             <div class="one_announce">
                 <div class="content_reported_announce">
-                    <div class="left_side">
-                        <div class="announce_image">
-                            <!-- Image de l'annonce signalée -->
-                            <img style="height: 100%; width: 100%; object-fit: contain;"  class="image" src="/uploads/<%= cur_ad.images[0] %>" alt="<%= cur_ad.images %>">
-                        </div>
-                        <script>
-                            var imgArray = <%- cur_ad.images %>;
-
-                            var img =  JSON.stringify(imgArray);
-                            console.log(img[0])
-                        </script>
+                    <div id="<%- cur_ad.title %>" class="left_side">
+                        <!-- The images will be appended here -->
                     </div>
+
+                    <script>
+                        var images = <%- cur_ad.images %>;
+                        var imageContainer = document.getElementById('<%- cur_ad.title %>');
+                        for (const image of images) {
+                            const imgElement = document.createElement('img');
+                            imgElement.src = `/uploads/${image}`;
+                            imgElement.alt = 'My Image';
+                            imageContainer.appendChild(imgElement);
+                        }
+                    </script>
+
                     <div class="right_side">
                         <div class="top">
                             <div class="announce_title">

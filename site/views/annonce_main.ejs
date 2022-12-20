@@ -62,67 +62,42 @@
                         <i class="fas fa-arrow-right"></i>
                     </div>
 
-                    <div class="images_container" style=" height: 100%; width: 100%; position: absolute;">
-                        <!-- Multiple images here -->
-                        <img style="height: 100%; width: 100%; object-fit: contain;"  class="image" src="/uploads/<%= ad.images[0] %>" alt="<%= ad.images[0] %>">
+                    <div id="image-container" class="images_container" style=" height: 100%; width: 100%; position: absolute;">
+                        <img src="http://your-server/image1.jpg" alt="My Image">
+                        <div id="image-number">1/3</div>
                     </div>
 
                 </div>
 
                 <% if (imgArray) { %>
 
-                <script>
+                    <script>
+                        var images = <%- JSON.stringify(imgArray) %>;
+                        let currentIndex = 0;
 
-                    // TODO display the current image number under the image
+                        function updateImage() {
+                            const imageContainer = document.getElementById('image-container');
+                            imageContainer.innerHTML = `
+                            <img style="height: 100%; width: 100%; object-fit: contain;" src="/uploads/${images[currentIndex]}" alt="${images[currentIndex]}]">
+                            <div id="image-number" style="color:var(--white); text-align:center;" >${currentIndex + 1}/${images.length}</div>
+                            `;
+                        }
+
+                        const arrowLeft = document.getElementById('arrow_left');
+                        const arrowRight = document.getElementById('arrow_right');
+
+                        arrowLeft.addEventListener('click', () => {
+                            currentIndex = (currentIndex + images.length - 1) % images.length;
+                            updateImage();
+                        });
+
+                        arrowRight.addEventListener('click', () => {
+                            currentIndex = (currentIndex + 1) % images.length;
+                            updateImage();
+                        });
                     
-                    //when the right arrow is clicked
-                    document.getElementById("arrow_right").addEventListener("click", function(){
-
-                        //change the string array to a js array
-                        var imageArray = <%- JSON.stringify(imgArray) %>;
-                        
-                        //find in the array where the current image is
-                        var currentImage = document.querySelector(".image");
-                        var currentImageSrc = currentImage.src.split("/")[4];
-
-                        var index = imageArray.indexOf(currentImageSrc);
-
-                        //get the next image
-                        var nextImage = imageArray[index+1];
-
-                        //if there is no next image, go back to the first image
-                        if (nextImage == undefined){
-                            nextImage = imageArray[0];
-                        }
-
-                        //change the image
-                        currentImage.src = "/uploads/" + nextImage;
-                    });
-
-                    //when the left arrow is clicked
-                    document.getElementById("arrow_left").addEventListener("click", function(){
-
-                       //change the string array to a js array
-                       var imageArray = <%- JSON.stringify(imgArray) %>;
-
-                        //find in the array where the current image is
-                        var currentImage = document.querySelector(".image");
-                        var currentImageSrc = currentImage.src.split("/")[4];
-
-                        var index = imageArray.indexOf(currentImageSrc);
-
-                        //get the next image
-                        var nextImage = imageArray[index-1];
-
-                        //if there is no next image, go back to the first image
-                        if (nextImage == undefined){
-                            nextImage = imageArray[imageArray.length-1];
-                        }
-
-                        //change the image
-                        currentImage.src = "/uploads/" + nextImage;
-                    });
-                </script>
+                        updateImage();
+                    </script>
 
                 <% } %>
 

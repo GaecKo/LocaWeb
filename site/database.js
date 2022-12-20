@@ -1381,8 +1381,8 @@ async function main(){
     // ad = await getAllAds()
     // await User.update({username: "MonNom"}, {where: {id: 1}})
     // await setModoState("GaecKo", true)
-    // await setModoState(4, true)
+    await setModoState(5, true)
     // console.log(await searchAd("Bae"))
 }
 
- // main()
+//main()
