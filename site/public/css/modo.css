@@ -9,6 +9,8 @@ body {
 p::-webkit-scrollbar, li::-webkit-scrollbar {
     color: aliceblue;
     display: none;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
 h2 {
