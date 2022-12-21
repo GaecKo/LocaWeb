@@ -773,13 +773,14 @@ async function deleteAd(adId) {
     deleted = await deleteReports(reports_list)
     return Ad.destroy({where: {id: adId}}).then(state => {
         if (state == 1) {
-            console.log("Ad " + adId + " its reports deleted successfully")
+            console.log("Ad " + adId + " was removed!")
             return true
         } else {
-            console.log("Ad " + adId + " its reports deleted successfully")
+            console.log("Ad " + adId + " wasn't deleted")
             return false
         }
     })
+    
 }
 
 /**
@@ -1340,49 +1341,7 @@ module.exports = {
 }
 
 async function main(){
-    // await addUser("Max", "gagxxx", "password")
-    // await addUser("GaecKo", "mohem", "password")
-    // await addAd(1, "titredelad", "descript", "city", "3000", "$", "path")
-    // await addAd(2, "salut", "descript", "LLN", "3000", "$", "path")
-    // await addAd(3, "hello", "descript", "Charleroi", "3000", "$", "path")
-    // await addAd(4, "papy", "descript", "marche", "3000", "$", "path")
-
-    // await addComment(1, "Bonjour puis-je venir", 1)
-    // await addComment(1, "Oui pas de soucis", 2, 1, 1)
-    // await addComment(1, "Ok super j'arrive", 1, 1, 2)
-
-
-    // await addComment()
-    // await deleteAd(2)
-    // await Ad.update({visibility: false}, {where: {id: 1}})
-
-    // await addCommentReport(2, "Je n'aime pas ce message")
-    // for (let i = 0; i < 10; i++) await addAdReport(1, i + ": hephephepo");
-    
-    // a = await getFullReports()
-    // const util = require('util')
-    // console.log(util.inspect(a, {showHidden: false, depth: null, colors: true}))
-    
-    
-
-    // await addAdReport(1, "pas cool")
-    // await addAdReport(1, "pas nice")
-    // await addCommentReport(1, "pas sympas", 1)
-
-    // await addCommentReport(1, "pas sympas")
-    // await addCommentReport(1, "pas sympas")
-
-    // await clearAdReports(1)
-
-    // ad = await getAd(1)
-    // ful = await getFullComments(ad.comments)
-    
-    // console.log(util.inspect(ful, {showHidden: false, depth: null, colors: true}))
-    // ad = await getAllAds()
-    // await User.update({username: "MonNom"}, {where: {id: 1}})
-    // await setModoState("GaecKo", true)
-    await setModoState(5, true)
-    // console.log(await searchAd("Bae"))
+  // use this function to test / modify database 
 }
 
-//main()
+// main()

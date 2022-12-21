@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <script src="https://kit.fontawesome.com/d3562eec23.js" crossorigin="anonymous"></script>
-    <title><%= ad.title %></title> 
+    <title>LocaWeb: <%= ad.title %></title> 
     <link rel="icon" type="image/svg+xml" href="../image/logo.svg">
 </head>
 
@@ -41,6 +41,13 @@
                 <button type="submit" class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
                 <p class="hover_update"> &nbsp; Click on this icon to modify your announce</p>
             </form>
+            <form method="POST" action="/deleteAd">
+                <input type="hidden"  name="adId" value="<%= ad.id %>">
+                <button type="submit" class="del-btn" onclick="return confirmDelete()"><i class="fa-solid fa-pen-to-square"></i></button>
+                <p class="hover_update"> &nbsp; Click on this icon to delete your announce</p>
+
+            </form> 
+
         <% } %>
 
         <% if (main_user.banned) { %>
@@ -330,35 +337,36 @@
         const objDiv = document.getElementById('announce_comment_text')
         objDiv.scrollTop = objDiv.scrollHeight;
     
+        function confirmDelete() {
+            return confirm("Are you sure you want to delete this ad?");
+        }
     
         function toggleComment(id) {
+            // hides or shows the form for adding comment
             if (document.getElementById("b" + id).value == 0) {
                 document.getElementById("b" + id).value = 1;
                 document.getElementById(id + "c").style.display = "";
-                document.getElementById(id+"b").style.display = "";
+                document.getElementById(id + "b").style.display = "";
                 document.getElementById(id).style.display="flex";
             } else {
                 document.getElementById("b" + id).value = 0;
                 document.getElementById(id + "c").style.display = "None";
                 document.getElementById(id).style.display="None";
-                document.getElementById(id+"b").style.display = "None";
+                document.getElementById(id + "b").style.display = "None";
             }
         }
         function toggleReport(id) {
+            // hides or shows the form for adding report
             if (document.getElementById("r" + id).value == 0) {
                 document.getElementById("r" + id).value = 1;
-                //document.getElementById(id+"r").style.display = "block";
-                document.getElementById(id+"p").style.display = "flex";
-                document.getElementById("p"+id).style.display = "none";
-                document.getElementById(id+"s").style.display = "flex";
-                //document.getElementById(id+"re").style.display="block";
+                document.getElementById(id + "p").style.display = "flex";
+                document.getElementById("p" + id).style.display = "none";
+                document.getElementById(id + "s").style.display = "flex";
             } else {
                 document.getElementById("r" + id).value = 0;
-                //document.getElementById(id+"re").style.display="None";
-                //document.getElementById(id+"r").style.display = "None";
-                document.getElementById(id+"p").style.display = "None";
-                document.getElementById("p"+id).style.display = "flex";
-                document.getElementById(id+"s").style.display = "None";
+                document.getElementById(id + "p").style.display = "None";
+                document.getElementById("p" + id).style.display = "flex";
+                document.getElementById(id + "s").style.display = "None";
             }
         }
     </script>

@@ -123,6 +123,9 @@ app.get('/announces', async function (req, res) {
 });
 
 app.get('/announces/:productId', async function (req, res) {
+  if (req.session.username == undefined) {
+    res.redirect("/login")
+  }
   req.session.screen_message = undefined;
   req.session.error = undefined;
   const productId = req.params;
@@ -298,6 +301,26 @@ app.post('/getAd-for-Update', async function (req, res) {
   req.session.adIdToUpdate = req.body.adId;
   res.redirect('/announces_updater')
 });
+
+app.post('/deleteAd', async function (req, res) {
+  let ad = await db.getAd(parseInt(req.body.adId))
+  if (ad.user != req.session.userId) {
+    res.redirect("/announces/" + req.body.adId)
+  }
+  let to_delete = ad.images
+  for (let i = 0; i < to_delete.length; i++) {
+    try {
+      fs.unlinkSync(path.join(__dirname, "./data/uploads/"+to_delete[i]))
+      console.log("successfully deleted :" + to_delete[i])
+    }
+    catch(err) {
+      console.log("Error while trying to delete the file: " + to_delete[i])
+      console.error(err)
+    }
+  }
+  await db.deleteAd(parseInt(req.body.adId))
+  res.redirect("/announces")
+})
 
 app.post('/login', async function (req, res) {
 
