@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/profile.css">
     <link rel="stylesheet" href="../css/annonces.css">
+    <link rel="stylesheet" href="../css/cookies.css">
     <script src="https://kit.fontawesome.com/d3562eec23.js" crossorigin="anonymous"></script>
     <title><%= username %></title>
 </head>
@@ -150,6 +151,8 @@
         <h6 class="user-stats">Total reports : <%= user.total_report %></h6>
 
     </div>
+
+    <%- include('template/cookies.ejs') %>
 
     <%- include('template/footer.ejs') %>
 

@@ -110,6 +110,12 @@ i {
     border:transparent;
 }
 
+.del-btn{
+    text-decoration: none; 
+    background-color: transparent;
+    border:transparent;
+}
+
 .announce_seller, .announce_price, .rent_article_button {
     margin-top: 10px;
     margin-left: auto;
@@ -565,6 +571,21 @@ i {
     cursor: pointer;
 }
 
+.fa-regular.fa-trash-can{
+    color: var(--white);
+    margin: 20px 0 0 100px;
+}
+
+.fa-regular.fa-trash-can:hover {
+    color: var(--purple);
+    cursor: pointer;
+}
+
+.form_del_announce {
+    display: flex;
+    height: 50px;
+}
+
 .form_update_announce {
     display: flex;
     height: 50px;
@@ -581,6 +602,12 @@ i {
 }
 
 .form_update_announce:hover > .hover_update {
+    display: block;
+    right: 300px;
+    transition: all 1s ease-in-out;
+}
+
+.form_del_announce:hover > .hover_update {
     display: block;
     right: 300px;
     transition: all 1s ease-in-out;

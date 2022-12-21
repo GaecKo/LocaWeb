@@ -5,6 +5,7 @@
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link rel="stylesheet" href="../css/style.css">
+      <link rel="stylesheet" href="../css/cookies.css">
       <title>LocaWeb</title>
       <link rel="icon" type="image/svg+xml" href="../image/logo.svg">
       <script src="https://kit.fontawesome.com/d3562eec23.js" crossorigin="anonymous"></script>
@@ -37,12 +38,8 @@
       </div>
     </div>
 
-    <div id="cookie-banner">
-      This website uses cookies to improve your experience. By continuing to browse the site, you are agreeing to our use of cookies.
-      <button id="accept-cookies">Accept</button>
-    </div>
 
-    <script src="../js/cookies.js"></script>
+    <%- include('template/cookies.ejs') %>
 
     <%- include('template/footer.ejs') %>
     

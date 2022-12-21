@@ -7,6 +7,7 @@
     <link rel="icon" type="image/svg+xml" href="../image/logo.svg">
     <link rel="stylesheet" href="../css/main_annonce.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/cookies.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <script src="https://kit.fontawesome.com/d3562eec23.js" crossorigin="anonymous"></script>
     <title>LocaWeb: <%= ad.title %></title> 
@@ -39,12 +40,12 @@
             <form method="POST"  action="/getAd-for-Update" class="form_update_announce">
                 <input type="hidden"  name="adId" value="<%= ad.id %>">
                 <button type="submit" class="edit-btn"><i class="fa-solid fa-pen-to-square"></i></button>
-                <p class="hover_update"> &nbsp; Click on this icon to modify your announce</p>
+                <p class="hover_update"> &nbsp; Click on this icon to edit</p>
             </form>
-            <form method="POST" action="/deleteAd">
+            <form method="POST" action="/deleteAd" class="form_del_announce">
                 <input type="hidden"  name="adId" value="<%= ad.id %>">
-                <button type="submit" class="del-btn" onclick="return confirmDelete()"><i class="fa-solid fa-pen-to-square"></i></button>
-                <p class="hover_update"> &nbsp; Click on this icon to delete your announce</p>
+                <button type="submit" class="del-btn" onclick="return confirmDelete()"><i class="fa-regular fa-trash-can"></i></button>
+                <p class="hover_update"> &nbsp; Click on this icon to delete</p>
 
             </form> 
 
@@ -306,6 +307,8 @@
             </div>
         </div>
     </div>
+
+    <%- include('template/cookies.ejs') %>
 
     <%- include('template/footer.ejs') %>
 
