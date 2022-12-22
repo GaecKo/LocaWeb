@@ -203,8 +203,7 @@
                                 <button type="submit" class="reply_button_right" id="<%= id_m %>b" value="<%= id_m %>|" name="res_btn" style="display: None;">Reply</button>
                             </div>
                         </form>
-
-                        <% if (!cur_m.disabled && cur_m.visibility && !(main_user.id in cur_m.reporters) && !can_not_report) {%>
+                        <% if (!cur_m.disabled && cur_m.visibility && !(cur_m.reporters.includes(main_user.id)) && !can_not_report) {%>
                             <form method="POST" class="form_comments" action="./<%= ad.id %>">
                                 <div class="type_and_send_content_report" id="<%= id_m %>p">
                                     <input type="hidden" name="type" value="coreport">
@@ -279,7 +278,7 @@
                                 </div>
                             </form>
 
-                            <% if (!cur_sub.disabled && cur_sub.visibility && (!(main_user.id in cur_sub.reporters) && !can_not_report)) { %>
+                            <% if (!cur_sub.disabled && cur_sub.visibility && (!(cur_sub.reporters.includes(main_user.id)) && !can_not_report)) { %> 
                                 <form method="POST" class="form_comments_reply" action="./<%= ad.id %>">
                                     <div class="type_and_send_content_report" id="<%= id_sub %>p">
                                         <input type="hidden" name="type" value="coreport">
