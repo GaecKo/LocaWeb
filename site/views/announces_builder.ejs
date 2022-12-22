@@ -28,44 +28,40 @@
             </div>
             <script>
                 const er_con = document.getElementsByClassName('error-container');
-                er_con[0].style.marginTop = '0px';
+                for (let i = 0; i < er_con.length; i++) {
+                    er_con[i].style.marginTop = '0px';
+                }
+
                 const er = document.getElementsByClassName('error');
-                er[0].style.color = 'green';
-                er[0].style.fontSize = '25px';
+                for (let j = 0; j < er.length; j++) {
+                    er[j].style.color = 'green';
+                    er[j].style.fontSize = '25px';
+                }
+                
                 const flex1 = document.getElementsByClassName('flex1');
-                flex1[0].style.marginTop = '0px';
+                for (let k = 0; k < flex1.length; k++) {
+                    flex1[k].style.marginTop = '0px';
+                }
             </script>
-            <!-- <style>
-                .error{
-                    color:green;
-                    font-size: 25px;
-                }
-                .flex1 {
-                    margin-top: 0px;    
-                }
-                .error-container {
-                    margin-bottom: 20px;
-                }
-            </style> -->
         <% } %>
 
         <div class="form-container">
 
             <form method="POST" enctype="multipart/form-data" action="/announces_builder">
                 <!-- Title -->
-                <input class="textinput" type="text" id="title" name="title" placeholder="Title of your offer">
+                <input class="textinput" type="text" id="title" name="title" placeholder="Title of your offer" required>
                 <br>
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 <!-- Description -->
-                <textarea class="textinput" id="description" name="description" placeholder="Description of the offer" maxlength="500" style="height:200px;resize: none;"></textarea>
+                <textarea class="textinput" id="description" name="description" placeholder="Description of the offer" maxlength="500" style="height:200px;resize: none;" required></textarea>
                 <br>
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 
                 <!-- Price -->
                 <div class="price">
                     <!-- City -->
-                    <input  class="textinput smallinput" type="text" id="city" name="city" placeholder="City">
-                    <input  class="textinput smallinput" type="number" id="price" name="price" placeholder="Price" min="1">
+                    <input  class="textinput smallinput" type="text" id="city" name="city" placeholder="City" required>
+                    <input  class="textinput smallinput" type="number" id="price" name="price" placeholder="Price" min="1" required>
 
                     <select class="textinput" style="width:200px;" name="rate" required>
                         <option value="0" disabled>Select rate:</option>
@@ -79,7 +75,7 @@
                 </div>
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 <!-- Image -->
-                <input id="files" type="file" accept="image/png" name="images" class="textinput smallinput"  multiple>  
+                <input id="files" type="file" accept="image/png" name="images" class="textinput smallinput" multiple required>  
                 <a class="remove" title="Remove the last image added" onclick="removeLastPicture()"> <i class="fas fa-times"></i> </a>
                 <div id="preview"></div>
                 <br>

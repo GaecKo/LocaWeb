@@ -6,9 +6,11 @@ body {
     font-family: 'Codec Pro';
 }
 
-p::-webkit-scrollbar, li::-webkit-scrollbar {
-    color: aliceblue;
+p::-webkit-scrollbar, li::-webkit-scrollbar, ul::-webkit-scrollbar {
     display: none;
+}
+
+p, li, ul {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
