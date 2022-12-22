@@ -156,8 +156,6 @@ body{
     background-color: transparent;
     margin-left: auto;
     margin-right: auto;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
 }
 
 .btn-grad.profile-btn, .btn-grad.disconnect-btn {
@@ -671,4 +669,12 @@ footer {
 
 .sticky + .content {
     padding-top: 60px;
+}
+
+.banned_message {
+    font-family: 'Codec Pro';
+    font-weight: bolder;
+    color: red;
+    text-shadow: 0 0 3px #FF0000;
+    text-align: center;
 }

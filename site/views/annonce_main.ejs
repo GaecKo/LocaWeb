@@ -182,9 +182,14 @@
                     
                     <div class="comment_text">
                         <% if (cur_m.disabled) { %>
-                            <em style="color:orangered"><%= cur_m.content %></em> <!-- @DRU PLEASE ADD EYE CROSSED, to make clear the comment is disabled -->
+                            <em style="color:orangered"><%= cur_m.content %></em>
+                            <i class="fas fa-eye-slash"></i>
+                            <!-- @DRU PLEASE ADD EYE CROSSED, to make clear the comment is disabled -->
                         <% } else if (!cur_m.visibility) { %> 
-                            <%= cur_m.content %> <!-- @DRU PLEASE BLUR THIS -->
+                            <div class="blurred_content">
+                                <%= cur_m.content %>
+                            </div>
+                             <!-- @DRU PLEASE BLUR THIS -->
                         <% } else { %>
                             <%= cur_m.content %>
                         <% } %> 
@@ -249,8 +254,8 @@
                                 <% } %>
                             <% } else if (cur_sub.visibility && cur_sub.disabled) { %>
                                 <em style="color:orangered"><%= cur_sub.content %></em> 
-                                <i class="fas fa-eye-slash">
-                                </i><!-- @DRU PLEASE ADD EYE CROSSED, to make clear the comment is disabled -->
+                                <i class="fas fa-eye-slash"></i>
+                                <!-- @DRU PLEASE ADD EYE CROSSED, to make clear the comment is disabled -->
                             <% } else if (!cur_sub.visibility) { %>
                                  <div class="blurred_content">
                                     <%= cur_sub.content %> 
@@ -301,7 +306,10 @@
                     <button type="submit" name="res_btn" value="" class="comment_send_button" >SEND</button>
                 </form>
                 <% } else { %>
-                    <p style="color: red">You are banned from this website. You can't post comment.</p> <!-- @dru please style this :) -->
+                    <div class="banned_message">
+                        <p>You are banned from this website. You can't post comment.</p>
+                    </div>
+                     <!-- @dru please style this :) -->
                 <% } %>    
             </div>
         </div>
