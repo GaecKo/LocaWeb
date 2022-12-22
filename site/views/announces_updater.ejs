@@ -49,19 +49,19 @@
 
             <form method="POST" enctype="multipart/form-data" action="/announces_updater">
                 <!-- Title -->
-                <input class="textinput" type="text" id="title" name="title" value="<%= ad.title %>">
+                <input class="textinput" type="text" id="title" name="title" value="<%= ad.title %>" required>
                 <br>
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 <!-- Description -->
-                <textarea class = "textinput" id="description" name="description" maxlength="500" style="height:200px;resize: none;"><%= ad.description %></textarea>
+                <textarea class = "textinput" id="description" name="description" maxlength="500" style="height:200px;resize: none;" required><%= ad.description %></textarea>
                 <br>
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 
                 <!-- Price -->
                 <div class="price">
                     <!-- City -->
-                    <input  class="textinput smallinput" type="text" id="city" name="city" value="<%= ad.city %>">
-                    <input  class="textinput smallinput" type="number" id="price" name="price" value="<%= ad.price %>" min="1">
+                    <input  class="textinput smallinput" type="text" id="city" name="city" value="<%= ad.city %>" required>
+                    <input  class="textinput smallinput" type="number" id="price" name="price" value="<%= ad.price %>" min="1" required>
 
                     <select class="textinput" style="width:200px;" name="rate" required>
                         <option value="0" disabled>Select rate:</option>
@@ -75,7 +75,7 @@
                 </div>
                 <hr style="width: 80%; border: 3px dashed transparent;">
                 <!-- Image -->
-                <input id="files" type="file" accept="image/png" name="images" class="textinput smallinput"  multiple>  
+                <input id="files" type="file" accept="image/png" name="images" class="textinput smallinput" multiple required>  
                 <a class="remove" title="Remove all the pictures" onclick="removeLastPicture()"> <i class="fas fa-times"></i> </a>
                 <div id="preview"></div>
                 <br>
