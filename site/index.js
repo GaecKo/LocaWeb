@@ -10,10 +10,8 @@ const PORT = 4000;
 const db = require("./database.js");
 const bodyParser = require("body-parser");
 const bcrypt = require('bcryptjs');
-const { type } = require('os');
 var salt = bcrypt.genSaltSync(10);
 const multer = require("multer");
-const { application } = require('express');
 
 const handleError = (err, res) => {
   res
@@ -82,6 +80,8 @@ app.get('/signup', function (req, res) {
 });
 
 app.get('/profile', async function (req, res) {
+  req.session.error = undefined
+  req.session.screen_message = undefined;
   if (req.session.username) {
     const user = await db.getUser(req.session.username);
     const announces = await db.getUserAds(user.id);
@@ -128,15 +128,29 @@ app.get('/announces/:productId', async function (req, res) {
   }
   req.session.screen_message = undefined;
   req.session.error = undefined;
-  const productId = req.params;
-  const ad = await db.getAd(productId.productId);
+
+  productId = parseInt(req.params.productId)
+  if (isNaN(productId)) { // checks if the productId is really an adId
+    req.session.screen_message = "This announce is not reachable."
+    res.redirect("/announces")
+    return
+  }
+
+  const ad = await db.getAd(productId);
+  if (ad == false) { // if the ad doesn't exist
+    req.session.screen_message = "This announce is not reachable."
+    res.redirect("/announces")
+    return
+  }
+  if (!ad.visibility) { // if the ad is not visible, it souldn't be accessible
+    req.session.screen_message = "This announce is currently being checked due to reports."
+    res.redirect("/announces")
+    return
+  }
   const author_username = await db.getUsername(ad.user)
   const user = await db.getUser(author_username) //get the user object (creator of the ad)
   const main_user = await db.getUser(req.session.username) // get the user object (logged in user)
-  if (!ad.visibility) {
-    req.session.screen_message = "This announce is currently being checked due to reports."
-    res.redirect("/announces")
-  }
+  
 
   const comments = await db.getFullComments(ad.comments)
   res.render("./annonce_main", {username : req.session.username, ad: ad, comments: comments, main_user: main_user, user: user, customs: req.session.customs});
