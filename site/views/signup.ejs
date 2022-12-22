@@ -57,7 +57,7 @@
             
             <hr style="width: 80%; border: 3px dashed transparent;">
 
-            <input class="textinput" type="password" placeholder="Password (at least 8 characters)" name="password" id="id_password" minlength="8" required>
+            <input class="textinput" type="password" placeholder="Password (at least 8 characters)" name="password" id="id_password" minlength="8" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^0-9a-zA-Z]).{8,26}$" title="Choose a stronger password (8+ characters, with letters, numbers, and special characters)" required>
             <i class="far fa-eye" id="togglePassword" style="margin-left: -40px; cursor: pointer; font-size: 25px; background-color: transparent; color: rgb(61, 61, 207);"></i>
 
             <hr style="width: 80%; border: 3px dashed transparent;">
